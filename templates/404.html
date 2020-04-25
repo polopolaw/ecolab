@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static wagtailuserbar %}
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{%block content%}
+    <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+
+    <div id="content">
+
+	    <!-- page-section -->
+
+    	<div class="page-section" data-bg="{% static 'images/1920x1000_bg1.jpg' %}">
+
+    		<div class="page-404-section">
+    			
+    			<h1 class="section-title">404</h1>
+    			<h2>Страница не найдена</h2>
+    			<p>Мы не можем найти страницу, которую вы искали. <br> <a href="#">Вернитесь на главную</a> или попробуйте поискать:</p>
+
+    			<form action="{% url 'search' %}" class="search-section">
+                  <input type="text" placeholder="Поиск по сайту">
+                  <button class="licon-magnifier"></button>
+                </form>
+    		</div>
+
+    	</div>
+
+    </div>
+
+    <!-- - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - -->
+{%endblock%}

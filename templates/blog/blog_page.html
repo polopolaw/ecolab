@@ -1,0 +1,676 @@
+{% extends 'base.html' %}
+    <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+{% load static wagtailuserbar %}
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block content %}
+{{page.counter}}
+    <div id="content">
+		
+    	<!-- - - - - - - - - - - - - - Breadcrumbs - - - - - - - - - - - - - - - - -->
+
+	    <div class="breadcrumbs-wrap" data-bg="{% static 'images/1920x280_bg2.jpg' %}">
+
+	      <div class="container">
+	        
+	        <h1 class="page-title">{{page.title}}</h1>
+
+	        {% if self.get_ancestors|length > 1 %}
+				<ul class="breadcrumbs">
+
+				{% for page in self.get_ancestors %}
+				{% if page.is_root == False %}
+				<li><a href="{{page.url}}">{{ page.title }}</a></li>
+				{% endif %}
+				{% endfor %}
+
+				<li>{{ page.title }}</li>
+
+				</ul>
+			{% endif %}
+
+	      </div>
+
+	    </div>
+	    <!-- posts - posts which get if set tag-->
+		
+	    <!-- - - - - - - - - - - - - end Breadcrumbs - - - - - - - - - - - - - - - -->
+
+	    <div class="page-content-wrap">
+
+    		<div class="container">
+        
+		        <div class="row">
+
+		        	<!-- Main content -->		        
+		        	<main id="main" class="col-md-8">
+						
+						<div class="content-element6">
+							
+							<div class="single-news blog-type type-2 style-2">
+							
+								<div class="welcome-item">
+
+									<div class="welcome-inner">
+										
+										<div class="welcome-img">
+				    						{% image page.main_image fill-750x460%}
+				    					</div>
+
+				    					<div class="welcome-content">
+
+				    						<svg class="bigHalfCircle" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+												<path d="M0 100 C40 0 60 0 100 100 Z"></path>
+											</svg>
+				    						
+				    						<div class="entry">
+
+												<!-- - - - - - - - - - - - - - Entry meta - - - - - - - - - - - - - - - - -->
+
+												<div class="entry-meta">
+													
+													<a href="#" class="entry-calendar">{{page.date|date:"d M  y"}}</a>
+													<div class="entry-byline"><a href="#">{{page.owner.first_name}}</a></div>
+													
+													{% if page.categories.all.count %}
+														{% for cat in page.categories.all %}
+												            <a class="entry-news" href="{% pageurl page.get_parent %}?cat={{ cat }}">{{cat}}</a>
+												        {% endfor %}
+													{% endif %}
+													<a href="#" class="entry-comments-link">3</a>
+													<a href="#" class="entry-share f-right">Поделиться</a>
+
+												</div>
+
+												<!-- - - - - - - - - - - - - - Entry meta - - - - - - - - - - - - - - - - -->
+
+												<!-- - - - - - - - - - - - - - Entry body - - - - - - - - - - - - - - - - -->
+
+												<div class="entry-body">
+
+													<div class="content-element3">
+														{{page.body|richtext}}
+														
+													</div>
+
+												</div>
+
+												<!-- - - - - - - - - - - - - - End of Entry body - - - - - - - - - - - - - - - - -->
+
+												<!-- - - - - - - - - - - - - - Entry meta - - - - - - - - - - - - - - - - -->
+
+												<div class="entry-meta">
+
+													<div class="entry-tags">
+														{% if page.tags.all.count %}
+														{% for tag in page.tags.all %}
+												            <a class="entry-news" href="{% pageurl page.get_parent %}?tag={{ tag }}">{{tag}}</a>
+												        {% endfor %}
+														{% endif %}
+													</div>
+													<a url="{{page.url}}" text="{{page.intro}}" img="{{page.main_image}}" class="entry-share f-right">Поделиться</a>
+
+												</div>
+
+												<!-- - - - - - - - - - - - - - Entry meta - - - - - - - - - - - - - - - - -->
+
+											</div>
+
+				    					</div>
+
+									</div>
+
+								</div>
+
+							</div>
+							<div class="entries-nav type-2">
+	                			
+			                  <div class="previous-entry">
+			                    {%if page.get_prev_siblings.first%}
+	                				{%with prev=page.get_prev_siblings.first%}
+			                    <a href="{{prev.url}}" class="alignleft">
+			                      {% image prev.specific.main_image fill-100x100%}
+			                    </a>
+			                    <div>
+			                      <a href="#">Предыдущий пост</a>
+			                      <h6><a href="{{prev.url}}">{{prev.title}}</a></h6>
+			                    </div>
+								{%endwith%}
+			                  {%endif%}
+			                  </div>
+			                  <div class="next-entry">
+			                    {%if page.get_next_siblings.first%}
+	                			{%with next=page.get_next_siblings.first%}
+			                    <a href="{{next.url}}" class="alignright">
+			                      {% image next.specific.main_image fill-100x100%}
+			                    </a>
+			                    <div>
+			                      <a href="#">Следующий пост</a>
+			                      <h6><a href="{{next.url}}">{{next.title}}</a></h6>
+			                    </div>
+			                    {%endwith%}
+			                  {%endif%}
+			                  </div>
+								
+			                </div>
+
+						</div>
+
+						<div class="content-element6">
+							
+							<div class="team-holder single-member type-2">
+
+	    						<!-- team element -->    	
+	    						<div class="team-item">
+
+	    							<div class="team-member">
+	    								<div class="member-photo">
+
+											  {% if request.user.wagtail_userprofile.avatar %}
+											    <a href="#"><img src="{{ page.owner.wagtail_userprofile.avatar.url }}" alt="{{ request.user.get_full_name }}" height="100px" width="100px">
+											  {% endif %}
+
+	    									</a>
+	    								</div>
+	    								<div class="wrapper">
+	    									<div class="member-info">
+	    										
+	    										<h5 class="member-name">{{page.owner.get_short_name}}</h5>
+		    									<p>{{page.owner.custom_userprofile.info}} </p>
+
+	    									</div>
+	    									<ul class="social-icons">
+
+								                {%if page.owner.custom_userprofile.facebook %}
+		                                        <li class="fb-icon"><a href="{{settings.site_settings.SocialMediaSettings.facebook}}"><i class="icon-facebook"></i></a></li>
+		                                        {%endif%}
+		                                        {%if page.owner.custom_userprofile.twitter %}
+		                                        <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.twitter}}"><i class="icon-twitter"></i></a></li>
+		                                        {%endif%}
+		                                        {%if page.owner.custom_userprofile.vk %}
+		                                        <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.vk}}"><i class="icon-vkontakte"></i></a></li>
+		                                        {%endif%}
+		                                        {%if page.owner.custom_userprofile.youtube %}
+		                                        <li class="youtube-icon"><a href="{{settings.site_settings.SocialMediaSettings.youtube}}"><i class="icon-youtube"></i></a></li>
+		                                        {%endif%}
+		                                        {%if page.owner.custom_userprofile.instagram %}<li class="insta-icon"><a href="{{ settings.site_settings.SocialMediaSettings.instagram }}"><i class="icon-instagram-4"></i></a></li> {%endif%}
+
+							              	</ul>
+	    								</div>
+	    							</div>
+
+	    						</div>
+
+	    					</div>
+
+						</div>
+						{%if page.related_links.all%}
+						<div class="content-element6">
+							
+							<h4>Связанные новости</h4>
+							<div class="row">
+								{%for link in page.related_links.all%}
+
+								{% with post=link.blog_post%} 
+								
+								{%if cycle == 'odd' %}
+								<div class="col-sm-6"> 	
+									
+									<div class="widget">
+										
+										<ul class="news-list small-img">
+                							
+						                    <li>
+						                    	
+						                    	<article class="entry">
+													
+													<!-- - - - - - - - - - - - - - Attachment - - - - - - - - - - - - - - - - -->
+
+						                    		<div class="entry-attachment">
+
+														<a class="#" href="{{post.url}}">{% image post.specific.main_image fill-100x100%}</a>
+
+													</div>
+
+													<!-- - - - - - - - - - - - - - End of Attachment - - - - - - - - - - - - - - - - -->
+
+													<!-- - - - - - - - - - - - - - Entry body - - - - - - - - - - - - - - - - -->
+
+													<div class="entry-body">
+
+														<!-- - - - - - - - - - - - - - Entry Meta - - - - - - - - - - - - - - - - -->
+
+														<div class="entry-meta">
+
+															<time class="entry-date" datetime="2016-01-27">{{post.specific.date|date:"d M y"}}</time>
+
+														</div>
+
+														<!-- - - - - - - - - - - - - - End of Meta - - - - - - - - - - - - - - - - -->
+
+														<h5 class="entry-title"><a href="{{post.url}}">{{post.title}}</a></h5>
+
+														<div class="entry-meta">
+														{% if post.specific.categories.all.count %}
+															{% for cat in post.specific.categories.all %}
+													            <a class="entry-news" href="{% pageurl page.get_parent %}?cat={{ cat }}">{{cat}}</a>
+													        {% endfor %}
+														{% endif %}
+															<a href="#" class="entry-comments-link">5</a>
+
+														</div>
+
+													</div>
+
+													<!-- - - - - - - - - - - - - - End of Entry body - - - - - - - - - - - - - - - - -->
+
+												</article>
+
+						                    </li>
+											
+
+						                </ul>
+
+									</div>
+
+								</div>
+								{%else%}
+								<div class="col-sm-6">
+									
+									<div class="widget">
+										
+										<ul class="news-list small-img">
+                							
+						                    <li>
+						                    	
+						                    	<article class="entry">
+													
+													<!-- - - - - - - - - - - - - - Attachment - - - - - - - - - - - - - - - - -->
+
+						                    		<div class="entry-attachment">
+
+														<a class="#" href="{{post.url}}">{% image post.specific.main_image fill-100x100%}</a>
+
+													</div>
+
+													<!-- - - - - - - - - - - - - - End of Attachment - - - - - - - - - - - - - - - - -->
+
+													<!-- - - - - - - - - - - - - - Entry body - - - - - - - - - - - - - - - - -->
+
+													<div class="entry-body">
+
+														<!-- - - - - - - - - - - - - - Entry Meta - - - - - - - - - - - - - - - - -->
+
+														<div class="entry-meta">
+
+															<time class="entry-date" datetime="2016-01-27">{{post.specific.date|date:"d M y"}}</time>
+
+														</div>
+
+														<!-- - - - - - - - - - - - - - End of Meta - - - - - - - - - - - - - - - - -->
+
+														<h5 class="entry-title"><a href="{{post.url}}">{{post.title}}</a></h5>
+
+														<div class="entry-meta">
+
+															{% if post.specific.categories.all.count %}
+															{% for cat in post.specific.categories.all %}
+													            <a class="entry-news" href="{% pageurl page.get_parent %}?cat={{ cat }}">{{cat}}</a>
+													        {% endfor %}
+														{% endif %}
+															<a href="#" class="entry-comments-link">3</a>
+
+														</div>
+
+													</div>
+
+													<!-- - - - - - - - - - - - - - End of Entry body - - - - - - - - - - - - - - - - -->
+
+												</article>
+
+						                    </li>
+											
+
+						                </ul>
+
+									</div>
+
+								</div>
+								{%endif%}
+								{%endwith%} 
+								{%endfor%}
+							</div>
+
+						</div>
+						{%endif%}
+						<div class="content-element6">
+							
+							<h4>Комментарии</h4>
+							<ol class="comments-list">
+        
+			                  <li class="comment">
+
+			                    <article>
+
+			                      <!-- - - - - - - - - - - - - - Avatar - - - - - - - - - - - - - - - - -->
+
+			                      <div class="gravatar">
+			                        
+			                        <a href="#"><img src="images/100x100_author1.jpg" alt=""></a>
+
+			                      </div>
+
+			                      <!-- - - - - - - - - - - - - - End of avatar - - - - - - - - - - - - - - - - -->
+
+			                      <!-- - - - - - - - - - - - - - Comment body - - - - - - - - - - - - - - - - -->
+
+			                      <div class="comment-body">
+
+			                        <header class="comment-meta">
+
+			                          <h6 class="comment-author"><a href="#">Amanda Johnson</a></h6>
+			                          <time datetime="2015-10-17 02:41" class="comment-date">August 20, 2017 at 2:06 pm</time>
+			                          <a href="#" class="comment-reply-link">Reply</a>
+
+			                        </header>
+
+			                        <p>Donec in velit vel ipsum auctor pulvinar. Vestibulum iaculis lacinia est. Proin dictum.Fusce euismod consequat ante. </p>
+
+			                      </div><!--/ .comment-body-->
+
+			                      <!-- - - - - - - - - - - - - - End of comment body - - - - - - - - - - - - - - - - -->
+
+			                    </article>
+
+			                    <ol class="children">
+			      
+			                      <li class="comment">
+
+			                        <article>
+
+			                          <!-- - - - - - - - - - - - - - Avatar - - - - - - - - - - - - - - - - -->
+
+			                          <div class="gravatar">
+			                            
+			                            <a href="#"><img src="images/100x100_author4.jpg" alt=""></a>
+
+			                          </div>
+
+			                          <!-- - - - - - - - - - - - - - End of avatar - - - - - - - - - - - - - - - - -->
+
+			                          <!-- - - - - - - - - - - - - - Comment body - - - - - - - - - - - - - - - - -->
+
+			                          <div class="comment-body">
+
+			                            <header class="comment-meta">
+
+			                              <h6 class="comment-author"><a href="#">Admin</a></h6>
+			                              <time datetime="2015-10-17 02:41" class="comment-date">August 20, 2017 at 2:06 pm</time>
+			                              <a href="#" class="comment-reply-link">Reply</a>
+
+			                            </header>
+
+			                            <p>Sed in lacus ut enim adipiscing aliquet. Nulla venenatis. In pede mi, aliquet sit amet, euismod in, auctor ut, ligula. </p>
+
+			                          </div><!--/ .comment-body-->
+
+			                          <!-- - - - - - - - - - - - - - End of comment body - - - - - - - - - - - - - - - - -->
+
+			                        </article>
+
+			                      </li>
+			                  
+			                    </ol>
+
+			                  </li>
+
+			                  <li class="comment">
+
+			                    <article>
+
+			                      <!-- - - - - - - - - - - - - - Avatar - - - - - - - - - - - - - - - - -->
+
+			                      <div class="gravatar">
+			                        
+			                        <a href="#"><img src="images/100x100_author5.jpg" alt=""></a>
+
+			                      </div>
+
+			                      <!-- - - - - - - - - - - - - - End of avatar - - - - - - - - - - - - - - - - -->
+
+			                      <!-- - - - - - - - - - - - - - Comment body - - - - - - - - - - - - - - - - -->
+
+			                      <div class="comment-body">
+
+			                        <header class="comment-meta">
+
+			                          <h6 class="comment-author"><a href="#">Bradley Grosh</a></h6>
+			                          <time datetime="2015-10-17 02:41" class="comment-date">August 20, 2017 at 2:06 pm</time>
+			                          <a href="#" class="comment-reply-link">Reply</a>
+
+			                        </header>
+
+			                        <p>Duis ac turpis. Integer rutrum ante eu lacus.</p>
+
+			                      </div><!--/ .comment-body-->
+
+			                      <!-- - - - - - - - - - - - - - End of comment body - - - - - - - - - - - - - - - - -->
+
+			                    </article>
+
+			                  </li>
+			              
+			                </ol>
+
+						</div>
+
+						<div class="content-element6">
+							
+							<h4>Leave a Comment</h4>
+							<p>Your email address will not be published. </p>
+
+							<form class="contact-form flex-type">
+
+    							<div class="contact-col-2"><input type="text" name="cf-name" placeholder="Your Name (required)"></div>
+
+    							<div class="contact-col-2"><input type="text" name="cf-email" placeholder="Email (required)"></div>
+
+    							<div class="contact-col"><input type="email" placeholder="Website"></div>
+
+    							<div class="contact-col"><textarea rows="8" name="cf-message" placeholder="Message"></textarea></div>
+
+    							<div class="contact-col-submit"><button type="submit" class="btn" data-type="submit">Post Comment</button></div>
+
+				            </form>
+
+						</div>
+
+		        	</main>
+
+		        	<!-- Sidebar-->		        
+		        	<aside id="sidebar" class="col-md-4">
+
+		        		<!-- widget search -->
+		        		<div class="widget">
+
+		        			<form action="{% url 'search' %}" class="contact-form search-line">
+		        				<div class="f-right">
+		        					<button class="search-btn btn"></button>
+		        				</div>
+		        				<div class="wrapper">
+		        					<input type="text" name="query" placeholder="Поиск по сайту">
+		        				</div>
+		        			</form>
+
+		        		</div>
+		        		<!-- /widget -->
+		        		
+		        		{% block categories_widget %}{% include "blog/includes/categories_widget.html" with cattegories=categories%}{% endblock categories_widget %}
+
+		        		<!-- widget Banner -->
+		        		<div class="widget">
+		        			
+		        			<a href="#" class="banner-item">
+			                    <div class="banner-inner">
+				                  	<i class="licon-tie"></i>
+				                    <h5 class="banner-title">Employment <br> Vacancies</h5>
+				                    <p>Nulla venenatis. In pede mi, aliquet sit amet, euismod.</p>
+				                    <div class="btn btn-small">View Vacancies</div>
+			                    </div>
+			                </a>
+
+		        		</div>
+		        		<!-- /widget -->
+						{%if page.get_popular_news%}
+		        		<!-- widget News -->
+		        		<div class="widget">
+
+		        			<h4 class="widget-title">Популярные новости</h4>
+		        			
+		        			<ul class="news-list small-img">
+                				{% for post in page.get_popular_news%}
+			                    <li>
+			                    	
+			                    	<article class="entry">
+										
+										<!-- - - - - - - - - - - - - - Attachment - - - - - - - - - - - - - - - - -->
+
+			                    		<div class="entry-attachment">
+
+											<a class="#" href="{{post.url}}">{% image post.main_image fill-100x100 %}</a>
+
+										</div>
+
+										<!-- - - - - - - - - - - - - - End of Attachment - - - - - - - - - - - - - - - - -->
+
+										<!-- - - - - - - - - - - - - - Entry body - - - - - - - - - - - - - - - - -->
+
+										<div class="entry-body">
+
+											<!-- - - - - - - - - - - - - - Entry Meta - - - - - - - - - - - - - - - - -->
+
+											<div class="entry-meta">
+
+												<time class="entry-date" datetime="2016-01-27">{{post.date|date:"M"}} {{post.date|date:"d"}}</time>
+
+											</div>
+
+											<!-- - - - - - - - - - - - - - End of Meta - - - - - - - - - - - - - - - - -->
+
+											<h5 class="entry-title"><a href="{{post.url}}">{{post.title}}</a></h5>
+
+											<div class="entry-meta">
+												{% if post.categories.all.count %}
+													{% for cat in post.categories.all %}
+											            <a class="entry-news" href="{% pageurl page.get_parent %}?cat={{ cat }}">{{cat}}</a>
+											        {% endfor %}
+												{% endif %}
+												
+												<a href="#" class="entry-comments-link">{{post.views}}</a>
+
+											</div>
+
+										</div>
+
+										<!-- - - - - - - - - - - - - - End of Entry body - - - - - - - - - - - - - - - - -->
+
+									</article>
+
+			                    </li>
+
+								{%endfor%}
+			                </ul>
+						
+		        		</div>
+		        		<!-- /widget -->
+						{%endif%}
+
+
+		        		<!-- widget Events -->
+		        		<div class="widget">
+
+					       {%if events %}
+			              <h4>Приближающиеся события</h4>
+			              <ul class="news-list">
+			                {% for event in events %}
+			                  {% with event=event.specific %}
+			                 <li>
+			                     <article class="entry">
+
+			                  <!-- - - - - - - - - - - - - - Entry body - - - - - - - - - - - - - - - - -->
+
+			                  <div class="entry-body">
+
+			                    <!-- - - - - - - - - - - - - - Entry Meta - - - - - - - - - - - - - - - - -->
+
+			                    <div class="entry-meta">
+
+			                      <time class="entry-date" datetime="2016-01-27">{{event.date}}</time>
+
+			                    </div>
+
+			                    <!-- - - - - - - - - - - - - - End of Meta - - - - - - - - - - - - - - - - -->
+
+			                    <h5 class="entry-title"><a href="{{event.timepad}}">{{event.title}}</a></h5>
+
+			                    <div class="contact-info-menu">
+
+			                            <div class="contact-info-item">
+			                              <i class="icon-clock"></i>
+			                              <span>Длительность: {{event.duration}} мин.</span>
+			                            </div>
+			                            <div class="contact-info-item">
+			                              <i class="icon-location"></i>
+			                              <span>{{event.location}}</span>
+			                            </div>
+
+			                          </div>
+
+			                  </div>
+
+			                  <!-- - - - - - - - - - - - - - End of Entry body - - - - - - - - - - - - - - - - -->
+
+			                </article>
+
+			                        </li>
+			                      {% endwith %}
+			                    {%endfor%}
+			                    </ul>
+			                    <a href="/event" class="info-btn">Больше событий</a>
+			                 
+			              {%endif%}
+			                   
+		        		</div>
+		        		<!-- /widget -->
+						{% block subscribe_form %}{% include "subscribe/includes/subscribe_form.html" %}{% endblock subscribe_form %}
+		        		<!-- widget Comments 
+		        		<div class="widget">
+
+		        			<h4 class="widget-title">Recent Comments</h4>
+		        			
+		        			<ul class="info-links type2 comment-type">
+                
+			                    <li><a href="#" class="author">Admin</a> on <a href="#">Mauris fermentum dictum</a></li>
+			                    <li><a href="#" class="author">Alan Smith</a> on <a href="#">Leo ut tellus dolor</a></li>
+			                    <li><a href="#" class="author">George</a> on <a href="#">Eget elementum vel cursus eleifend elit</a></li>
+			                    <li><a href="#" class="author">Sandra</a> on <a href="#">Nemo enim ipsam voluptatem quia</a></li>
+			                    <li><a href="#" class="author">Admin</a> on <a href="#">Aenean auctor wisi et urna</a></li>
+
+			                </ul>
+
+		        		</div>
+		        		 /widget -->
+
+		        	</aside>
+
+		        </div>
+
+		    </div>
+
+    	</div>
+
+    </div>
+
+    <!-- - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - -->
+
+{% endblock %}

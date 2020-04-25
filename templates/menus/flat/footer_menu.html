@@ -1,0 +1,15 @@
+<div class="copyright-section">
+            
+    <div class="container">
+
+        <ul class="hr-list">
+            {% for item in menu_items %}
+            <li><a href="{{ item.href }}">{{ item.text }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <p class="copyright">Copyright <span>EcoLab</span> © 2020. Все права защищены</p>
+
+    </div>
+
+</div>

@@ -1,0 +1,286 @@
+{% load wagtailimages_tags %}
+{% load static%}
+{% load wagtailcore_tags %}
+{%block sidebar%}
+<!-- Sidebar-->		        
+		        	<aside id="sidebar" class="col-md-4">
+
+		        		<!-- widget search -->
+		        		<div class="widget">
+
+		        			<form action="{% url 'search' %}" class="contact-form search-line">
+		        				<div class="f-right">
+		        					<button class="search-btn btn"></button>
+		        				</div>
+		        				<div class="wrapper">
+		        					<input type="text" placeholder="Search">
+		        				</div>
+		        			</form>
+
+		        		</div>
+		        		<!-- /widget -->
+		        		
+		        		<!-- widget links -->
+		        		<div class="widget">
+
+		        			<h4 class="widget-title">Categories</h4>
+		        			
+		        			<ul class="info-links type2">
+                
+			                    <li><a href="#">Education</a></li>
+			                    <li><a href="#">Interviews</a></li>
+			                    <li><a href="#">News</a></li>
+			                    <li><a href="#">Video</a></li>
+			                    <li><a href="#">Tips</a></li>
+
+			                </ul>
+
+		        		</div>
+		        		<!-- /widget -->
+
+		        		<!-- widget Banner -->
+		        		<div class="widget">
+		        			
+		        			<a href="#" class="banner-item">
+			                    <div class="banner-inner">
+				                  	<i class="licon-tie"></i>
+				                    <h5 class="banner-title">Employment <br> Vacancies</h5>
+				                    <p>Nulla venenatis. In pede mi, aliquet sit amet, euismod.</p>
+				                    <div class="btn btn-small">View Vacancies</div>
+			                    </div>
+			                </a>
+
+		        		</div>
+		        		<!-- /widget -->
+						
+		        		<!-- widget News -->
+		        		<div class="widget">
+
+		        			<h4 class="widget-title">Популярные новости</h4>
+		        			
+		        			<ul class="news-list small-img">
+                				{% for post in page.get_popular_news%}
+                				{%with post=specific.post%}
+			                    <li>
+			                    	
+			                    	<article class="entry">
+										
+										<!-- - - - - - - - - - - - - - Attachment - - - - - - - - - - - - - - - - -->
+
+			                    		<div class="entry-attachment">
+
+											<a class="#" href="{{post.url}}">{% image post.main_image fill-100x100 %}</a>
+
+										</div>
+
+										<!-- - - - - - - - - - - - - - End of Attachment - - - - - - - - - - - - - - - - -->
+
+										<!-- - - - - - - - - - - - - - Entry body - - - - - - - - - - - - - - - - -->
+
+										<div class="entry-body">
+
+											<!-- - - - - - - - - - - - - - Entry Meta - - - - - - - - - - - - - - - - -->
+
+											<div class="entry-meta">
+
+												<time class="entry-date" datetime="2016-01-27">{{post.date|date:"M"}} {{post.date|date:"d"}}</time>
+
+											</div>
+
+											<!-- - - - - - - - - - - - - - End of Meta - - - - - - - - - - - - - - - - -->
+
+											<h5 class="entry-title"><a href="{{post.url}}">{{post.title}}</a></h5>
+
+											<div class="entry-meta">
+												{% if post.tags.all.count %}
+					                            {% for tag in post.tags.all %}
+					                                    <a class="entry-news" href="/blog?tag={{ tag }}">{{tag}}</a>
+					                                {% endfor %}
+					                            {% endif %}
+												
+												<a href="#" class="entry-comments-link">{{post.views}}</a>
+
+											</div>
+
+										</div>
+
+										<!-- - - - - - - - - - - - - - End of Entry body - - - - - - - - - - - - - - - - -->
+
+									</article>
+
+			                    </li>
+								{%endwith%}
+								{%endfor%}
+			                </ul>
+						
+		        		</div>
+		        		<!-- /widget -->
+						
+		        		<!-- widget Calendar -->
+		        		<div class="widget">
+
+		        			<h4 class="widget-title">Calendar</h4>
+		        			
+		        			<div class="widget-calendar">
+
+		        				<table>
+		        					<tr>
+		        						<!--titles for td-->		        			
+		        						<th colspan="7">December 2017</th>
+		        					</tr>
+		        					<tr class="days">
+		        						<td>M</td>
+		        						<td>T</td>
+		        						<td>W</td>
+		        						<td>T</td>
+		        						<td>F</td>
+		        						<td>S</td>
+		        						<td>S</td>
+		        					</tr>
+		        					<tr>
+		        						<td>1</td>
+		        						<td>2</td>
+		        						<td>3</td>
+		        						<td>4</td>
+		        						<td>5</td>
+		        						<td>6</td>
+		        						<td>7</td>
+		        					</tr>
+		        					<tr>
+		        						<td>8</td>
+		        						<td class="link">
+		        							<a href="#">9</a>
+		        						</td>
+		        						<td>10</td>
+		        						<td class="link current">
+		        							<a href="#">11</a>
+		        						</td>
+		        						<td>12</td>
+		        						<td>13</td>
+		        						<td>14</td>
+		        					</tr>
+		        					<tr>
+		        						<td class="link">
+		        							<a href="#">15</a>
+		        						</td>
+		        						<td>16</td>
+		        						<td>17</td>
+		        						<td>18</td>
+		        						<td>19</td>
+		        						<td class="link">
+		        							<a href="#">20</a>
+		        						</td>
+		        						<td>21</td>
+		        					</tr>
+		        					<tr>
+		        						<td>22</td>
+		        						<td>23</td>
+		        						<td class="link">
+		        							<a href="#">24</a>
+		        						</td>
+		        						<td>25</td>
+		        						<td>26</td>
+		        						<td>27</td>
+		        						<td>28</td>
+		        					</tr>
+		        					<tr>
+		        						<td>29</td>
+		        						<td>30</td>
+		        						<td></td>
+		        						<td></td>
+		        						<td></td>
+		        						<td></td>
+		        						<td></td>
+		        					</tr>
+		        				</table>
+
+		        			</div>
+
+				            <a href="#" class="calendar-month">« Nov</a>
+
+		        		</div>
+		        		<!-- /widget -->
+						{%if events %}
+		        		<!-- widget Events -->
+		        		<div class="widget">
+
+					      
+			              <h4>Приближающиеся события</h4>
+			              <ul class="news-list">
+			                {% for event in events %}
+			                  {% with event=event.specific %}
+			                 <li>
+			                     <article class="entry">
+
+			                  <!-- - - - - - - - - - - - - - Entry body - - - - - - - - - - - - - - - - -->
+
+			                  <div class="entry-body">
+
+			                    <!-- - - - - - - - - - - - - - Entry Meta - - - - - - - - - - - - - - - - -->
+
+			                    <div class="entry-meta">
+
+			                      <time class="entry-date" datetime="2016-01-27">{{event.date}}</time>
+
+			                    </div>
+
+			                    <!-- - - - - - - - - - - - - - End of Meta - - - - - - - - - - - - - - - - -->
+
+			                    <h5 class="entry-title"><a href="{{event.timepad}}">{{event.title}}</a></h5>
+
+			                    <div class="contact-info-menu">
+
+			                            <div class="contact-info-item">
+			                              <i class="icon-clock"></i>
+			                              <span>Длительность: {{event.duration}} мин.</span>
+			                            </div>
+			                            <div class="contact-info-item">
+			                              <i class="icon-location"></i>
+			                              <span>{{event.location}}</span>
+			                            </div>
+
+			                          </div>
+
+			                  </div>
+
+			                  <!-- - - - - - - - - - - - - - End of Entry body - - - - - - - - - - - - - - - - -->
+
+			                </article>
+
+			                        </li>
+			                      {% endwith %}
+			                    {%endfor%}
+			                    </ul>
+			                    <a href="/event" class="info-btn">Больше событий</a>
+			                 
+			             
+			                   
+		        		</div>
+		        		<!-- /widget -->
+		        		{%endif%}
+		        		<!-- widget Comments 
+		        		<div class="widget">
+
+		        			<h4 class="widget-title">Recent Comments</h4>
+		        			
+		        			<ul class="info-links type2 comment-type">
+                
+			                    <li><a href="#" class="author">Admin</a> on <a href="#">Mauris fermentum dictum</a></li>
+			                    <li><a href="#" class="author">Alan Smith</a> on <a href="#">Leo ut tellus dolor</a></li>
+			                    <li><a href="#" class="author">George</a> on <a href="#">Eget elementum vel cursus eleifend elit</a></li>
+			                    <li><a href="#" class="author">Sandra</a> on <a href="#">Nemo enim ipsam voluptatem quia</a></li>
+			                    <li><a href="#" class="author">Admin</a> on <a href="#">Aenean auctor wisi et urna</a></li>
+
+			                </ul>
+
+		        		</div>
+		        		 /widget -->
+
+		        		<!-- /widget -->
+						{%block subscribe_form %}
+						{% include 'subscribe/subscribe_page.html' with form_page=page_sidebar.subscribe%}
+						{%endblock%}
+						<!-- widget Subscribe -->
+
+		        	</aside>
+{%endblock%}

@@ -1,0 +1,350 @@
+{% load static wagtailuserbar %}
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="keywords" content="Переработка пластика">
+        <meta name="description" content="Перереработка пластика в Омске, мы делаем из вторсырья практичные и стильные вещи">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900" rel="stylesheet">
+
+        <title>
+            {% block title %}
+                {{page.title}}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+        </title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {# Global stylesheets #}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/ecolab.css' %}">
+        <!-- Vendor CSS
+        ============================================ -->
+        
+        <link rel="stylesheet" href="{% static 'font/demo-files/demo.css' %}">
+        <link rel="stylesheet" href="{% static 'plugins/revolution/css/settings.css' %}">
+        <link rel="stylesheet" href="{% static 'plugins/revolution/css/layers.css' %}">
+        <link rel="stylesheet" href="{% static 'plugins/revolution/css/navigation.css' %}">
+
+        <!-- CSS theme files
+        ============================================ -->
+        <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/fontello.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+        <script src="https://use.fontawesome.com/feb0e2ba4c.js"></script>
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+                    
+        {% endblock %}
+        
+    </head>
+
+    <body class="{% block body_class %}{% endblock %}">
+        <div class="loader"></div>
+
+  <!--cookie-->
+  <!-- <div class="cookie">
+          <div class="container">
+            <div class="clearfix">
+              <span>Please note this website requires cookies in order to function correctly, they do not store any specific information about you personally.</span>
+              <div class="f-right"><a href="#" class="button button-type-3 button-orange">Accept Cookies</a><a href="#" class="button button-type-3 button-grey-light">Read More</a></div>
+            </div>
+          </div>
+        </div>-->
+
+  <!-- - - - - - - - - - - - - - Wrapper - - - - - - - - - - - - - - - - -->
+<!--social-share-->
+<div class="social-share">
+        <div class="social-share-close"><span>X</span></div>
+        <div class="social-share-image"><img src="{%static 'images/165x165_brand6.jpg'%}"alt=""></div>
+        <div class="social-share-mainblock">
+            <div class="social-share-title"><span>Расскажите в социальных сетях</span></div>
+            <div class="social-share-mainblock-icons">
+                <div class="social-share-mainblock-icon-vk">
+    <a id="share-link-vk" href="">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1" role="img" aria-labelledby="at-svg-vk-11" title="Vkontakte" alt="Vkontakte" class="social-share-mainblock-icon-vk"><title id="at-svg-vk-11">Вконтакте</title><g><path d="M26.712 10.96s-.167-.48-1.21-.348l-3.447.024a.785.785 0 0 0-.455.072s-.204.108-.3.37a22.1 22.1 0 0 1-1.28 2.695c-1.533 2.61-2.156 2.754-2.407 2.587-.587-.372-.43-1.51-.43-2.323 0-2.54.382-3.592-.756-3.868-.37-.084-.646-.144-1.616-.156-1.232-.012-2.274 0-2.86.287-.396.193-.695.624-.515.648.227.036.742.143 1.017.515 0 0 .3.49.347 1.568.13 2.982-.48 3.353-.48 3.353-.466.252-1.28-.167-2.478-2.634 0 0-.694-1.222-1.233-2.563-.097-.25-.288-.383-.288-.383s-.216-.168-.527-.216l-3.28.024c-.504 0-.683.228-.683.228s-.18.19-.012.587c2.562 6.022 5.483 9.04 5.483 9.04s2.67 2.79 5.7 2.597h1.376c.418-.035.634-.263.634-.263s.192-.214.18-.61c-.024-1.843.838-2.12.838-2.12.838-.262 1.915 1.785 3.065 2.575 0 0 .874.6 1.532.467l3.064-.048c1.617-.01.85-1.352.85-1.352-.06-.108-.442-.934-2.286-2.647-1.916-1.784-1.665-1.496.658-4.585 1.413-1.88 1.976-3.03 1.796-3.52z" fill-rule="evenodd"></path></g></svg>
+    <span class="social-share-mainblock-icons-label" title="Vkontakte">Вконтакте</span></a></div>
+    <div class="social-share-mainblock-icon-tg"><a id="share-link-tg" href="tg://msg_url?url=https://valid.url&amp;text=text"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1" role="img" aria-labelledby="at-svg-telegram-12" title="Telegram" alt="Telegram" class="social-share-mainblock-icon-tg"><title id="at-svg-telegram-12">Telegram</title><g><g fill-rule="evenodd"></g><path d="M15.02 20.814l9.31-12.48L9.554 17.24l1.92 6.42c.225.63.114.88.767.88l.344-5.22 2.436 1.494z" opacity=".6"></path><path d="M12.24 24.54c.504 0 .727-.234 1.008-.51l2.687-2.655-3.35-2.054-.344 5.22z" opacity=".3"></path><path d="M12.583 19.322l8.12 6.095c.926.52 1.595.25 1.826-.874l3.304-15.825c.338-1.378-.517-2.003-1.403-1.594L5.024 14.727c-1.325.54-1.317 1.29-.24 1.625l4.98 1.58 11.53-7.39c.543-.336 1.043-.156.633.214"></path></g></svg><span class="social-share-mainblock-icons-label" title="Telegram">Telegram</span></a></div>
+    <div class="social-share-mainblock-icon-fb"><a id="share-link-fb" href="www.facebook.com/dialog/share?app_id=324966041266385&amp;href=https://gist.github.com/eduardobc88/5770e1dadfd22f589951&amp;name=text&amp;display=popup&link=#&redirect_uri=#close_window"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1" role="img" aria-labelledby="at-svg-facebook-13" title="Facebook" alt="Facebook" class="social-share-mainblock-icon-fb"><title id="at-svg-facebook-13">Facebook</title><g><path d="M22 5.16c-.406-.054-1.806-.16-3.43-.16-3.4 0-5.733 1.825-5.733 5.17v2.882H9v3.913h3.837V27h4.604V16.965h3.823l.587-3.913h-4.41v-2.5c0-1.123.347-1.903 2.198-1.903H22V5.16z" fill-rule="evenodd"></path></g></svg><span class="social-share-mainblock-icons-label" title="Facebook">Facebook</span></a></div>
+    <div class="social-share-mainblock-icon-tw"><a id="share-link-tw" href="https://twitter.com/intent/tweet?url=sdsd&text=fdgfdgfd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1" role="img" aria-labelledby="at-svg-twitter-14" title="Twitter" alt="Twitter" class="at-icon at-icon-twitter"><title id="at-svg-twitter-14">Twitter</title><g><path d="M27.996 10.116c-.81.36-1.68.602-2.592.71a4.526 4.526 0 0 0 1.984-2.496 9.037 9.037 0 0 1-2.866 1.095 4.513 4.513 0 0 0-7.69 4.116 12.81 12.81 0 0 1-9.3-4.715 4.49 4.49 0 0 0-.612 2.27 4.51 4.51 0 0 0 2.008 3.755 4.495 4.495 0 0 1-2.044-.564v.057a4.515 4.515 0 0 0 3.62 4.425 4.52 4.52 0 0 1-2.04.077 4.517 4.517 0 0 0 4.217 3.134 9.055 9.055 0 0 1-5.604 1.93A9.18 9.18 0 0 1 6 23.85a12.773 12.773 0 0 0 6.918 2.027c8.3 0 12.84-6.876 12.84-12.84 0-.195-.005-.39-.014-.583a9.172 9.172 0 0 0 2.252-2.336" fill-rule="evenodd"></path></g></svg><span class="social-share-mainblock-icons-label" title="Telegram">Twitter</span></a></div>
+    <div class="social-share-mainblock-icon-whatsapp"><a id="share-link-whatsapp" href="whatsapp://send?text=text%20https://valid.url"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" version="1.1" role="img" aria-labelledby="at-svg-whatsapp-15" title="WhatsApp" alt="WhatsApp" class="social-share-mainblock-icon-whatsapp"><title id="at-svg-whatsapp-15">WhatsApp</title><g><path d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.746.315-.688.645-1.032 1.318-1.06 2.264v.114c-.015.99.472 1.977 1.017 2.78 1.23 1.82 2.506 3.41 4.554 4.34.616.287 2.035.888 2.722.888.817 0 2.15-.515 2.478-1.318.13-.33.244-.73.244-1.088 0-.058 0-.144-.03-.215-.1-.172-2.434-1.39-2.678-1.39zm-2.908 7.593c-1.747 0-3.48-.53-4.942-1.49L7.793 24.41l1.132-3.337a8.955 8.955 0 0 1-1.72-5.272c0-4.955 4.04-8.995 8.997-8.995S25.2 10.845 25.2 15.8c0 4.958-4.04 8.998-8.998 8.998zm0-19.798c-5.96 0-10.8 4.842-10.8 10.8 0 1.964.53 3.898 1.546 5.574L5 27.176l5.974-1.92a10.807 10.807 0 0 0 16.03-9.455c0-5.958-4.842-10.8-10.802-10.8z" fill-rule="evenodd"></path></g></svg><span class="social-share-mainblock-icons-label" title="Telegram">Whatsapp</span></a></div>
+</div>
+        </div>
+    </div>
+<!--/social-share-->
+  <div id="wrapper" class="wrapper-container">
+
+    <!-- - - - - - - - - - - - - Mobile Menu - - - - - - - - - - - - - - -->
+
+    <nav id="mobile-advanced" class="mobile-advanced"></nav>
+
+    <!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->
+
+    <header id="header" class="header style-2">
+        
+        <!-- search-form -->
+        <div class="searchform-wrap">
+            <div class="vc-child h-inherit relative">
+
+              <form action="{% url 'search' %}">
+                <input type="text" name="query" placeholder="Найти">
+                <button type="submit"></button>
+              </form>
+
+            </div>
+            <button class="close-search-form"></button>
+        </div>
+
+        <!-- top-header -->
+        <div class="top-header">
+            
+            <!-- - - - - - - - - - - - / Mobile Menu - - - - - - - - - - - - - -->
+
+            <!--main menu-->
+
+            <div class="menu-holder">
+                
+                <div class="menu-wrap">
+
+                    <div class="table-row">
+                        
+                        <!-- logo -->
+
+                        <div class="logo-wrap">
+
+                            <a href="/" class="logo"><img src="{% static 'images/logo.png' %}" alt=""></a>
+
+                        </div>
+
+                        <!-- Menu & TopBar -->
+                        <div class="nav-item">
+                            
+                            <!-- Top Bar -->
+                            
+                            <div class="contact-info-menu">
+                                {%if settings.site_settings.WorkspaceSettings.phone %}
+                                <div class="contact-info-item">
+                                    <i class="icon-phone"></i>
+                                    <a href="tel:{{settings.site_settings.WorkspaceSettings.phone}}">{{settings.site_settings.WorkspaceSettings.phone}}</a>
+                                </div>
+                                {%endif%}
+                                {%if settings.site_settings.WorkspaceSettings.email %}
+                                <div class="contact-info-item">
+                                    <i class="icon-mail-1"></i>
+                                    <a href="mailto:{{settings.site_settings.WorkspaceSettings.email}}">{{settings.site_settings.WorkspaceSettings.email}}</a>
+                                </div>
+                                {%endif%}
+                                {%if settings.site_settings.WorkspaceSettings.address %}
+                                <div class="contact-info-item">
+                                    <i class="icon-location"></i>
+                                    <span>{{settings.site_settings.WorkspaceSettings.address}}</span>
+                                </div>
+                                {%endif%}
+                                <div class="contact-info-item">
+                                    <i class="icon-globe-1"></i>
+                                    <a href="#">Войти/Зарегистрироваться</a>
+                                </div>
+                                <div class="contact-info-item">
+                                    <ul class="social-icons">
+                                        {%if settings.site_settings.SocialMediaSettings.facebook %}
+                                        <li class="fb-icon"><a href="{{settings.site_settings.SocialMediaSettings.facebook}} "target="_blank"><i class="icon-facebook"></i></a></li>
+                                        {%endif%}
+                                        {%if settings.site_settings.SocialMediaSettings.twitter %}
+                                        <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.twitter}}" target="_blank"><i class="icon-twitter"></i></a></li>
+                                        {%endif%}
+                                        {%if settings.site_settings.SocialMediaSettings.vk %}
+                                        <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.vk}}" target="_blank"><i class="icon-vkontakte"></i></a></li>
+                                        {%endif%}
+                                        {%if settings.site_settings.SocialMediaSettings.youtube %}
+                                        <li class="youtube-icon"><a href="{{settings.site_settings.SocialMediaSettings.youtube}}" target="_blank"><i class="icon-youtube"></i></a></li>
+                                        {%endif%}
+                                        {%if settings.site_settings.SocialMediaSettings.instagram %}<li class="insta-icon"><a href="{{ settings.site_settings.SocialMediaSettings.instagram }} " target="_blank"><i class="icon-instagram-4"></i></a></li> {%endif%}
+                                        
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                            
+                            <!-- - - - - - - - - - - - - - Navigation - - - - - - - - - - - - - - - - -->
+{% load menu_tags %}
+{% main_menu max_levels=3 template="menus/custom_main_menu.html" sub_menu_template="menus/custom_sub_menu.html" %}
+                            
+                            <!-- - - - - - - - - - - - - end Navigation - - - - - - - - - - - - - - - -->
+
+                            <div class="search-holder">
+
+                                <button class="search-button"></button>
+
+                            </div>
+
+                            <a href="#" class="btn btn-style-2">Связаться</a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        
+        <!-- bottom-separator -->
+        <div class="bottom-separator"></div>
+      
+    </header>
+        {% wagtailuserbar %}
+
+        {% block content %}{% endblock %}
+
+        {# Global javascript #}
+        <script type="text/javascript" src="{% static 'js/ecolab.js' %}"></script>
+
+
+
+        <!-- - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->
+
+    <footer id="footer" class="footer">
+        
+        <!-- Top footer -->
+        <div class="top-footer">
+            
+            <div class="container">
+                
+                <div class="icons-box fx-col-4">
+
+                    <!-- - - - - - - - - - - - - - Icon Box Item - - - - - - - - - - - - - - - - -->       
+                    {%if settings.site_settings.WorkspaceSettings.address %}         
+                    <div class="icons-wrap">
+                        
+                        <div class="icons-item">
+                            <div class="item-box"> <i class="licon-map-marker"></i>
+                                <h5 class="icons-box-title">
+                                    <a>Адрес</a>
+                                </h5>
+                                <p style="word-break: break-all;">
+                                    {{settings.site_settings.WorkspaceSettings.address}}
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    {%endif%}
+                    <!-- - - - - - - - - - - - - - Icon Box Item - - - - - - - - - - - - - - - - -->
+                    {%if settings.site_settings.WorkspaceSettings.working_hours %}                
+                    <div class="icons-wrap">
+
+                        <div class="icons-item">
+                            <div class="item-box"><i class="licon-clock3"></i>
+                                <h5 class="icons-box-title">
+                                    <a>Время работы</a>
+                                </h5>
+                                <p>{% for block in settings.site_settings.WorkspaceSettings.working_hours %}
+                                        <section>{% include_block block %}</section>
+                                    {% endfor %}
+                                     
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    {%endif%}
+                    <!-- - - - - - - - - - - - - - Icon Box Item - - - - - - - - - - - - - - - - -->
+                                   
+                    <div class="icons-wrap">
+
+                        <div class="icons-item">
+                            <div class="item-box"> <i class="licon-smartphone"></i>
+                                <h5 class="icons-box-title">
+                                    <a>Свяжитесь с нами</a>
+                                </h5>
+                                <p>
+                                    <a href="callto:{{settings.site_settings.WorkspaceSettings.phone}}">{{settings.site_settings.WorkspaceSettings.phone}}</a> <br> <a href="mailto:{{settings.site_settings.WorkspaceSettings.email}}" class="link-text">{{settings.site_settings.WorkspaceSettings.email}}</a>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- - - - - - - - - - - - - - Icon Box Item - - - - - - - - - - - - - - - - -->                
+                    <div class="icons-wrap">
+
+                        <div class="icons-item">
+                            <div class="item-box"> <i class="licon-share2"></i>
+                                <h5 class="icons-box-title">
+                                    <a href="#">Оставайтесь на связи</a>
+                                </h5>
+                                <ul class="social-icons style-2">
+                                    
+                                    {%if settings.site_settings.SocialMediaSettings.facebook %}
+                                    <li class="fb-icon"><a href="{{settings.site_settings.SocialMediaSettings.facebook}}"><i class="icon-facebook"></i></a></li>
+                                    {%endif%}
+                                    {%if settings.site_settings.SocialMediaSettings.twitter %}
+                                    <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.twitter}}"><i class="icon-twitter"></i></a></li>
+                                    {%endif%}
+                                    {%if settings.site_settings.SocialMediaSettings.vk %}
+                                    <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.vk}}"><i class="icon-vkontakte"></i></a></li>
+                                    {%endif%}
+                                    {%if settings.site_settings.SocialMediaSettings.youtube %}
+                                    <li class="youtube-icon"><a href="{{settings.site_settings.SocialMediaSettings.youtube}}"><i class="icon-youtube"></i></a></li>
+                                    {%endif%}
+                                    {%if settings.site_settings.SocialMediaSettings.instagram %}<li class="insta-icon"><a href="{{ settings.site_settings.SocialMediaSettings.instagram }}"><i class="icon-instagram-4"></i></a></li> {%endif%}
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Copyright -->
+        {% flat_menu 'footer_menu' template="menus/flat/footer_menu.html"%}
+
+    </footer>
+
+    
+
+    <!-- - - - - - - - - - - - - end Footer - - - - - - - - - - - - - - - -->
+
+  </div>
+
+  <!-- - - - - - - - - - - - end Wrapper - - - - - - - - - - - - - - -->
+      <!-- JS Libs & Plugins
+      ============================================ -->
+      <script src="{% static 'js/libs/jquery.modernizr.js' %}"></script>
+      <script src="{% static 'js/libs/jquery-2.2.4.min.js' %}"></script>
+      <script src="{% static 'js/libs/jquery-ui.min.js' %}"></script>
+      <script src="{% static 'plugins/jquery.scrollTo.min.js' %}"></script>
+      <script src="{% static 'plugins/jquery.localScroll.min.js' %}"></script>
+      <script src="{% static 'plugins/jquery.countdown.plugin.min.js' %}"></script>
+      <script src="{% static 'plugins/jquery.countdown.min.js' %}"></script>
+      <script src="{% static 'plugins/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'plugins/jquery.queryloader2.min.js' %}"></script>
+      <script src="{% static 'plugins/revolution/js/jquery.themepunch.tools.min.js?ver=5.0' %}"></script>
+      <script src="{% static 'plugins/revolution/js/jquery.themepunch.revolution.min.js?ver=5.0' %}"></script>
+
+      <!-- JS theme files
+      ============================================ -->
+      <script src="{% static 'js/plugins.js' %}"></script>
+      <script src="{% static 'js/script.js' %}"></script>
+    {% block extra_js %}
+        {# Override this in templates to add extra javascript #}
+
+    {% endblock %}
+    </body>
+</html>

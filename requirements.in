@@ -4,3 +4,5 @@ https://control.divio.com/api/v1/apps/serve/aldryn-django/2.2.12.1/c2d1c3a0-4978
 https://control.divio.com/api/v1/apps/serve/aldryn-sso/1.7.0/3ef75ae5-729a-4c44-ac3e-fa5950511e90/aldryn-sso-1.7.0.tar.gz#egg=aldryn-sso==1.7.0
 https://control.divio.com/api/v1/apps/serve/aldryn-wagtail/2.8.0.1/22ed06ac-95c5-48a4-b950-c4c0d728653f/aldryn-wagtail-2.8.0.1.tar.gz#egg=aldryn-wagtail==2.8.0.1
 # </INSTALLED_ADDONS>
+wagtailmenus==3.0.1
+django-debug-toolbar==1.8

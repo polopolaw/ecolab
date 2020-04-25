@@ -1,0 +1,16 @@
+{% load wagtailcore_tags%}
+{% if categories %}
+<!-- widget links -->
+<div class="widget">
+
+	<h4 class="widget-title">Категории</h4>
+	
+	<ul class="info-links type2">
+		{%for category in categories%}
+        <li><a href="{% slugurl 'блог' %}?cat={{category.name}}">{{category.name}}</a></li>
+		{%endfor%}
+    </ul>
+
+</div>
+<!-- /widget -->
+{%endif%}

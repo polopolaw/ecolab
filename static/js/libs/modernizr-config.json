@@ -1,0 +1,19 @@
+{
+  "minify": true,
+  "options": [
+    "setClasses"
+  ],
+  "feature-detects": [
+    "test/touchevents",
+    "test/css/animations",
+    "test/css/flexbox",
+    "test/css/flexboxlegacy",
+    "test/css/flexboxtweener",
+    "test/css/flexwrap",
+    "test/css/transforms",
+    "test/css/transforms3d",
+    "test/css/transformstylepreserve3d",
+    "test/css/transitions",
+    "test/forms/placeholder"
+  ]
+}

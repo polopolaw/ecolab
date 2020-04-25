@@ -1,0 +1,376 @@
+{% extends 'base.html' %}
+{% load static wagtailuserbar %}
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags%}
+{% block content %}
+
+
+    <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+
+    <div id="content">
+
+    	<!-- - - - - - - - - - - - - - Breadcrumbs - - - - - - - - - - - - - - - - -->
+
+	    <div class="breadcrumbs-wrap" data-bg="{% static 'images/1920x280_bg2.jpg' %}">
+
+	      <div class="container">
+	        
+	        <h1 class="page-title">{{page.title}}</h1>
+
+	        {% if self.get_ancestors|length > 1 %}
+				<ul class="breadcrumbs">
+
+				{% for page in self.get_ancestors %}
+				{% if page.is_root == False %}
+				<li><a href="{{page.url}}">{{ page.title }}</a></li>
+				{% endif %}
+				{% endfor %}
+
+				<li>{{ page.title }}</li>
+
+				</ul>
+			{% endif %}
+
+	      </div>
+
+	    </div>
+	    <!-- posts - posts which get if set tag-->
+		
+	    <!-- - - - - - - - - - - - - end Breadcrumbs - - - - - - - - - - - - - - - -->
+
+	    <div class="page-content-wrap">
+
+    		<div class="container">
+        
+		        <div class="row">
+
+		        	<!-- Main content -->		        
+		        	<main id="main" class="col-md-8">
+						
+						<div class="content-element5">
+							
+							<div class="welcome-section blog-type type-2 style-2">
+							{% if posts %}
+								{% for post in posts %}
+								<div class="welcome-col">
+								<div class="welcome-item">
+									<div class="welcome-inner">
+										{% with post=post.specific %}
+										{%if post.slider.all|length != 0%}
+										<div class="carousel-type-2">
+	
+								          	<div class="owl-carousel" data-max-items="1">
+												{%for item_carousel in post.slider.all %}
+								          		<!-- Slide -->				          
+								          		<div class="item-carousel">
+								          			<!-- Carousel Item -->
+													{% image item_carousel.image fill-750x465 as img %}
+								          			<img src="{{img.url}}" alt="{{img.alt}}">
+
+								          			<!-- /Carousel Item --> 
+								          		</div>
+								          		<!-- /Slide -->		          
+												{%endfor%}
+								          	</div>
+
+								        </div>
+										{% elif post.main_embed.value %}
+										<div class="welcome-attachment">
+												<div class="responsive-iframe">
+							                        <iframe src="https://www.youtube.com/embed/{{post.main_embed}}?rel=0&amp;showinfo=0&amp;autohide=2&amp;controls=0&amp;playlist=J2Y_ld0KL-4&amp;enablejsapi=1"></iframe>
+	
+							                    </div>
+											</div>
+										{% else %}
+										<div class="welcome-img">
+											<a href="{{post.url}}">
+						    				{% image post.main_image fill-750x465 %}
+						    				</a>
+						    			</div>
+										{% endif %}
+										<div class="welcome-content">
+
+				    						<svg class="bigHalfCircle" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+												<path d="M0 100 C40 0 60 0 100 100 Z"></path>
+											</svg>
+				    						
+				    						<div class="entry">
+				    							<div class="entry-body">
+
+													<time class="entry-date" datetime="2016-08-20">
+						    							<span>{{ post.date|date:'d' }}</span>{{ post.date|date:'b' }}
+						    						</time>
+
+													<div class="wrapper">
+
+														<h4 class="entry-title"><a href="{{post.url}}">{{ post.title}}</a></h4>
+
+														<p>{{ post.intro}}</p>
+
+														<a href="{{post.url}}" class="info-btn">Читать далее</a>
+
+													</div>
+
+												</div>
+
+												<!-- - - - - - - - - - - - - - End of Entry body - - - - - - - - - - - - - - - - -->
+
+												<!-- - - - - - - - - - - - - - Entry meta - - - - - - - - - - - - - - - - -->
+
+												<div class="entry-meta">
+
+													<div class="entry-byline"><a href="#">{{post.owner.first_name}}</a></div>
+
+														{% if post.categories.all.count %}
+													{% for cat in post.categories.all %}
+											            <a class="entry-news" href="{% pageurl page.get_parent %}?cat={{ cat }}">{{cat}}</a>
+											        {% endfor %}
+												{% endif %}
+
+													</a>
+													<a url="{{post.url}}" text="{{post.intro}}" img="{{post.main_image}}" class="entry-share f-right">Поделиться</a>
+
+												</div>
+												
+												<!-- - - - - - - - - - - - - - Entry meta - - - - - - - - - - - - - - - - -->
+
+											</div>
+
+				    					</div>
+
+									</div>
+
+								</div>
+
+				    		</div>
+							{% endwith %}
+							{% endfor %}
+							<!-- Without tag -->
+							{% endif %}
+							
+							
+						{# Only show pagination if there is more than one page to click through #}
+  						{% if blogpages.paginator.num_pages > 1 %}
+				    	<ul class="pagination">
+				    		{% if blogpages.has_previous %}
+				    		<li>
+								<a href="?page={{ blogpages.previous_page_number }}{% if request.GET.tag != ''%}&tag={{ request.GET.tag }}{% endif %}" class="prev-page"></a>
+							</li>
+				            {% endif %}
+							{% for page_num in blogpages.paginator.page_range %}
+							<li>
+								<a href="?page={{ page_num }}{% if request.GET.tag != ''%}&tag={{ request.GET.tag }}{% endif %}" class="{% if page_num == blogpages.number %} active{% endif %}">{{ page_num }}</a>
+							</li>
+							{% endfor %}
+							{% if blogpages.has_next %}
+				           	<li>
+								<a href="?page={{ blogpages.next_page_number }}{% if request.GET.tag != ''%}&tag={{ request.GET.tag }}{% endif %}" class="next-page"></a>
+							</li>
+				            {% endif %}
+							
+						</ul>
+						{%endif%}
+		        	</main>
+
+		        	<!-- Sidebar-->		        
+		        	<aside id="sidebar" class="col-md-4">
+
+		        		<!-- widget search -->
+		        		<div class="widget">
+
+		        			<form action="{% url 'search' %}" class="contact-form search-line">
+		        				<div class="f-right">
+		        					<button class="search-btn btn"></button>
+		        				</div>
+		        				<div class="wrapper">
+		        					<input type="text" name="query" placeholder="Поиск по сайту">
+		        				</div>
+		        			</form>
+
+		        		</div>
+		        		<!-- /widget -->
+		        		{% block categories_widget %}{% include "blog/includes/categories_widget.html" with cattegories=categories%}{% endblock categories_widget %}
+		        		<!-- widget Banner -->
+		        		<div class="widget">
+		        			
+		        			<a href="#" class="banner-item">
+			                    <div class="banner-inner">
+				                  	<i class="licon-tie"></i>
+				                    <h5 class="banner-title">Employment <br> Vacancies</h5>
+				                    <p>Nulla venenatis. In pede mi, aliquet sit amet, euismod.</p>
+				                    <div class="btn btn-small">View Vacancies</div>
+			                    </div>
+			                </a>
+
+		        		</div>
+		        		<!-- /widget -->
+						
+		        		<!-- /widget -->
+						{%if popularnews%}
+		        		<!-- widget News -->
+		        		<div class="widget">
+
+		        			<h4 class="widget-title">Популярные новости</h4>
+		        			
+		        			<ul class="news-list small-img">
+                				{% for post in popularnews%}
+                				
+			                    <li>
+			                    	
+			                    	<article class="entry">
+										
+										<!-- - - - - - - - - - - - - - Attachment - - - - - - - - - - - - - - - - -->
+
+			                    		<div class="entry-attachment">
+
+											<a class="#" href="{{post.url}}">{% image post.main_image fill-100x100 %}</a>
+
+										</div>
+
+										<!-- - - - - - - - - - - - - - End of Attachment - - - - - - - - - - - - - - - - -->
+
+										<!-- - - - - - - - - - - - - - Entry body - - - - - - - - - - - - - - - - -->
+
+										<div class="entry-body">
+
+											<!-- - - - - - - - - - - - - - Entry Meta - - - - - - - - - - - - - - - - -->
+
+											<div class="entry-meta">
+
+												<time class="entry-date" datetime="2016-01-27">{{post.date|date:"M"}} {{post.date|date:"d"}}</time>
+
+											</div>
+
+											<!-- - - - - - - - - - - - - - End of Meta - - - - - - - - - - - - - - - - -->
+
+											<h5 class="entry-title"><a href="{{post.url}}">{{post.title}}</a></h5>
+
+											<div class="entry-meta">
+												{% if post.categories.all.count %}
+													{% for cat in post.categories.all %}
+											            <a class="entry-news" href="{% pageurl page.get_parent %}?cat={{ cat }}">{{cat}}</a>
+											        {% endfor %}
+												{% endif %}
+												
+												<a href="#" class="entry-comments-link">{{post.views}}</a>
+
+											</div>
+
+										</div>
+
+										<!-- - - - - - - - - - - - - - End of Entry body - - - - - - - - - - - - - - - - -->
+
+									</article>
+
+			                    </li>
+								
+								{%endfor%}
+			                </ul>
+						
+		        		</div>
+		        		<!-- /widget -->
+						{%endif%}
+
+
+		        		<!-- widget Events -->
+		        		<div class="widget">
+
+					       {%if events %}
+			              <h4>Приближающиеся события</h4>
+			              <ul class="news-list">
+			                {% for event in events %}
+			                  {% with event=event.specific %}
+			                 <li>
+			                     <article class="entry">
+
+			                  <!-- - - - - - - - - - - - - - Entry body - - - - - - - - - - - - - - - - -->
+
+			                  <div class="entry-body">
+
+			                    <!-- - - - - - - - - - - - - - Entry Meta - - - - - - - - - - - - - - - - -->
+
+			                    <div class="entry-meta">
+
+			                      <time class="entry-date" datetime="2016-01-27">{{event.date}}</time>
+
+			                    </div>
+
+			                    <!-- - - - - - - - - - - - - - End of Meta - - - - - - - - - - - - - - - - -->
+
+			                    <h5 class="entry-title"><a href="{{event.timepad}}">{{event.title}}</a></h5>
+
+			                    <div class="contact-info-menu">
+
+			                            <div class="contact-info-item">
+			                              <i class="icon-clock"></i>
+			                              <span>Длительность: {{event.duration}} мин.</span>
+			                            </div>
+			                            <div class="contact-info-item">
+			                              <i class="icon-location"></i>
+			                              <span>{{event.location}}</span>
+			                            </div>
+
+			                          </div>
+
+			                  </div>
+
+			                  <!-- - - - - - - - - - - - - - End of Entry body - - - - - - - - - - - - - - - - -->
+
+			                </article>
+
+			                        </li>
+			                      {% endwith %}
+			                    {%endfor%}
+			                    </ul>
+			                    <a href="/event" class="info-btn">Больше событий</a>
+			                 
+			              {%endif%}
+			                   
+		        		</div>
+		        		
+		        		{% block subscribe_form %}{% include "subscribe/includes/subscribe_form.html" %}{% endblock subscribe_form %}
+		        		
+		        		
+
+			            
+
+			            <!-- widget Istagram -->
+		        		<div class="widget">
+
+			                <h4 class="widget-title">Привет из инстаграма</h4>
+
+			                <!-- SnapWidget -->
+							<script src="https://snapwidget.com/js/snapwidget.js"></script>
+							<iframe src="https://snapwidget.com/embed/796694" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden;  width:100%; "></iframe>
+			                
+			            </div>
+			            <!-- /widget -->
+
+			            <!-- widget Tags -->
+			            {% if page.get_child_tags %}
+		        		<div class="widget">
+			                <h4 class="widget-title">Теги</h4>
+			                <div class="tagcloud">
+					        {% for tag in page.get_child_tags %}
+					            <a href="?tag={{ tag }}">{{ tag }}</a>
+					        {% endfor %}
+			                </div>
+			                
+			            </div>
+			            <!-- /widget -->
+						{% endif %}
+			            
+		        	</aside>
+
+		        </div>
+
+		    </div>
+
+    	</div>
+
+    </div>
+
+    <!-- - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - -->
+
+	
+{% endblock %}

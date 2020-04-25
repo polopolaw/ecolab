@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags %}
+
+{% block body_class %}template-searchresults{% endblock %}
+
+{% block title %}Поиск по сайту{% endblock %}
+
+{% block content %}
+    <div id="content">
+        
+        <!-- - - - - - - - - - - - - - Breadcrumbs - - - - - - - - - - - - - - - - -->
+
+        <div class="breadcrumbs-wrap" data-bg="{% static 'images/1920x280_bg2.jpg' %}">
+
+          <div class="container">
+            
+            <h1 class="page-title">Поиск по сайту</h1>
+
+          </div>
+
+        </div>
+        <!-- posts - posts which get if set tag-->
+        
+        <!-- - - - - - - - - - - - - end Breadcrumbs - - - - - - - - - - - - - - - -->
+
+<div class="page-content-wrap">
+
+    <div class="container">
+
+        <div class="row">
+    <!-- widget search -->
+    <div class="widget">
+
+        <form action="{% url 'search' %}" class="contact-form search-line">
+            <div class="f-right">
+                <button class="search-btn btn"></button>
+            </div>
+            <div class="wrapper">
+                <input type="text" name="query" {% if search_query %} value="{{ search_query }}"{% endif %}>
+            </div>
+        </form>
+
+    </div>
+    <!-- /widget -->
+    {% if search_results %}
+        <ul>
+            {% for result in search_results %}
+                <li>
+                    <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
+                    {% if result.search_description %}
+                        {{ result.search_description }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+
+        {% if search_results.has_previous %}
+            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        {% if search_results.has_next %}
+            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
+        {% endif %}
+    {% elif search_query %}
+        <img src="{%static 'images/filter_not_find.jpg' %}" alt="">Ничего не найдено=(
+    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

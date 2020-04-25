@@ -1,0 +1,16 @@
+{% load menu_tags %}
+<nav id="main-navigation" class="main-navigation">
+    <ul id="menu" class="clearfix">
+{% for item in menu_items %}
+    {% if item.has_children_in_menu %}
+    <li class="dropdown {%if item.active_class %} current {%endif%}">
+        <a href="{{ item.href }}">{{ item.text }}</a>
+            {% sub_menu item %}
+    </li>
+    {% else %}
+    <li class="{%if item.active_class %} current {%endif%}"><a href="{{item.href}}">{{ item.text }}</a>
+        </li>
+    {% endif %}
+{% endfor %}
+    </ul>
+</nav>

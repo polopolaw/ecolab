@@ -1,0 +1,20 @@
+
+{% load subscribe_form wagtailcore_tags %}
+
+{% get_subscribe_form as subscribe_form %}
+<!-- widget Subscribe -->
+<div class="widget">
+
+    <h4 class="widget-title">Подпишитесь на рассылку</h4>
+
+    <p>Ежемесячный дайджест с разными плюшками</p>
+    
+    <form action="{% pageurl subscribe_form.page %}" method="POST" class="contact-form">
+        {% csrf_token %}
+        {{ subscribe_form.form }}
+        <button class="btn">Подписаться</button>
+    </form>
+
+</div>
+<!-- /widget -->
+
