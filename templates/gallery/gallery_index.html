@@ -142,24 +142,22 @@
         }); 
     }
         function render(page, tag) {
-        if(page == '' && tag != '') {
-            var url = "tags/ajax/" + tag;
-            console.log(url);
-        } else if (page != '' && tag != '') {
-            var url = "tags/ajax/" + tag + "/?page=" + page;
-            console.log(url);
-        } else {
+            if(page == '' && tag != '') {
+                var url = "tags/ajax/" + tag;
+            } else if (page != '' && tag != '') {
+                var url = "tags/ajax/" + tag + "/?page=" + page;
+            } else {
 
-        }
-        $.ajax({
+            }
+            $.ajax({
                 url: url,
                 type: "get",
                 dataType: "html",
                 success: function(result){
+                    
                     $("#test").html(result);
-
-                    setTimeout(function() {
-                        $('.isotope').isotope({
+                    
+                    $('.isotope').isotope({
                           itemSelector: '.item',
                           layoutMode : "masonry",
                           transitionDuration:"0.7s",
@@ -167,7 +165,6 @@
                             columnWidth: '.item',
                           }
                         });
-                    }, 180);
                 
                 if($('.portfolio-holder').length){
                     if($.fancybox){
