@@ -14,8 +14,10 @@ from wagtail.search import index
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.snippets.models import register_snippet
 
+from event.models import EventPage
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
+from subscribe.models import SubscribePage
 
 class BlogIndex(Page):
     # Speficies that only BlogPage objects can live under this index page
@@ -24,7 +26,7 @@ class BlogIndex(Page):
      # Returns the list of Tags for all child posts of this BlogPage.
     def get_child_tags(self):
         tags = []
-        news_pages = BlogPage.objects.live().descendant_of(self);
+        news_pages = BlogPage.objects.live().descendant_of(self)
         for page in news_pages:
             # Not tags.append() because we don't want a list of lists
             tags += page.tags.all()
@@ -56,12 +58,14 @@ class BlogIndex(Page):
         except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
             blogpages = paginator.page(paginator.num_pages)
+        events = EventPage.objects.all().live().order_by('date').exclude(date__lt=datetime.now()).order_by('-id')[0:3]
         popularnews = BlogPage.objects.filter(date__gte = datetime.now() - timedelta(days=60)).live().filter().order_by(('-views'))[:3]
         categories = BlogCategory.objects.all()
         return render(request, self.template, {
             'page': self,
             'posts': blogpages,
             'blogpages': blogpages,
+            'events': events,
             'popularnews': popularnews,
             'categories': categories,
         })
@@ -74,6 +78,7 @@ class BlogPageTag(TaggedItemBase):
     )
 
 class BlogPage(Page):
+   
     # Database fields
     main_embed = models.TextField(blank=True)
     main_image = models.ForeignKey(
@@ -145,8 +150,10 @@ class BlogPage(Page):
         # Update template context
         context = super().get_context(request)
         categories = BlogCategory.objects.all()
+        events = EventPage.objects.all().live().order_by('date').exclude(date__lt=datetime.now()).order_by('-id')[0:3]
         popularnews = BlogPage.objects.filter(date__gte = datetime.now() - timedelta(days=60)).live().filter().order_by(('-views'))[:3]
         context['popularnews'] = popularnews
+        context['events'] = events
         context['categories'] = categories
         return context
 

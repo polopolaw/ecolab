@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% load static wagtailuserbar %}
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags%}
+{%block extra_css %}
+
+<link rel="stylesheet" href="{% static 'plugins/fancybox/helpers/jquery.fancybox-thumbs.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/fancybox/helpers/jquery.fancybox-buttons.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/fancybox/jquery.fancybox.css' %}">
+{%endblock%}
+{% block content %}
+    <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+
+    <div id="content">
+
+    	<!-- - - - - - - - - - - - - - Breadcrumbs - - - - - - - - - - - - - - - - -->
+
+	    <div class="breadcrumbs-wrap">
+
+	      <div class="container">
+	        
+	        <h1 class="page-title">{{page.title}}</h1>
+
+            {% if self.get_ancestors|length > 1 %}
+                <ul class="breadcrumbs">
+
+                {% for page in self.get_ancestors %}
+                {% if page.is_root == False %}
+                <li><a href="{{page.url}}">{{ page.title }}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                <li>{{ page.title }}</li>
+
+                </ul>
+            {% endif %}
+
+	      </div>
+
+	    </div>
+
+	    <!-- - - - - - - - - - - - - end Breadcrumbs - - - - - - - - - - - - - - - -->
+
+	    <!-- page-section -->
+
+    	<div class="page-section">
+
+    		<div class="container">
+
+    			<!-- - - - - - - - - - - - - - Filter - - - - - - - - - - - - - - - - -->    	
+
+    			<div id="options">
+    				<div id="filters" class="isotope-nav">
+    					{%for tag in gallery_tags%}
+    					<button  href="/{{page.slug}}/tags/{{ tag.slug }}">{{ tag }}</button>
+    					{%endfor%}
+    				</div>
+    			</div>
+    			<!-- - - - - - - - - - - - - - End of Filter - - - - - - - - - - - - - - - - -->    	
+<div id="test">
+    			<div class="isotope three-collumn clearfix portfolio-holder">
+                    {%for image in gallery_images%}
+                                        
+                    <div class="item {%for tag in image.tags.all%}{{tag}} {%endfor%}">
+
+                    <!-- - - - - - - - - - - - - - Project - - - - - - - - - - - - - - - - -->
+
+                      <div class="project">
+
+                              <!-- - - - - - - - - - - - - - Project Image - - - - - - - - - - - - - - - - -->
+
+                              <div class="project-image">
+                        {% image image original as img%}
+
+                                <img src="{{img.url}}" alt="">
+                                <a href="{{img.url}}"  class="project-link project-action fancybox" title="{{image.title}}" rel="category"></a>
+
+                              </div>
+
+                              <!-- - - - - - - - - - - - - - End of Project Image - - - - - - - - - - - - - - - - -->
+
+                          </div>
+
+                          <!-- - - - - - - - - - - - - - End of Project - - - - - - - - - - - - - - - - -->
+
+                    </div>
+                    {%endfor%}
+    			</div>
+            {% if gallery_images.has_next or gallery_images.has_previous %}
+              <ul class="pagination">
+                {% if gallery_images.has_previous %}
+                <li>
+                    <a class="prev-page" href="?page={{ gallery_images.previous_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}"></a>  
+                </li>
+                {% endif %}
+                {% for page in gallery_images.paginator.page_range %}
+                    <li class="gallery-pagination-item {% if gallery_images.number == page  %}active{% endif %}">
+                      <a class="{% if gallery_images.number == page  %}active{% endif %}" href="?page={{page }}">{{ page }}</a>
+                    </li>
+                    {% endfor %}
+                    {% if gallery_images.has_next %}
+                <li>
+                  <a class="next-page" href="?page={{ gallery_images.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}"></a>
+                    
+                </li>
+                {% endif %}
+              </ul>
+            {% endif %}
+
+</div>
+    		</div>
+
+    	</div>
+
+    </div>
+
+    <!-- - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - -->
+{% endblock %}
+{%block extra_js%}
+
+  <script src="{% static 'plugins/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'plugins/fancybox/jquery.fancybox.js' %}"></script>
+  <script src="{% static 'plugins/fancybox/helpers/jquery.fancybox-thumbs.js' %}"></script>
+  <script src="{% static 'plugins/fancybox/helpers/jquery.fancybox-buttons.js' %}"></script>
+  <script>
+    setTimeout(function() {
+        $('.isotope').isotope({
+          itemSelector: '.item',
+          layoutMode : "masonry",
+          transitionDuration:"0.7s",
+          masonry: {
+            columnWidth: '.item',
+          }
+        });
+    }, 50);
+
+
+
+    for (const item of document.querySelectorAll('#filters button')) {
+        item.addEventListener("click", function(){
+            render('', this.innerHTML) ;
+        }); 
+    }
+        function render(page, tag) {
+        if(page == '' && tag != '') {
+            var url = "tags/ajax/" + tag;
+            console.log(url);
+        } else if (page != '' && tag != '') {
+            var url = "tags/ajax/" + tag + "/?page=" + page;
+            console.log(url);
+        } else {
+
+        }
+        $.ajax({
+                url: url,
+                type: "get",
+                dataType: "html",
+                success: function(result){
+                    $("#test").html(result);
+
+                    setTimeout(function() {
+                        $('.isotope').isotope({
+                          itemSelector: '.item',
+                          layoutMode : "masonry",
+                          transitionDuration:"0.7s",
+                          masonry: {
+                            columnWidth: '.item',
+                          }
+                        });
+                    }, 180);
+                
+                if($('.portfolio-holder').length){
+                    if($.fancybox){
+
+                        var $fancyBox = $('.fancybox');
+
+                        $.fancybox.defaults.padding = 0;
+                        $.fancybox.defaults.wrapCSS = 'custom-lightbox';
+
+                        $.fancybox.defaults.helpers.thumbs = {
+                            width: 80,
+                            height: 80
+                        }
+
+                        if($fancyBox.length){
+                            $fancyBox.fancybox();
+                        }
+
+                        var fancyboxMedia = $('.fancybox-media');
+
+                        if(fancyboxMedia.length){
+
+                            fancyboxMedia.fancybox({
+                                openEffect  : 'none',
+                                closeEffect : 'none',
+                                helpers : {
+                                    media : {}
+                                }
+                            });
+
+                        }
+
+                    }
+
+                }
+                    for (const page_button of document.querySelectorAll('.gallery-pagination-item')) {
+                        page_button.addEventListener("click", function(event){
+                            render(event.currentTarget.firstElementChild.getAttribute('page_id'), event.currentTarget.firstElementChild.getAttribute('curr_tag')) ;
+                        }); 
+                    }
+
+                    for (const page_button of document.querySelectorAll('.next-page, .prev-page ')) {
+                        page_button.addEventListener("click", function(event){
+                            render(event.currentTarget.getAttribute('page_id'), event.currentTarget.getAttribute('curr_tag')) ;
+                        }); 
+                    }
+            },
+            
+        });
+    }
+
+
+
+            
+
+
+            
+</script>
+  
+{%endblock%}

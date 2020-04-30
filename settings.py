@@ -45,12 +45,20 @@ aldryn_addons.settings.load(locals())
 
 INSTALLED_APPS.extend([
     # Extend the INSTALLED_APPS setting by listing additional applications here
+    'home',
     'blog',
+    'event',
     'search',
-    'wagtailmenus',
     'subscribe',
+    'team',
     'site_settings',
+    'gallery',
+    'wagtail.contrib.styleguide',
     'wagtail.contrib.settings',
+    'captcha',
+    'wagtailcaptcha',
+    'wagtailmenus',
+    "wagtail.contrib.routable_page",
 ])
 
 # To see the settings that have been applied, use the Django diffsettings 
@@ -63,3 +71,7 @@ if DEBUG:
 
 MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
+#Recaptcha settings
+#RECAPTCHA_PUBLIC_KEY = '6LehI-oUAAAAAEt5YjnGeZbOwzWktvV6GPu_5f0e'
+#RECAPTCHA_PRIVATE_KEY = '6LehI-oUAAAAAGaqKaTLvDjEVt65OR_MlAuVvJsT'
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']

@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static wagtailuserbar %}
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% block content %}
+    <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+
+    <div id="content">
+
+<!-- - - - - - - - - - - - - - Breadcrumbs - - - - - - - - - - - - - - - - -->
+
+	    <div class="breadcrumbs-wrap">
+
+	      <div class="container">
+	        
+	        <h1 class="page-title">{{page.title}}</h1>
+
+	        {% if self.get_ancestors|length > 1 %}
+				<ul class="breadcrumbs">
+
+				{% for page in self.get_ancestors %}
+				{% if page.is_root == False %}
+				<li><a href="{{page.url}}">{{ page.title }}</a></li>
+				{% endif %}
+				{% endfor %}
+
+				<li>{{ page.title }}</li>
+
+				</ul>
+			{% endif %}
+
+	      </div>
+
+	    </div>
+	    <!-- posts - posts which get if set tag-->
+		
+	    <!-- - - - - - - - - - - - - end Breadcrumbs - - - - - - - - - - - - - - - -->
+
+    	<div class="page-section type2">
+    		
+    		<div class="container">
+    			{%for role in roles %}
+    				
+    			<div class="content-element">
+    				
+    				
+    				
+
+    				<h3>{{role.plural}}</h3>
+					
+					<!-- team section -->
+	    			<div class="team-holder fx-col-3">
+		              
+		              	<!-- team element -->
+		              	{% for member in role.teammember_set.all %}
+		              	<div class="team-item">
+
+			                <div class="team-member">
+
+			                    {% if member.photo %}
+			                    {% image member.photo fill-360x360 as img %} 
+							    	<a href="#" class="member-photo"><img src="{{img.url}}" alt="{{img.alt}}"></a>
+								{% endif %}
+			                  	<div class="member-info">
+			                    	<h5 class="member-name"><a href="#">{{member.user.get_full_name}}</a></h5>
+			                    	<h6 class="member-position">{%if member.specificrole %}{{member.specificrole}}{%else%}{{role.name}}{%endif%}</h6>
+			                    	<p>{{member.info}}</p>
+			                  	</div>
+			                  	<ul class="social-icons">
+									{%if member.facebook%}
+					                <li class="fb-icon"><a href="{{member.facebook}}" target="_blank"><i class="icon-facebook"></i></a></li>
+					                {%endif%}
+					                {%if member.vk%}
+					                <li class="tweet-icon"><a href="{{member.vk}}" target="_blank"><i class="icon-vkontakte"></i></a></li>
+					                {%endif%}
+					                {%if member.twitter%}
+					                <li class="tweet-icon"><a href="{{member.twitter}}" target="_blank"><i class="icon-twitter"></i></a></li>
+					                {%endif%}
+					                {%if member.instagram%}
+					                <li class="insta-icon"><a href="{{member.instagram}}" target="_blank"><i class="icon-instagram-4"></i></a></li>
+					                {%endif%}
+
+				              	</ul>
+			                </div>
+
+		              	</div>
+		              	{% endfor %}
+		              
+		            </div>
+
+    			</div>
+    			
+    			{%endfor%}
+
+    		</div>
+
+    	</div>
+
+    	{%block joinform%}{%include 'team/includes/join_form.html' %}{%endblock%}
+
+    <!-- - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - -->
+ </div>
+{% endblock %}

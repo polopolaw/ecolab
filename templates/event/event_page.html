@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+{% load static wagtailuserbar %}
+{% load wagtailimages_tags %}
+{% load event_tags wagtailcore_tags %}
+{% block extra_js %}
+<script src="https://api-maps.yandex.ru/2.1/?apikey=ebb1401e-6730-4666-825c-84df709f3df1&lang=ru_RU" type="text/javascript">
+    </script>
+{%endblock%}
+{%block content%}
+    <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+
+    <div id="content">
+
+
+<!-- - - - - - - - - - - - - - Breadcrumbs - - - - - - - - - - - - - - - - -->
+
+	    <div class="breadcrumbs-wrap style-2 type-2">
+
+	      <div class="container">
+	        
+	        <h1 class="page-title">{{page.title}}</h1>
+
+	        {% if self.get_ancestors|length > 1 %}
+				<ul class="breadcrumbs">
+
+				{% for page in self.get_ancestors %}
+				{% if page.is_root == False %}
+				<li><a href="{{page.url}}">{{ page.title }}</a></li>
+				{% endif %}
+				{% endfor %}
+
+				<li>{{ page.title }}</li>
+
+				</ul>
+			{% endif %}
+
+	      </div>
+
+	    </div>
+	    <!-- posts - posts which get if set tag-->
+		
+	    <!-- - - - - - - - - - - - - end Breadcrumbs - - - - - - - - - - - - - - - -->
+    	<div class="page-section">
+
+    		<div class="container">
+    			
+    			<div class="content-element4">
+    				
+    				<div class="row">
+    				
+	    				<main id="main" class="col-md-8">
+	    				
+		    				<!-- content element -->
+							<div class="content-element2">
+								
+								<div class="content-element3">
+									{%image page.main_image fill-750x460 %}
+								</div>
+
+			                    <div class="text-wrap content-element3">
+			                    	{% for block in page.body %}
+                                        <section>{% include_block block %}</section>
+                                    {% endfor %}
+			                    </div>
+
+			                    <div class="share style-2">
+									<div class="other-options">
+										<a href="https://calendar.google.com/calendar/r/eventedit?dates={{page.date|date:'Y'}}{{page.date|date:'m'}}{{page.date|date:'d'}}T{{page.date|date:'G'}}{{page.date|date:'i'}}00/{%if page.dateend%}{{page.dateend|date:'Y'}}{{page.dateend|date:'m'}}{{page.dateend|date:'d'}}T{{page.dateend|date:'G'}}{{page.dateend|date:'i'}}00{%else%}{%with dateend=page.calculate_enddate%}{{dateend|date:'Y'}}{{dateend|date:'m'}}{{dateend|date:'d'}}T{{dateend|date:'G'}}{{dateend|date:'i'}}00{%endwith%}{%endif%}&location={{page.location}}&text={{page.title}}" download class="btn btn-size type-2 btn-style-6">+ Google Calendar</a>
+										<a href="{{page.ics.url}}" download class="btn btn-size type-2 btn-style-6">+ Экспорт в ваш календарь</a>
+									</div>
+									<a url="{{page.url}}" text="{{page.intro}}" img="{{page.main_image}}" class="share-link entry-share"><i class="licon-share2"></i></a>
+								</div>
+
+							</div>
+
+		    			</main>
+						<aside id="sidebar" class="col-md-4">
+							
+							<div class="widget widget-map">
+								
+								<!-- Google map -->
+    							<div id="googleMap" class="map-container"></div>
+
+    							<div class="event-info">
+    								
+    								<div class="info-section">
+    									
+    									<div class="info-title">Детали:</div>
+
+    									<div class="class-info type-2">
+											{%if page.dateend%}
+											<div class="class-detail">
+												<span>Дата</span>
+												{{page.date|date:"F"}} {{page.date|date:"d"}} {{page.date|date:"H:i"}} - {{page.dateend|date:"F"}} {{page.dateend|date:"d"}} {{page.dateend|date:"H:i"}}
+											</div>
+											{%else%}
+											<div class="class-detail">
+												<span>Дата</span>
+												{{page.date|date:"F"}} {{page.date|date:"d"}} {{page.date|date:"H:i"}}
+											</div>
+											<div class="class-detail">
+												<span>Длительность</span>
+												{%if page.duration.days != 0%} {{page.duration.days}} д. {%endif%} {{page.duration|hours}}:{{page.duration|minutes}}
+												
+
+											</div>
+											{%endif%}
+											<div class="class-detail">
+												
+												<span>Стоимость</span>
+												{%if page.cost == 0 or page.cost == None%}Бесплатно{% else %}{{page.cost}}&#8381{% endif %}
+
+											</div>
+											{% if page.categories.all.count %}
+											<div class="class-detail">
+												
+												<span>Категория мероприятия</span>
+												
+													{% for cat in page.categories.all %}
+											            {{cat}}
+											        {% endfor %}
+												
+
+											</div>
+											{% endif %}
+											<div class="class-detail">
+												
+												<span>Теги мероприятия</span>
+												{% if page.tags.all.count %}
+												{% for tag in page.tags.all %}
+										            <a href="{% pageurl page.get_parent %}?tag={{ tag }}">{{tag}}</a>
+										        {% endfor %}
+												{% endif %}
+												
+
+											</div>
+										</div>
+
+    								</div>
+									{%if page.organizer.all %}
+    								<div class="info-section">
+    									
+    									<div class="info-title">Организатор</div>
+
+    									<div class="class-info type-2">
+											<div class="class-detail">
+
+												<span>Имя</span>
+												{{page.organizer.name}}
+
+											</div>
+											<div class="class-detail">
+												
+												<span>Телефон</span>
+												{{page.organizer.phone}}
+
+											</div>
+											<div class="class-detail">
+												
+												<span>Email</span>
+												<a href="mailto:{{page.organizer.email}}">{{page.organizer.email}}</a>
+
+											</div>
+											<div class="class-detail">
+												
+												<span>Сайт</span>
+												<a href="{{page.organizer.website}}">{{page.organizer.website}}</a>
+
+											</div>
+										</div>
+
+    								</div>
+									{%endif%}
+									{%if page.location%}
+    								<div class="info-section">
+    									
+    									<div class="info-title">Место проведения</div>
+
+    									<div class="class-info type-2">
+											<div class="class-detail">
+												
+												<span>Адрес</span>
+												{{page.location}}
+
+											</div>
+										</div>
+
+    								</div>
+									{%endif%}
+    							</div>
+
+							</div>
+						</aside>
+
+	    			</div>
+
+    			</div>
+
+    			<div class="entries-nav">
+					{%if page.get_prev_siblings.first%}
+        				{%with prev=page.get_prev_siblings.first%}
+                    <a href="{{prev.url}}" class="previous-entry">Предыдущее мероприятие
+                    </a>
+                    	{%endwith%}
+                 	{%endif%}
+					<a href="{{page.get_parent.url}}" class="btn type-2 btn-style-6 btn-size">Все мероприятия</a>
+					{%if page.get_next_siblings.first%}
+        				{%with next=page.get_next_siblings.first%}
+                    <a href="{{next.url}}" class="next-entry">Следующее мероприятие
+                    </a>
+                    	{%endwith%}
+                 	{%endif%}
+
+				</div>
+
+    		</div>
+
+    	</div>
+{%if page.related_links.all%}
+    	<div class="page-section" data-bg="{% static 'images/1920x993_bg.jpg' %}">
+			
+			<div class="container">
+
+				<h3>Связанные события</h3>
+				
+				<!-- welcome area -->
+		    	<div class="welcome-section blog-type fx-col-3">
+					{%for link in page.related_links.all%}
+					{% with event=link.event_page.specific%}
+					<!-- welcome element -->
+		    		<div class="welcome-col">
+		    			
+		    			<div class="welcome-item">
+
+							<div class="welcome-inner">
+								
+								<div class="welcome-img">
+		    						{% image event.main_image fill-360x220%}
+		    						<time class="entry-date" datetime="2016-08-20">
+		    							<span>{{event.date|date:"d"}}</span>{{event.date|date:"M"}}
+		    						</time>
+		    					</div>
+
+		    					<div class="welcome-content">
+
+		    						<svg class="bigHalfCircle" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+										<path d="M0 100 C40 0 60 0 100 100 Z"></path>
+									</svg>
+		    						
+		    						<div class="entry">
+
+										<!-- - - - - - - - - - - - - - Entry body - - - - - - - - - - - - - - - - -->
+
+										<div class="entry-body">
+
+											<h5 class="entry-title"><a href="{{event.url}}">{{event.title}}</a></h5>
+
+											<div class="contact-info-menu">
+
+					            				<div class="contact-info-item">
+					            					
+					            					<i class="icon-clock"></i>
+					            					<span> {{event.date|date:"H:i"}} </span>
+					            				</div>
+					            				{%if event.location%}
+					            				<div class="contact-info-item">
+					            					<i class="icon-location"></i>
+					            					<span>{{event.location}}</span>
+					            				</div>
+												{%endif%}
+					            			</div>
+
+										</div>
+
+										<!-- - - - - - - - - - - - - - End of Entry body - - - - - - - - - - - - - - - - -->
+											
+
+									</div>
+
+		    					</div>
+
+							</div>
+
+						</div>
+
+		    		</div>
+					
+					<!-- welcome element -->
+					{%endwith%} 
+					{%endfor%}
+		    	</div>
+
+			</div>
+
+		</div>
+
+    </div>
+{%endif%}
+</div>
+    <!-- - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - -->
+{%endblock%}

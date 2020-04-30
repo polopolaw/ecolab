@@ -394,41 +394,7 @@
 
         if($('.portfolio-holder').length){
 
-        	if($.fancybox){
 
-	        	$.fancybox.defaults.beforeShow = function () {
-
-					var className = '';
-
-			        if (this.title) {
-			            // New line
-			            this.title += '<br />';
-			            this.title += '<div class="fancybox-share-buttons">';
-
-			        }
-			        else{
-			        	this.title += '<div class="fancybox-share-buttons only">';
-			        }			        
-
-	    			this.title += '<a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-url="' + this.href + '">Tweet</a> ';
-
-	        		// Add FaceBook like button
-	    			this.title += '<iframe src="//www.facebook.com/plugins/like.php?href=http://fancyapps.com/fancybox/demo/1_b.jpg&amp;layout=button_count&amp;show_faces=true&amp;width=500&amp;action=like&amp;font&amp;colorscheme=light&amp;height=23" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:110px; height:23px;" allowtransparency="true"></iframe>';
-
-	    			this.title += '</div>';
-
-				};
-
-				$.fancybox.defaults.afterShow = function(){
-					// Render tweet button
-					twttr.widgets.load();
-				};
-
-				$.fancybox.defaults.helpers.title = {
-					type: 'inside'
-				}
-
-	        }
 
 	        if($.fancybox){
 
@@ -533,6 +499,7 @@
 		    // filter buttons
 		    $('#filters button').on('click', function(){
 		    	var $this = $(this);
+		    	console.log('click')
 		        // don't proceed if already selected
 		        if ( !$this.hasClass('is-checked') ) {
 		          $this.parents('#options').find('.is-checked').removeClass('is-checked');
@@ -541,6 +508,7 @@
 				var selector = $this.attr('data-filter');
 				$container.isotope({  itemSelector: '.item', filter: selector, isOriginLeft: false });
 				return false;
+
 		    });
 
 		    $.mad_core.isotope();

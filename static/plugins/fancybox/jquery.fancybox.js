@@ -640,15 +640,16 @@
 				};
 
 			if (locked) {
-				rez.w = locked[0].clientWidth;
+				rez.w = locked[0].clientWidth - 30;
 				rez.h = locked[0].clientHeight;
 
 			} else {
 				// See http://bugs.jquery.com/ticket/6724
-				rez.w = isTouch && window.innerWidth  ? window.innerWidth  : W.width();
+				rez.w = isTouch && window.innerWidth  ? window.innerWidth  : W.width() - 30;
 				rez.h = isTouch && window.innerHeight ? window.innerHeight : W.height();
 			}
-
+			console.log(rez)
+			console.log(locked)
 			return rez;
 		},
 
@@ -1413,7 +1414,6 @@
 
 			rez.top  = getValue(Math.max(rez.top,  rez.top  + ((viewport.h - height) * current.topRatio)));
 			rez.left = getValue(Math.max(rez.left, rez.left + ((viewport.w - width)  * current.leftRatio)));
-
 			return rez;
 		},
 

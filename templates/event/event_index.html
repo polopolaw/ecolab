@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static wagtailuserbar %}
+{% load wagtailimages_tags %}
+{% load event_tags wagtailcore_tags %}
+{% block content %}
+
+<!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+
+<div id="content">
+
+    	<!-- - - - - - - - - - - - - - Breadcrumbs - - - - - - - - - - - - - - - - -->
+
+	    <div class="breadcrumbs-wrap" data-bg="{% static 'images/1920x280_bg2.jpg' %}">
+
+	      <div class="container">
+	        
+	        <h1 class="page-title">{{page.title}}</h1>
+
+	        {% if self.get_ancestors|length > 1 %}
+				<ul class="breadcrumbs">
+
+				{% for page in self.get_ancestors %}
+				{% if page.is_root == False %}
+				<li><a href="{{page.url}}">{{ page.title }}</a></li>
+				{% endif %}
+				{% endfor %}
+
+				<li>{{ page.title }}</li>
+
+				</ul>
+			{% endif %}
+
+	      </div>
+
+	    </div>
+	    <!-- posts - posts which get if set tag-->
+		
+	    <!-- - - - - - - - - - - - - end Breadcrumbs - - - - - - - - - - - - - - - -->
+
+	<div class="page-content-wrap">
+
+		<div class="container">
+			
+			<div class="event-options">
+				
+				<div class="event-col date">
+					
+					<form class="contact-form">
+						<label>Events From</label>
+						<input type="text" placeholder="Date">
+					</form>
+
+				</div>
+				<div class="event-col search">
+					
+					<form class="contact-form">
+						<label>Search</label>
+						<input type="text" placeholder="Search">
+					</form>
+
+				</div>
+				<div class="event-col">
+					
+					<a href="#" class="btn btn-size">Найти мероприятия</a>
+
+				</div>
+				<div class="event-col last-col">
+					
+					<div class="sort-criteria">
+
+	                  <div class="view-type">
+						
+						<label>View as</label>
+	 
+	                    <div class="custom-select with-icons">
+		                    <div class="select-title btn btn-style-4 btn-size"><i class="licon-list"></i>List</div>
+		                    <ul id="menu-type" class="select-list"></ul>
+		                    <select class="hide">
+			                    <option value="menu">Month</option>
+			                    <option value="menu">Week</option>
+			                    <option value="menu">Day</option>
+			                    <option value="menu">Map</option>
+			                    <option value="menu">Photo</option>
+		                    </select>
+		                </div>
+
+	                  </div>
+
+	                </div><!--/ .sort-criteria -->
+
+				</div>
+
+			</div>
+{% if events %}
+	{% for event in events %}
+		{% with event=event.specific %}
+		
+			<h5 class="event-title">December 2017</h5>
+
+			<div class="blog-type style-2 list-view event">
+				
+				<div class="welcome-item">
+
+					<div class="welcome-inner">
+
+						<div class="welcome-img">
+							{% image event.main_image fill-360x220 as img %}
+							<a href="{{event.url}}"><img src="{{img.url}}" alt="{{img.alt}}"></a>
+							<time class="entry-date" datetime="2016-08-20">
+    							<span>{{event.date|date:"j"}}</span>{{event.date|date:"M"}}
+    						</time>
+						</div>
+
+						<div class="welcome-content">
+
+							<svg class="bigHalfCircle" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
+								<path d="M0 100 C40 0 60 0 100 100 Z"></path>
+							</svg>
+
+							<div class="entry">
+
+								<!-- - - - - - - - - - - - - - Entry body - - - - - - - - - - - - - - - - -->    	
+
+								<div class="entry-body">
+
+									<h5 class="entry-title">
+										<a href="{{event.url}}">{{event.title}}</a>
+										{%if event.cost == 0 or event.cost == None%}<span class="label free">Бесплатно</span>{% else %}<span class="label">{{event.cost}}&#8381</span>{% endif %}
+									</h5>
+
+									<div class="contact-info-menu">
+
+			            				<div class="contact-info-item">
+			            					<i class="icon-clock"></i>
+			            					<span>Начало: {{event.date|date:"H:i"}}</span>
+			            				</div>
+			            				<div class="contact-info-item">
+			            					{%if event.duration != None%}
+			            					<i class="icon-clock"></i>
+			            					<span>Длительность: {%if event.duration.days != 0%} {{event.duration.days}} д. {%endif%} {{event.duration|hours}}:{{event.duration|minutes}}</span>
+			            					{%else%}
+			            						<i class="icon-clock"></i>
+												<span>До: {{event.dateend|date:"d M H:i"}}</span>
+			            					{%endif%}
+			            				</div>
+			            				{%if event.location%}
+			            				<div class="contact-info-item">
+			            					<i class="icon-location"></i>
+			            					<span>{{event.location}}</span>
+			            				</div>
+			            				{%endif%}
+			            			</div>
+
+									<p>
+										{{event.intro|richtext}}
+									</p>
+									
+									<a href="{{event.url}}" class="info-btn">Подробнее</a><br><a href="{{event.timepad}}" class="info-btn">Записаться</a>
+
+								</div>
+
+								<!-- - - - - - - - - - - - - - End of Entry body - - - - - - - - - - - - - - - - -->    	 
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		{% endwith %}
+	{%endfor%}
+{%endif%}
+		</div>
+
+	</div>
+
+</div>
+
+<!-- - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - -->
+{% endblock %}

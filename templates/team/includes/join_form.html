@@ -1,0 +1,50 @@
+{% load join_form wagtailcore_tags %}
+{% load static wagtailuserbar %}
+{% get_join_form as join_form %}
+{%block join_form%}
+<div class="holder-bg type-2 parallax-section" data-bg="{% static 'images/2059x1000_bg.jpg' %}">
+
+	        <div class="container">
+	        	<div class="row">
+	        		<div class="col-sm-6">
+	        			
+	        			<h3 class="section-title">{{ join_form.form.title }}</h3>
+	        			<div class="text-wrap">
+	        				<p class="text-size-medium">{{join_form.form.paragraph|richtext}} </p>
+	        			</div>
+						
+						<div class="fw-medium">
+							<div class="small-title">У нас:</div>
+		        			{% for block in join_form.form.describe_list %}
+                                {% include_block block %}
+                            {% endfor %}
+                        </div>
+
+	        		</div>
+	        		<div class="col-sm-6">
+						<form action="{{join_form.form.url}}" method="POST">
+				            {% csrf_token %}
+				             {% for field in join_form.form.get_form %}
+
+							        {{ field.errors }}
+							        {{ field.label_tag }} {{ field }}
+
+							{% endfor %}
+			                <button type="submit" class="btn">Отправить</button>
+				        </form>
+	        			<form>
+                
+
+			                
+
+			            </form>
+
+
+	        		</div>
+	        	</div>
+	        </div>
+	        
+	    </div>
+
+    </div>
+{%endblock%}

@@ -1,0 +1,9 @@
+{% load wagtailcore_tags %}
+
+<ul class="custom-list type-2 style-3">
+{%with value=block.value%}
+    {%for item in value%}
+    <li>{{item}}</li>
+    {%endfor%}
+{%endwith%}
+</ul>
