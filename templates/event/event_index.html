@@ -41,62 +41,18 @@
 
 		<div class="container">
 			
-			<div class="event-options">
-				
-				<div class="event-col date">
-					
-					<form class="contact-form">
-						<label>Events From</label>
-						<input type="text" placeholder="Date">
-					</form>
-
-				</div>
-				<div class="event-col search">
-					
-					<form class="contact-form">
-						<label>Search</label>
-						<input type="text" placeholder="Search">
-					</form>
-
-				</div>
-				<div class="event-col">
-					
-					<a href="#" class="btn btn-size">Найти мероприятия</a>
-
-				</div>
-				<div class="event-col last-col">
-					
-					<div class="sort-criteria">
-
-	                  <div class="view-type">
-						
-						<label>View as</label>
-	 
-	                    <div class="custom-select with-icons">
-		                    <div class="select-title btn btn-style-4 btn-size"><i class="licon-list"></i>List</div>
-		                    <ul id="menu-type" class="select-list"></ul>
-		                    <select class="hide">
-			                    <option value="menu">Month</option>
-			                    <option value="menu">Week</option>
-			                    <option value="menu">Day</option>
-			                    <option value="menu">Map</option>
-			                    <option value="menu">Photo</option>
-		                    </select>
-		                </div>
-
-	                  </div>
-
-	                </div><!--/ .sort-criteria -->
-
-				</div>
-
-			</div>
+			
 {% if events %}
+{%with month=events|first%}
+    <h5 class="event-title">{{month.date|date:"F"}} {{month.date|date:"Y"}}</h5>
 	{% for event in events %}
 		{% with event=event.specific %}
-		
-			<h5 class="event-title">December 2017</h5>
-
+		 {%with currmonth=event.date%}
+		 {%if month.date|date:"M" == currmonth.date|date:"M" %}
+		 {%else%}
+			<h5 class="event-title">{{currmonth.date|date:"F"}} {{currmonth.date|date:"Y"}}</h5>
+		 {%endif%}
+		 {%endwith%}
 			<div class="blog-type style-2 list-view event">
 				
 				<div class="welcome-item">
@@ -107,7 +63,7 @@
 							{% image event.main_image fill-360x220 as img %}
 							<a href="{{event.url}}"><img src="{{img.url}}" alt="{{img.alt}}"></a>
 							<time class="entry-date" datetime="2016-08-20">
-    							<span>{{event.date|date:"j"}}</span>{{event.date|date:"M"}}
+    							<span>{{event.date|date:"j"}}</span>{{event.date|date:"E"}}
     						</time>
 						</div>
 
@@ -135,12 +91,14 @@
 			            					<span>Начало: {{event.date|date:"H:i"}}</span>
 			            				</div>
 			            				<div class="contact-info-item">
-			            					{%if event.duration != None%}
+			            					{%if event.duration%}
 			            					<i class="icon-clock"></i>
 			            					<span>Длительность: {%if event.duration.days != 0%} {{event.duration.days}} д. {%endif%} {{event.duration|hours}}:{{event.duration|minutes}}</span>
 			            					{%else%}
+											 {%if event.dateend %}
 			            						<i class="icon-clock"></i>
 												<span>До: {{event.dateend|date:"d M H:i"}}</span>
+											 {%endif%}
 			            					{%endif%}
 			            				</div>
 			            				{%if event.location%}
@@ -173,7 +131,13 @@
 
 		{% endwith %}
 	{%endfor%}
+{%endwith%}
 {%endif%}
+			<div class="share style-2">
+				<div class="other-options">
+					<a href="{{page.calenadar_file.url}}" download class="btn btn-size type-2 btn-style-6">+ Экспорт в ваш календарь все мероприятия</a>
+				</div>
+			</div>
 		</div>
 
 	</div>

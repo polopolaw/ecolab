@@ -247,14 +247,15 @@
 
                     <!-- - - - - - - - - - - - - - End of Meta - - - - - - - - - - - - - - - - -->
 
-                    <h5 class="entry-title"><a href="{{event.timepad}}">{{event.title}}</a></h5>
+                    <h5 class="entry-title"><a href="{{event.url}}">{{event.title}}</a></h5>
 
                     <div class="contact-info-menu">
-
+                            {%if event.duration %}
                             <div class="contact-info-item">
                               <i class="icon-clock"></i>
                               <span>Длительность: {{event.duration}} мин.</span>
                             </div>
+                            {%endif%}
                             <div class="contact-info-item">
                               <i class="icon-location"></i>
                               <span>{{event.location}}</span>
@@ -336,7 +337,8 @@
 
                         <!-- - - - - - - - - - - - - - Countdown - - - - - - - - - - - - - - - - -->
 
-                  <div class="countdown" data-year='{{event.date|date:"Y"}}' data-month='{{event.date|date:"n"}}' data-day='{{event.date|date:"j"}}' data-hours='{{event.date|date:"G"}}' data-minutes='{{event.date|date:"i"}}' data-seconds='0'></div>
+                  <div class="countdown" data-year='{{event.date|date:"Y"}}' data-month='{{event.date|date:"n"|add:"-1"}}' 
+                  data-day='{{event.date|date:"j"}}' data-hours='{{event.date|date:"G"}}' data-minutes='{{event.date|date:"i"}}' data-seconds='0'></div>
 
                   <!-- - - - - - - - - - - - - - End countdown - - - - - - - - - - - - - - - - -->
 
@@ -384,7 +386,7 @@
         <div class="title-holder align-center">
           
           <h2 class="section-title">Наши направления</h2>
-          <p>Мы очень любим делать интересные и полезные городские проекты. <br> Экология, урбанистика, дизайн, благотворительность. Мы ждем тебя в нашу <a style="color:#a6c437;" href="{% slugurl 'команда' %}">команду</a> </p>
+          <p>Мы очень любим делать интересные и полезные городские проекты. <br> Экология, урбанистика, дизайн, благотворительность. Мы ждем тебя в нашу <a style="color:#a6c437;" href="{% slugurl 'команда-проекта' %}">команду</a> </p>
 
         </div>
         

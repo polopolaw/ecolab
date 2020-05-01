@@ -74,7 +74,7 @@ class EventPage(Page):
     date = models.DateTimeField("Дата мероприятия")
     dateend = models.DateTimeField("Конец мероприятия", blank=True, null=True)
     cost = models.PositiveIntegerField(blank=True, null=True, help_text='Если оставить поле пустым отобразится что мероприятие бесплатное')
-    duration = models.DurationField(blank=True, help_text='Если указана дата окончания мероприятия, это поле в приоритете. Формат ввода Дни Часы:Минуты:Секунды')
+    duration = models.DurationField(blank=True, help_text='Если указана дата окончания мероприятия, это поле в приоритете. Формат ввода Дни Часы:Минуты:Секунды', null=True)
     ics = models.FileField(upload_to='uploads/', null=True, blank=True)
     intro = RichTextField(blank=False)
     body = StreamField([
@@ -166,22 +166,25 @@ def create_ics(sender, instance, **kwargs):
     events = global_ics.get_children()
     c = Calendar()
     for event in events:
-        e = Event()
-        e.name = event.title
-        e.begin = event.specific.date
-        e.end = event.specific.dateend
-        e.alarms = alarm
-        if event.specific.duration != None:
-            e.duration = event.specific.duration
-        if (event.specific.cost == 0 or event.specific.cost == None):
-            cost = 'Бесплатно'
-            e.description = str(event.specific.intro.strip("<p>*</p>")) + ' Стоимость: ' + str(cost)
+        if (event.specific.date < timezone.now()):
+            pass
         else:
-            e.description = str(event.specific.intro.strip("<p>*</p>")) + ' Стоимость: ' + str(event.specific.cost)+  'р.'
-        e.location = event.specific.location
-        if event.specific.timepad != None:
-            e.url = event.specific.timepad
-        c.events.add(e)
+            e = Event()
+            e.name = event.title
+            e.begin = event.specific.date
+            e.end = event.specific.dateend
+            e.alarms = alarm
+            if event.specific.duration != None:
+                e.duration = event.specific.duration
+            if (event.specific.cost == 0 or event.specific.cost == None):
+                cost = 'Бесплатно'
+                e.description = str(event.specific.intro.strip("<p>*</p>")) + ' Стоимость: ' + str(cost)
+            else:
+                e.description = str(event.specific.intro.strip("<p>*</p>")) + ' Стоимость: ' + str(event.specific.cost)+  'р.'
+            e.location = event.specific.location
+            if event.specific.timepad != None:
+                e.url = event.specific.timepad
+            c.events.add(e)
     global_ics.calenadar_file.delete(save=False)
     global_ics.calenadar_file.save('global.ics', ContentFile(str(c)), save=True)
 

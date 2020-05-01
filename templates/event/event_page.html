@@ -100,7 +100,7 @@
 											</div>
 											<div class="class-detail">
 												<span>Длительность</span>
-												{%if page.duration.days != 0%} {{page.duration.days}} д. {%endif%} {{page.duration|hours}}:{{page.duration|minutes}}
+												{%if page.duration.days != 0%} {{page.duration.days}} д. {%endif%} {{page.duration|hours}}ч. {{page.duration|minutes}} мин.
 												
 
 											</div>
@@ -137,7 +137,7 @@
 										</div>
 
     								</div>
-									{%if page.organizer.all %}
+									{%if page.specific.organizer.all %}
     								<div class="info-section">
     									
     									<div class="info-title">Организатор</div>
