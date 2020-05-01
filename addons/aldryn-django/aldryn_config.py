@@ -169,7 +169,6 @@ class Form(forms.BaseForm):
                         'django.template.context_processors.csrf',
                         'django.template.context_processors.tz',
                         'django.template.context_processors.static',
-                        'wagtail.contrib.settings.context_processors.settings',
                         'aldryn_django.context_processors.debug',
                     ],
                     'loaders': loader_list_class([
