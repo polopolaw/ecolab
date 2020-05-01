@@ -624,48 +624,22 @@
 		/*	Google Maps											*/
 		/* ---------------------------------------------------- */
 
-		if ($('#googleMap').length) {
+		if ($('#yandexMap').length) {
 
-			$(document).ready(function() {
-
-				function loadMap() {
-				  	var mapProp = {
-					    center: {lat: 51.503454, lng: -0.124755},
-					    zoom:15,
-					    mapTypeId:google.maps.MapTypeId.ROADMAP
-
-					};
-
-					var map = document.getElementById('googleMap');
-
-					if(map !== null){
-
-				    	var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-
-					}
-		            
-		            setMarkers(map);
-
-				}
-				var marks = [
-				  ['first', 51.503454,-0.111562]
-				];
-
-	            function setMarkers(map) {
-
-					for (var i = 0; i < marks.length; i++) {
-						var mark = marks[i];
-						var marker = new google.maps.Marker({
-						  position: {lat: mark[1], lng: mark[2]},
-						  map: map,
-						  title: mark[0],
-						  zIndex: mark[3]
-						});
-					}
-				}
-				google.maps.event.addDomListener(window, 'load', loadMap);
-
-			});
+			ymaps.ready(init);
+			function init(){
+				// Создание карты.
+				var myMap = new ymaps.Map("yandexMap", {
+					// Координаты центра карты.
+					// Порядок по умолчанию: «широта, долгота».
+					// Чтобы не определять координаты центра карты вручную,
+					// воспользуйтесь инструментом Определение координат.
+					center: [55.76, 37.64],
+					// Уровень масштабирования. Допустимые значения:
+					// от 0 (весь мир) до 19.
+					zoom: 7
+				});
+			}
 			
 		}
 
