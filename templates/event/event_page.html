@@ -5,6 +5,22 @@
 {% block extra_js %}
 <script src="https://api-maps.yandex.ru/2.1/?apikey=ebb1401e-6730-4666-825c-84df709f3df1&lang=ru_RU" type="text/javascript">
     </script>
+	<script>
+								ymaps.ready(init);
+									function init(){
+										// Создание карты.
+										var myMap = new ymaps.Map("yandexMap", {
+											// Координаты центра карты.
+											// Порядок по умолчанию: «широта, долгота».
+											// Чтобы не определять координаты центра карты вручную,
+											// воспользуйтесь инструментом Определение координат.
+											center: [73.299042, 55.03088],
+											// Уровень масштабирования. Допустимые значения:
+											// от 0 (весь мир) до 19.
+											zoom: 7
+										});
+									}
+								</script>
 {%endblock%}
 {%block content%}
     <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
@@ -80,6 +96,7 @@
 								
 								<!-- Yandex map -->
     							<div id="yandexMap" class="map-container" style="width: 360px; height: 461px" ></div>
+								
 
     							<div class="event-info">
     								
