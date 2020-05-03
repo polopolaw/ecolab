@@ -6,21 +6,69 @@
 <script src="https://api-maps.yandex.ru/2.1/?apikey=ebb1401e-6730-4666-825c-84df709f3df1&lang=ru_RU" type="text/javascript">
     </script>
 	<script type="text/javascript">
-								ymaps.ready(init);
-									function init(){
-										// Создание карты.
-										var myMap = new ymaps.Map("map", {
-											// Координаты центра карты.
-											// Порядок по умолчанию: «широта, долгота».
-											// Чтобы не определять координаты центра карты вручную,
-											// воспользуйтесь инструментом Определение координат.
-											center: [73.299042, 55.03088],
-											// Уровень масштабирования. Допустимые значения:
-											// от 0 (весь мир) до 19.
-											zoom: 7
-										});
-									}
-								</script>
+		
+		ymaps.ready(init);
+		function init(){
+			{%if page.coordinates %}
+			var myMap = new ymaps.Map("map", {
+					// Координаты центра карты.
+					// Порядок по умолчанию: «широта, долгота».
+					// Чтобы не определять координаты центра карты вручную,
+					// воспользуйтесь инструментом Определение координат.
+					center: [{{page.coordinates}}],
+					// Уровень масштабирования. Допустимые значения:
+					// от 0 (весь мир) до 19.
+					zoom: 15
+				});
+				var myPlacemark = new ymaps.Placemark([{{page.coordinates}}]);
+				myMap.geoObjects.add(myPlacemark);
+		    
+			{%elif page.location%}
+			$.get({url: "https://geocode-maps.yandex.ru/1.x/?apikey=ebb1401e-6730-4666-825c-84df709f3df1&format=json&geocode={{page.location}}&results=1",
+			
+			dataType: "json", 
+			success: function(result){
+				// Создание карты.
+				
+				var x = result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos;
+				
+				x = x.split(' ');
+				var myMap = new ymaps.Map("map", {
+					// Координаты центра карты.
+					// Порядок по умолчанию: «широта, долгота».
+					// Чтобы не определять координаты центра карты вручную,
+					// воспользуйтесь инструментом Определение координат.
+					center: [x[1], x[0]],
+					// Уровень масштабирования. Допустимые значения:
+					// от 0 (весь мир) до 19.
+					zoom: 15
+				});
+				var myPlacemark = new ymaps.Placemark([x[1], x[0]]);
+				myMap.geoObjects.add(myPlacemark);
+			}});
+			{%else%}
+			$.get({url: "https://geocode-maps.yandex.ru/1.x/?apikey=ebb1401e-6730-4666-825c-84df709f3df1&format=json&geocode=город Омск&results=1",
+			dataType: "json", 
+			success: function(result){
+				// Создание карты.
+				var x = result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos;
+				x = x.split(' ');
+				var myMap = new ymaps.Map("map", {
+					// Координаты центра карты.
+					// Порядок по умолчанию: «широта, долгота».
+					// Чтобы не определять координаты центра карты вручную,
+					// воспользуйтесь инструментом Определение координат.
+					center: [x[1], x[0]],
+					// Уровень масштабирования. Допустимые значения:
+					// от 0 (весь мир) до 19.
+					zoom: 15
+				});
+				var myPlacemark = new ymaps.Placemark([x[1], x[0]]);
+				myMap.geoObjects.add(myPlacemark);
+			}});
+			{%endif%}
+		}						
+	</script>
 {%endblock%}
 {%block content%}
     <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
@@ -115,12 +163,15 @@
 												<span>Дата</span>
 												{{page.date|date:"F"}} {{page.date|date:"d"}} {{page.date|date:"H:i"}}
 											</div>
+											{%if page.duration%}
 											<div class="class-detail">
 												<span>Длительность</span>
+												
 												{%if page.duration.days != 0%} {{page.duration.days}} д. {%endif%} {{page.duration|hours}}ч. {{page.duration|minutes}} мин.
 												
 
 											</div>
+											{%endif%}
 											{%endif%}
 											<div class="class-detail">
 												
@@ -214,18 +265,18 @@
     			</div>
 
     			<div class="entries-nav">
-					{%if page.get_prev_siblings.first%}
-        				{%with prev=page.get_prev_siblings.first%}
-                    <a href="{{prev.url}}" class="previous-entry">Предыдущее мероприятие
+					{%if prev_event%}
+        				
+                    <a href="{{prev_event.url}}" class="previous-entry">Предыдущее мероприятие
                     </a>
-                    	{%endwith%}
+                    	
                  	{%endif%}
 					<a href="{{page.get_parent.url}}" class="btn type-2 btn-style-6 btn-size">Все мероприятия</a>
-					{%if page.get_next_siblings.first%}
-        				{%with next=page.get_next_siblings.first%}
-                    <a href="{{next.url}}" class="next-entry">Следующее мероприятие
+					{%if next_event%}
+        				
+                    <a href="{{next_event.url}}" class="next-entry">Следующее мероприятие
                     </a>
-                    	{%endwith%}
+                    	
                  	{%endif%}
 
 				</div>

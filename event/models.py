@@ -1,6 +1,7 @@
 import os
 from datetime import timedelta
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 from wagtail.core import blocks
 from django.utils import timezone
 from django import forms
@@ -15,7 +16,7 @@ from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
 from django.shortcuts import render
 from django.contrib.auth.models import User
 
-from wagtail.core.blocks import CharBlock, RichTextBlock, RawHTMLBlock, ListBlock, BlockQuoteBlock
+from wagtail.core.blocks import CharBlock, RichTextBlock, RawHTMLBlock, ListBlock, BlockQuoteBlock, BooleanBlock
 
 from wagtail.snippets.models import register_snippet
 
@@ -85,13 +86,53 @@ class EventPage(Page):
         ('html', RawHTMLBlock(label="Чистый HTML", icon="code")),
         ('list', blocks.ListBlock(blocks.CharBlock(label="Пункт списка"), icon="list-ul", template = 'blocks/list_block.html')),
         ('blockquote', blocks.StructBlock([
-            ('quote', BlockQuoteBlock (label="Цитата")),
+            ('quote', BlockQuoteBlock(label="Цитата")),
             ('author', CharBlock (label="Автор")),
-        ], template = 'blocks/quote_block.html', icon='openquote')), 
+        ], template = 'blocks/quote_block.html', icon='openquote')),
+        ('form', blocks.StreamBlock([
+            ('input', blocks.StructBlock([
+                ('name', CharBlock(label="Название поля")),
+                ('placeholder', CharBlock (label="Подсказка", required=True)),
+                ('required', BooleanBlock(required=False, label="Обязательное поле"))
+            ], label="Однострочное поле")),
+            ('textarea', blocks.StructBlock([
+                ('name', CharBlock(label="Название поля")),
+                ('placeholder', CharBlock(label="Подсказка", required=True)),
+                ('required', BooleanBlock(label="Обязательное поле", required=False))
+            ], label="Многострочное поле")),
+            ('checkbox', blocks.StructBlock([
+                ('name', CharBlock(label="Название поля")),
+                ('choices', blocks.ListBlock(
+                    blocks.CharBlock(label="Выбор"), 
+                    required=False)),
+                ('required', BooleanBlock(required=False, label="Обязательное поле"))
+            ], label="Чек-бокс поле")),
+            ('select', blocks.StructBlock([
+                ('name', CharBlock(label="Название поля")),
+                ('choices', blocks.ListBlock(
+                    blocks.CharBlock(label="Выбор"), 
+                    required=False)),
+                ('required', BooleanBlock(required=False, label="Обязательное поле"))
+            ], label="Выбор из списка")),
+            ('emailfield', blocks.StructBlock([
+                ('name', CharBlock (label="Название поля")),
+                ('placeholder', CharBlock (label="Подсказка", required=True)),
+                ('required', BooleanBlock(required=False, label="Обязательное поле"))
+            ], label="Email")),
+            ('numberfield', blocks.StructBlock([
+                ('name', CharBlock (label="Название поля")),
+                ('placeholder', CharBlock (label="Подсказка", required=True)),
+                ('required', BooleanBlock(required=False, label="Обязательное поле"))
+            ], label="Числовое поле")),
+            ],
+            icon='form', template="blocks/event_form_block.html"
+            )), 
     ])
+    form_answers = JSONField(blank=True)
     max_visitors = models.PositiveIntegerField(blank=True)
     tags = ClusterTaggableManager(through=EventPageTag, blank=True)
     location = models.CharField(max_length=250, blank=True)
+    coordinates = models.CharField(max_length=100, blank=True, null=True, help_text="Широта,долгота через запятую")
     timepad = models.URLField(
         help_text='URL на мероприятие в Timepad', blank=True)
     categories = ParentalManyToManyField('event.EventCategory', blank=True)
@@ -123,6 +164,7 @@ class EventPage(Page):
         FieldPanel('duration'),
         FieldPanel('max_visitors'),
         FieldPanel('location'),
+        FieldPanel('coordinates'),
         FieldPanel('timepad'),
         StreamFieldPanel('body', classname="full"),
         ImageChooserPanel('main_image'),
@@ -134,8 +176,19 @@ class EventPage(Page):
 
 
     def calculate_enddate(self):
+        if (self.duration == None):
+            return 0
         return self.date + self.duration
+    
 
+    def get_context(self, request):
+        # Update template context
+        context = super().get_context(request)
+        next_event = EventPage.objects.live().all().order_by('date').exclude(date__lt=timezone.now()).filter(date__gt=self.date).first()
+        prev_event = EventPage.objects.live().all().order_by('date').exclude(date__lt=timezone.now()).filter(date__lt=self.date).last()
+        context['prev_event'] = prev_event
+        context['next_event'] = next_event
+        return context
 
 #work on signal publish page
 def create_ics(sender, instance, **kwargs):

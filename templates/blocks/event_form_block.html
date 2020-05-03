@@ -1,0 +1,56 @@
+{% load wagtailcore_tags %}
+<h3>Регистрация на мероприятие</h3>
+<form class="contact-form" method="post" action="{%url 'register_on_event' %}">
+{% csrf_token %}
+<input type="hidden" name="event_id" value="{{page.id}}">
+{%for struct_block in block.value%}
+    {% if struct_block.block_type == 'input' %}
+    <label for="{{struct_block.id}}">{{struct_block.value.name}}{%if struct_block.value.required%}<span style="color:red;"> *</span>{%endif%}</label>
+    <input type="text" id="{{struct_block.id}}" name="{{struct_block.id}}" placeholder="{{struct_block.value.placeholder}}" {%if struct_block.required %}required{%endif%}>
+    {%endif%}
+    {% if struct_block.block_type == 'numberfield' %}
+    <label for="{{struct_block.id}}">{{struct_block.value.name}}{%if struct_block.value.required%}<span style="color:red;"> *</span>{%endif%}</label>
+    <input type="number" id="{{struct_block.id}}" name="{{struct_block.id}}" placeholder="{{struct_block.value.placeholder}}" {%if struct_block.required%}required{%endif%}>
+    {%endif%}
+    {% if struct_block.block_type == 'emailfield' %}
+    <label for="{{struct_block.id}}">{{struct_block.value.name}}{%if struct_block.value.required%}<span style="color:red;"> *</span>{%endif%}</label>
+    <input type="email" id="{{struct_block.id}}" name="{{struct_block.id}}" placeholder="{{struct_block.value.placeholder}}" {%if struct_block.required%}required{%endif%}>
+    {%endif%}
+    {% if struct_block.block_type == 'textarea' %}
+    <label for="{{struct_block.id}}">{{struct_block.value.name}}{%if struct_block.value.required%}<span style="color:red;"> *</span>{%endif%}</label>
+    <textarea name="{{struct_block.id}}" id="{{struct_block.id}}" rows="5" placeholder="{{struct_block.value.placeholder}}" {%if struct_block.value.required%}required{%endif%}></textarea>
+    <br>
+    {%endif%}
+    {% if struct_block.block_type == 'select' %}
+    <div class="view-type">
+							
+        <label>{{struct_block.value.name}} {%if struct_block.value.required%}<span style="color:red;">*</span>{%endif%}</label>
+
+        <div class="custom-select with-icons">
+            <div class="select-title  btn-size active">{{struct_block.value.choices|first}}</div>
+            <ul id="menu-type" class="select-list"></ul>
+            <select class="hide" name="{{struct_block.id}}" style="display: none;" {%if struct_block.value.required%}required{%endif%}>
+                {%with value=struct_block.value.choices%}
+                    {%for item in value%}
+                        <option value="{{struct_block.id}}">{{item}}</option>
+                    {%endfor%}
+                {%endwith%}
+            </select>
+        </div>
+
+        </div>
+        <br>
+    {%endif%}
+    {% if struct_block.block_type == 'checkbox' %}
+    <label>{{struct_block.value.name}}{%if struct_block.value.required%}<span style="color:red;"> *</span>{%endif%}</label>
+    {%with value=struct_block.value.choices id='1'%}
+        {%for item in value%}
+        <input type="checkbox" id="{{struct_block.id}}{{forloop.counter}}" name="{{struct_block.id}}" value="{{item}}" {%if struct_block.required%}required{%endif%}>
+        <label for="{{struct_block.id}}{{forloop.counter}}">{{item}}</label><br>
+        {%endfor%}
+        <br>
+    {%endwith%}
+    {%endif%}
+{%endfor%}
+<button type="submit" class="btn" data-type="submit">Зарегистрироваться</button><br>
+</form>
