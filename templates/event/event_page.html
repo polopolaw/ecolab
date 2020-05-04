@@ -122,11 +122,14 @@
 								</div>
 
 			                    <div class="text-wrap content-element3">
+								
 			                    	{% for block in page.body %}
                                         <section>{% include_block block %}</section>
                                     {% endfor %}
 			                    </div>
-
+								{%if page.timepad%}
+								<div href="{{page.timepad}}">Записаться TimePad</div>
+								{%endif%}
 			                    <div class="share style-2">
 									<div class="other-options">
 										<a href="https://calendar.google.com/calendar/r/eventedit?dates={{page.date|date:'Y'}}{{page.date|date:'m'}}{{page.date|date:'d'}}T{{page.date|date:'G'}}{{page.date|date:'i'}}00/{%if page.dateend%}{{page.dateend|date:'Y'}}{{page.dateend|date:'m'}}{{page.dateend|date:'d'}}T{{page.dateend|date:'G'}}{{page.dateend|date:'i'}}00{%else%}{%with dateend=page.calculate_enddate%}{{dateend|date:'Y'}}{{dateend|date:'m'}}{{dateend|date:'d'}}T{{dateend|date:'G'}}{{dateend|date:'i'}}00{%endwith%}{%endif%}&location={{page.location}}&text={{page.title}}" download class="btn btn-size type-2 btn-style-6">+ Google Calendar</a>

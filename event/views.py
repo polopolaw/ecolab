@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.http import Http404
-from django.http import HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import get_object_or_404
-import json
+from django.core.mail import BadHeaderError, send_mail
+
 
 from .models import EventPage
 # Create your views here.
@@ -34,9 +35,14 @@ def register_on_event(request):
                         if(blocks.id == field):
                             if(blocks.block_type == 'checkbox'):
                                 result[blocks.value.get('name')] = request.POST.getlist(field)
-                            result[event.form_answers.__len__() + 1][blocks.value.get('name')] = request.POST.get(field)
+                            result[event.form_answers.__len__() + 1][blocks.value.get('name')] = request.POST.get(field, '')
         event.form_answers.update(result)
         event.save()
+        try:
+            send_mail('subject', 'message', 'from@ecolab.ru', ['to@ecolab.ru'], fail_silently=False)
+        except BadHeaderError:
+            return HttpResponse('Invalid header found.')
+        return HttpResponseRedirect('/')
         responseData = {
         'id': 4,
         'name': 'Test Response',

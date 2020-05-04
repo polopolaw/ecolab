@@ -113,7 +113,7 @@
 										{{event.intro|richtext}}
 									</p>
 									
-									<a href="{{event.url}}" class="info-btn">Подробнее</a><br><a href="{{event.timepad}}" class="info-btn">Записаться</a>
+									<a href="{{event.url}}" class="info-btn">Подробнее</a><br><a href="{%if event.timepad %}{{event.timepad}}{%else%}{{event.url}}#register_form{%endif%}" class="info-btn">Записаться</a>
 
 								</div>
 
