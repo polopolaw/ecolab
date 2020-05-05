@@ -77,4 +77,4 @@ MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
 #EMAIL SETTINGS
-EMAIL_BACKEND ='django.core.mail.backends.console.EmailBackend'
+
