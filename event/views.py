@@ -5,7 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import get_object_or_404
 from django.core.mail import BadHeaderError, send_mail
-
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
 
 from .models import EventPage
 # Create your views here.
@@ -39,15 +40,37 @@ def register_on_event(request):
         event.form_answers.update(result)
         event.save()
         try:
-            send_mail('subject', 'message', 'from@ecolab.ru', ['to@ecolab.ru'], fail_silently=False)
-        except BadHeaderError:
-            return HttpResponse('Invalid header found.')
-        return HttpResponseRedirect('/')
-        responseData = {
-        'id': 4,
-        'name': 'Test Response',
-        'roles' : ['Admin','User']
-    }
-        return JsonResponse(responseData)
+            user = result[event.form_answers.__len__()]['Имя']
+        except KeyError:
+            user = ''
+        try:
+            to = result[event.form_answers.__len__()]['Email']
+        except KeyError:
+            to = False
+        if to:
+            try:
+                subject = 'Билет на мероприятие' + event.title
+                text_content = 'This is an important message.'
+                context = {
+                    'event':event,
+                    'user':user,
+                }
+                html_content = render_to_string(
+                    template_name='event/email/ticket_after_registration.html', context=context
+                ).strip()
+                msg = EmailMultiAlternatives(subject, text_content, [to])
+                msg.attach_alternative(html_content, "text/html")
+                msg.content_subtype = "html"
+                msg.send()
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return HttpResponseRedirect('/')
+        else:
+            responseData = {
+            'id': 4,
+            'name': 'Test Response',
+            'roles' : ['Admin','User']
+            }
+            return JsonResponse(responseData)
     else:
         pass
