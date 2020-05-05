@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.core.mail import BadHeaderError, send_mail
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
-
+from django.contrib import messages
 from .models import EventPage
 # Create your views here.
 
@@ -39,6 +39,7 @@ def register_on_event(request):
                             result[event.form_answers.__len__() + 1][blocks.value.get('name')] = request.POST.get(field, '')
         event.form_answers.update(result)
         event.save()
+        messages.add_message(request, messages.SUCCESS, 'Вы успешно зарегистрировались на мероприятие.')
         try:
             user = result[event.form_answers.__len__()]['Имя']
         except KeyError:
@@ -54,24 +55,21 @@ def register_on_event(request):
                 context = {
                     'event':event,
                     'user':user,
+                    'request': request,
                 }
                 html_content = render_to_string(
                     template_name='event/email/ticket_after_registration.html', context=context
                 ).strip()
-                msg = EmailMultiAlternatives(subject, text_content, [to])
+                msg = EmailMultiAlternatives(subject, 'from@example.com', text_content, [to])
                 msg.attach_alternative(html_content, "text/html")
                 msg.content_subtype = "html"
                 msg.send()
-                send_mail(subject, html_content, 'from@example.com', [to],  html_message=html_content)
+                
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
-            return HttpResponseRedirect('/')
+            
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
-            responseData = {
-            'id': 4,
-            'name': 'Test Response',
-            'roles' : ['Admin','User']
-            }
-            return JsonResponse(responseData)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
-        pass
+        return HttpResponseRedirect(request.META.get('/'))
