@@ -62,6 +62,7 @@ def register_on_event(request):
                 msg.attach_alternative(html_content, "text/html")
                 msg.content_subtype = "html"
                 msg.send()
+                send_mail(subject, html_content, 'from@example.com', [to],  html_message=True)
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return HttpResponseRedirect('/')
