@@ -1,6 +1,6 @@
 {% load wagtailcore_tags %}
 <h3 id="register_form">Регистрация на мероприятие</h3>
-<form  class="contact-form" method="post" action="{%url 'register_on_event' %}">
+<form  name="register_form" class="contact-form" method="post" action="{%url 'register_on_event' %}" onsubmit="return validateForm()">
 {% csrf_token %}
 <input type="hidden" name="event_id" value="{{page.id}}">
 {%for struct_block in block.value%}
@@ -45,12 +45,30 @@
     <label>{{struct_block.value.name}}{%if struct_block.value.required%}<span style="color:red;"> *</span>{%endif%}</label>
     {%with value=struct_block.value.choices id='1'%}
         {%for item in value%}
-        <input type="checkbox" id="{{struct_block.id}}{{forloop.counter}}" name="{{struct_block.id}}" value="{{item}}" {%if struct_block.required%}required{%endif%}>
+        <input type="checkbox" id="{{struct_block.id}}{{forloop.counter}}" name="{{struct_block.id}}" value="{{item}}" {%if struct_block.value.required%}required{%endif%}>
         <label for="{{struct_block.id}}{{forloop.counter}}">{{item}}</label><br>
         {%endfor%}
         <br>
     {%endwith%}
     {%endif%}
 {%endfor%}
-<button type="submit" class="btn" data-type="submit">Зарегистрироваться</button><br>
+<input type="submit" class="btn" data-type="submit">Зарегистрироваться</button><br>
 </form>
+
+<script>
+function validateForm() {
+    var x = document.forms["register_form"]["fname"].value;
+    mistake=1;
+    $( ".class1" ).each(function( index ) {
+        if ($(this).prop('checked')==checked){
+            mistake=0;
+        }
+    });
+    if (mistake==1){
+        alert('mistake');
+    }
+    alert("Необходимо ввести имя");
+    return false;
+}
+
+</script>

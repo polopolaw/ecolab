@@ -107,7 +107,16 @@
     	<div class="page-section">
 
     		<div class="container">
-    			
+    			<ul class="messages">
+    {% for message in messages %}
+	{% if message.tags == 'success'%}
+	<div class="alert alert-success">
+		<button type="button" class="close" data-dismiss="alert"></button>
+		{{ message }}
+	</div>
+	{% endif %}
+    {% endfor %}
+	</ul>
     			<div class="content-element4">
     				
     				<div class="row">
