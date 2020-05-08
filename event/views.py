@@ -35,7 +35,7 @@ def register_on_event(request):
                     for blocks in streamblocks.value:
                         if(blocks.id == field):
                             if(blocks.block_type == 'checkbox'):
-                                result[blocks.value.get('name')] = request.POST.getlist(field)
+                                result[event.form_answers.__len__() + 1][blocks.value.get('name')] = request.POST.getlist(field)
                             result[event.form_answers.__len__() + 1][blocks.value.get('name')] = request.POST.get(field, '')
         event.form_answers.update(result)
         event.save()

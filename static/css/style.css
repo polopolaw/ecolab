@@ -3632,6 +3632,7 @@ button.search-button:before{content: "\e922";}
   [class*="table-type"] table tr > th{
     padding: 13px 30px;
     text-align: left;
+    word-break: break-all;
   }
 
   [class*="table-type"] table tr > th{

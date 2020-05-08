@@ -1,4 +1,7 @@
 from django import template
+from django.core.serializers import serialize
+from django.db.models.query import QuerySet
+import json
 
 register = template.Library()
 
@@ -10,3 +13,6 @@ def get_minutes(timedelta):
 @register.filter(name='hours')
 def get_hours(timedelta):
     return timedelta.seconds//3600
+
+
+
