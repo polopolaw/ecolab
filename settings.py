@@ -59,17 +59,14 @@ INSTALLED_APPS.extend([
     'wagtailcaptcha',
     'wagtailmenus',
     "wagtail.contrib.routable_page",
+    "shop"
 ])
 
 # To see the settings that have been applied, use the Django diffsettings 
 # management command. 
 # See https://docs.divio.com/en/latest/how-to/configure-settings.html#list
-if DEBUG:
-
-    INSTALLED_APPS.extend(["debug_toolbar"])
 
 
-MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
 #Recaptcha settings
 #RECAPTCHA_PUBLIC_KEY = '6LfjnPAUAAAAAHhqKbK4IrSsPIfis1Y0YGje-gp3'

@@ -70,6 +70,11 @@ def register_on_event(request):
             
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            context = {
+                    'event':event,
+                    'user':user,
+                    'request': request,
+                }
+            return render(request, template_name='event/email/ticket_after_registration.html', context=context)
     else:
         return HttpResponseRedirect(request.META.get('/'))

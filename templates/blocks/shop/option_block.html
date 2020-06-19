@@ -1,0 +1,12 @@
+
+{% load wagtailcore_tags %}
+<label>Опции:</label>
+<div class="custom-select type-2">
+    <div class="select-title">Small</div>
+    <ul id="menu-type3" class="select-list"></ul>
+        <select class="hide">
+            {%for block in page.option%}
+            <option value="{{block.option.cost.value}}">{{block.option.name.value}}</option>
+            {%endfor%}
+        </select>
+</div>

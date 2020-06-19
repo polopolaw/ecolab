@@ -12,7 +12,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel, StreamFieldPanel, PageChooserPanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel, StreamFieldPanel, PageChooserPanel
 from django.shortcuts import render
 from django.contrib.auth.models import User
 
@@ -78,6 +78,13 @@ class EventPage(Page):
     duration = models.DurationField(blank=True, help_text='Если указана дата окончания мероприятия, это поле в приоритете. Формат ввода Дни Часы:Минуты:Секунды', null=True)
     ics = models.FileField(upload_to='uploads/', null=True, blank=True)
     intro = RichTextField(blank=False)
+    main_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     body = StreamField([
         ('emphasize', blocks.CharBlock(label="Выделить текст", icon="title", template = 'blocks/event_emphasize_block.html')),
         ('paragraph', blocks.RichTextBlock(label="Текст", icon="pilcrow", template = 'blocks/event_paragraph_block.html')),
@@ -138,13 +145,7 @@ class EventPage(Page):
     categories = ParentalManyToManyField('event.EventCategory', blank=True)
     organizer = models.ForeignKey('event.EventOrganizer', on_delete=models.SET_NULL, null=True, blank=True)
     views = models.IntegerField(default=0)
-    main_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
+    
 
     search_fields = Page.search_fields + [
         index.SearchField('body'),

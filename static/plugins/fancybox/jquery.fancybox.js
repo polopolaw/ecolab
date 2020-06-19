@@ -648,8 +648,7 @@
 				rez.w = isTouch && window.innerWidth  ? window.innerWidth  : W.width() - 30;
 				rez.h = isTouch && window.innerHeight ? window.innerHeight : W.height();
 			}
-			console.log(rez)
-			console.log(locked)
+
 			return rez;
 		},
 

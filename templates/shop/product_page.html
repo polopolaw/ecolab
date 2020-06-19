@@ -1,0 +1,478 @@
+{% extends 'base.html' %}
+{% load static wagtailuserbar %}
+{% load wagtailimages_tags %}
+{% load shop_tags wagtailcore_tags %}
+{% block extra_js_top %}
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+     
+{% endblock %}
+
+{%block extra_css %}
+
+<link rel="stylesheet" href="{% static 'plugins/fancybox/helpers/jquery.fancybox-thumbs.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/fancybox/helpers/jquery.fancybox-buttons.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/fancybox/jquery.fancybox.css' %}">
+{%endblock%}
+{% block shopcart%}
+
+<div class="shop-cart">
+                    
+	<button class="sc-cart-btn dropdown-invoker"><span class="licon-cart"></span></button>
+
+	<div class="shopping-cart dropdown-window">
+
+		
+
+	</div><!--/ .shopping-cart -->
+
+</div>
+{%endblock%}
+{% block content %}
+<div class="breadcrumbs-wrap style-2 type-2">
+
+	<div class="container">
+		
+		<h1 class="page-title">{{page.title}}</h1>
+
+		{% if self.get_ancestors|length > 1 %}
+			<ul class="breadcrumbs">
+
+			{% for page in self.get_ancestors %}
+			{% if page.is_root == False %}
+			<li><a href="{{page.url}}">{{ page.title }}</a></li>
+			{% endif %}
+			{% endfor %}
+
+			<li>{{ page.title }}</li>
+
+			</ul>
+		{% endif %}
+
+	</div>
+
+</div>
+
+		                    
+
+
+
+    <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+
+    <div id="content" class="page-content-wrap">
+
+        <div class="container">
+
+          	<div class="content-element6">
+            
+	            <div class="product single">
+
+	              	<div class="row">
+
+		                <div class="col-sm-6">
+
+		                  <div class="image-preview-container">
+
+		                    <!-- - - - - - - - - - - - - - Image Preview Container - - - - - - - - - - - - - - - - -->
+							{%with i=page.slider.all|first%}
+		                    <div class="image-preview">
+							{%image i.image fill-555x555 as img%}
+		                      <img href="{{img.url}}" class="fancybox" id="zoom-image" data-zoom-image="{{img.url}}" src="{{img.url}}" alt="">
+
+		                    </div><!--/ .image-preview-->
+							{%endwith%}.
+							
+
+		                    <!-- - - - - - - - - - - - - - End of Image Preview Container - - - - - - - - - - - - - - - - -->
+
+		                    <!-- - - - - - - - - - - - - - Thumbnails - - - - - - - - - - - - - - - - -->
+
+		                    <div class="carousel-type-4 type-2">
+
+		                      <div class="owl-carousel product-thumbs" id="thumbnails">
+		                      	{%for carousel_item in page.slider.all%}
+								  {%image carousel_item.image fill-555x555 as img%}
+		                        <a class="active" href="#" data-image="{{img.url}}">
+
+		                          {%image carousel_item.image fill-100x100%}
+
+		                        </a>
+								{%endfor%}
+
+		                      </div>
+
+		                    </div>
+
+		                    <!-- - - - - - - - - - - - - - End of Thumbnails - - - - - - - - - - - - - - - - -->
+
+		                  </div><!--/ .image-preview-container -->
+
+		                </div>
+
+		                <div class="col-sm-6">
+
+		                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
+
+		                  <div class="product-description">
+
+		                    <h3 class="product-name">{{page.name}}</h3>
+
+		                    <div class="pricing-area">
+
+		                      <div class="product-price">
+							{%if page.option%}
+		                        {%with option=page.option|first%}{{option.value.cost}}&#8381{%endwith%}
+							{%else%}
+								{{page.cost}}&#8381
+							{%endif%}
+		                      </div>
+		                      
+		                      <div class="flex-row">
+		                      	
+		                      	<ul class="rating">
+								  {%with rate=page.rating|div:page.count_rating%}
+			                        {%if rate >= 1%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%if rate >= 2%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%if rate >= 3%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%if rate >= 4%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%if rate >= 5%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%endwith%}
+			                    </ul>
+								&nbsp;&nbsp;
+								<span>(<a href="#tab-2">{{page.productreview_set.all|length}} отзыв</a>)</span>
+
+		                      </div>
+
+		                    </div>
+
+		                    <p class="product-excerpt">{{page.short_description|richtext}} </p>
+
+		                    <form class="add-to-cart-form">
+							  {%if page.option%}
+							  <label>Опции:</label>
+		                      <div class="custom-select type-2">
+		                        <div class="select-title">{%with option=page.option|first%}{{option.value.name}}{%endwith%}</div>
+		                        <ul id="menu-type3" class="select-list"></ul>
+		                        <select class="hide">
+								{%for block in page.option%}
+									<option value="{{block.value.cost}}">{{block.value.name}}</option>
+								{%endfor%}
+		                        </select>
+		                      </div>
+							  {%endif%}
+		                      <div class="product-actions">
+		                        
+		                        <label>Количество:</label>
+		                        <div>
+		                          <div class="quantity">
+		                            <button type="button" class="qty-minus"><i class="icon icon-down-dir"></i></button>
+		                            <input type="text" value="1"  readonly="">
+		                            <button type="button" class="qty-plus"><i class="icon icon-up-dir"></i></button>
+		                            
+		                          </div>
+		                          <a href="#" class="btn">В корзину</a>
+		                        </div>
+
+		                      </div><!--/ .product-actions -->
+
+		                    </form>
+
+		                    <ul class="product-meta">
+
+		                      <li>Категория: {% for cat in page.categories.all %}<a href="#">{{cat}}</a>{%endfor%}</li>
+		                      <li>Теги: {% for tag in page.tags.all %}<a href="#">{{tag}}</a> {%endfor%}</li>
+
+		                    </ul>
+
+		                    <div class="share style-2">
+							<a url="{{page.url}}" text='page.short_description|richtex' img="{{page.main_image}}" class="share-link entry-share f-right"><i class="licon-share2"></i></a>
+								
+							</div>
+
+		                  </div>
+
+		                  <!-- - - - - - - - - - - - - - End of Product Description - - - - - - - - - - - - - - - - -->
+
+		                </div>
+
+	              	</div><!--/ .row -->
+
+	            </div><!--/ .product-single -->
+
+          	</div>
+
+          	<div class="content-element">
+            
+	            <div class="row">
+	              
+	              <main id="main" class="col-md-8 col-sm-12">
+	                
+	                <div class="tabs tabs-section clearfix">
+	                  <!--tabs navigation-->                  
+	                  <ul class="tabs-nav clearfix">
+	                    <li>
+	                      <a href="#tab-1">Описание</a>
+	                    </li>
+	                    <li>
+	                      <a href="#tab-2">Отзывы({{page.productreview_set.all|length}})</a>
+	                    </li>
+	                  </ul>
+	                  <!--tabs content-->                 
+	                  <div class="tabs-content">
+	                    <div id="tab-1">
+
+	                      {{page.description|richtext}}
+
+	                    </div>
+	                    <div id="tab-2">
+
+	                      <div class="content-element">
+	                      
+	                        <h5 class="section-title">{{page.productreview_set.all|length}} Отзыва на {{page.name}}</h5>
+							{% for review in page.productreview_set.all %}
+							{%if review.publish == True%}
+	                        <ol class="comments-list">
+	          
+	                          <li class="comment">
+
+	                            <article>
+
+	                              <!-- - - - - - - - - - - - - - Avatar - - - - - - - - - - - - - - - - -->
+
+	                              <div class="gravatar">
+	                                {%if review.author_avatar%}
+	                                <a href="{{review.author_url}}"><img src="{{review.author_avatar}}" alt=""></a>
+									{%else%}
+									<a href="{{review.author_url}}"><img src="{% static 'images/guest_avatar.png' %}"></a>
+									{%endif%}	
+	                              </div>
+
+	                              <!-- - - - - - - - - - - - - - End of avatar - - - - - - - - - - - - - - - - -->
+
+	                              <!-- - - - - - - - - - - - - - Comment body - - - - - - - - - - - - - - - - -->
+
+	                              <div class="comment-body">
+
+	                                <header class="comment-meta">
+
+	                                  	<h6 class="comment-author"><a href="{%if review.author_url%}{{review.author_url}}{%endif%}">{{review.author_name}}</a></h6>
+	                                  	<div class="wrapper">
+	                                    	<time datetime="2017-10-17 02:41" class="comment-date single f-left">{{review.date_create|date}}</time>
+	                                    	<ul class="rating f-right">
+												{%if review.vote >= 1%}
+						                        <li><i class="licon-star"></i></li>
+												{%else%}
+												<li class="empty"><i class="licon-star"></i></li>
+												{%endif%}
+												{%if review.vote >= 2%}
+						                        <li><i class="licon-star"></i></li>
+												{%else%}
+												<li class="empty"><i class="licon-star"></i></li>
+												{%endif%}
+												{%if review.vote >= 3%}
+						                        <li><i class="licon-star"></i></li>
+												{%else%}
+												<li class="empty"><i class="licon-star"></i></li>
+												{%endif%}
+												{%if review.vote >= 4%}
+						                        <li><i class="licon-star"></i></li>
+												{%else%}
+												<li class="empty"><i class="licon-star"></i></li>
+												{%endif%}
+												{%if review.vote >= 5%}
+						                        <li><i class="licon-star"></i></li>
+												{%else%}
+												<li class="empty"><i class="licon-star"></i></li>
+												{%endif%}
+
+						                    </ul>
+	                                  	</div>
+
+	                                </header>
+
+	                                <p>{{review.review_content}}</p>
+									<h3>Достоинства:</h3>
+									<p>{{review.pros}}</p>
+									<h3>Недостатки:</h3>
+									<p>{{review.cons}}</p>
+									{%if review.wasrecomeded %}
+									<h3>Рекомендует продукт</h3>
+									{%endif%}
+	                              </div><!--/ .comment-body-->
+
+	                              <!-- - - - - - - - - - - - - - End of comment body - - - - - - - - - - - - - - - - -->
+
+	                            </article>
+
+	                          </li>
+	                      
+	                        </ol>
+							{%endif%}
+							{% endfor %}
+	                      </div>
+
+	                      <div class="content-element">
+	                        
+	                        <div class="bg-sidebar-item style-2">
+	                          
+	                          <h5 class="content-element3">Добавить отзыв</h5>
+	                          <p class="content-element3">Ваш email адресс не будет показан в отзыве.</p>
+								<form action="/shop/add_review/" method="post" class="contact-form flex-type">
+									{% csrf_token %}
+									<div class="contact-col">
+										{{ form.author_name.errors }}
+										<label for="{{ form.author_name.id_for_label }}">Ваше имя:</label>
+										{{ form.author_name }}
+									</div>
+									<div class="contact-col">
+										{{ form.author_email.errors }}
+										<label for="{{ form.author_email.id_for_label }}">Email:</label>
+										{{ form.author_email }}
+									</div>
+									<div class="contact-col">
+										{{ form.vote.errors }}
+										<label for="{{ form.vote.id_for_label }}">Ваша оценка:</label>
+										{{ form.vote }}
+									</div>
+									<div class="contact-col">
+										{{ form.review_content.errors }}
+										<label for="{{ form.review_content.id_for_label }}">Ваш отзыв:</label>
+										{{ form.review_content }}
+									</div>
+									<div class="contact-col">
+										{{ form.pros.errors }}
+										<label for="{{ form.pros.id_for_label }}">Достоинства:</label>
+										{{ form.pros }}
+									</div>
+									<div class="contact-col">
+										{{ form.cons.errors }}
+										<label for="{{ form.cons.id_for_label }}">Недостаки:</label>
+										{{ form.cons }}
+									</div>
+									<div class="contact-col">
+										{{ form.wasrecomeded.errors }}
+										{{ form.wasrecomeded }}
+										<label for="{{ form.wasrecomeded.id_for_label }}">Рекомендуете этот товар?</label>
+									</div>
+									<div class="contact-col">
+										{{ form.author_url }}
+									</div>
+									<div class="contact-col">
+										{{ form.author_avatar }}
+									</div>
+									<div class="contact-col">
+										<input type="hidden" name="product" value={{page.id}}>
+									</div>
+									<input type="submit" class="btn" value="Отправить">
+								</form>
+	                          	
+
+	    							
+	    							
+	                        </div>
+
+	                      </div>
+
+	                    </div>
+	                  </div>
+	                </div>
+
+	              </main>
+	              <aside id="sidebar" class="col-md-4 col-sm-12">
+	                {%if page.related_links.all%}
+	                <!-- Widget -->
+		            <div class="widget">
+		                  
+		              <h4 class="widget-title">Сопутствующие товары</h4>
+
+		              <div class="product-holder">
+		                {%for related_pr in page.related_links.all%}
+						{%with related_pr=related_pr.shop_product.specific%}
+		                <!-- product -->
+		                <div class="product">
+		                    
+		                  <!-- - - - - - - - - - - - - - Product Image - - - - - - - - - - - - - - - - -->
+		                  <figure class="product-image">
+						  {%with image=related_pr.slider.all|first%}
+		                    <a href="{{related_pr.url}}">{%image image.image fill-100x100%}</a>
+							{%endwith%}
+		                  </figure>
+		                  <!-- - - - - - - - - - - - - - End of Product Image - - - - - - - - - - - - - - - - -->
+
+		                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
+		                  <div class="product-description">
+
+		                    <h5 class="product-name"><a href="{{related_pr.url}}">{{related_pr.name}}</a></h5>
+
+		                    <div class="pricing-area">
+
+		                      <div class="product-price">
+								{%if related_pr.option%}
+		                        	{%with option=related_pr.option|first%}{{option.value.cost}}&#8381{%endwith%}
+								{%else%}
+									{{related_pr.cost}}&#8381
+								{%endif%}
+		                      </div>
+
+		                      <ul class="rating">
+		                        <li><i class="licon-star"></i></li>
+		                        <li><i class="licon-star"></i></li>
+		                        <li><i class="licon-star"></i></li>
+		                        <li><i class="licon-star"></i></li>
+		                        <li class="empty"><i class="licon-star"></i></li>
+		                      </ul>
+
+		                    </div>
+
+		                  </div>
+		                  <!-- - - - - - - - - - - - - - End of Product Description - - - - - - - - - - - - - - - - -->
+
+		                </div>
+						{%endwith%}
+						{%endfor%}
+		              </div>
+
+		            </div>
+					{%endif%}
+	              </aside>
+
+	            </div>
+
+          	</div>
+          
+        </div>
+
+      </div>
+
+    <!-- - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - -->
+
+{%endblock%}
+{%block extra_js%}
+<script type="text/babel" src="{% static 'js/react-cart-manager.js' %}"></script>    
+    <script src="{% static 'plugins/elevatezoom.min.js' %}"></script>
+	<script src="{% static 'plugins/isotope.pkgd.min.js' %}"></script>
+  	<script src="{% static 'plugins/fancybox/jquery.fancybox.js' %}"></script>
+  	<script src="{% static 'plugins/fancybox/helpers/jquery.fancybox-thumbs.js' %}"></script>
+  	<script src="{% static 'plugins/fancybox/helpers/jquery.fancybox-buttons.js' %}"></script>
+{%endblock%}
