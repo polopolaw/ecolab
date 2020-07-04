@@ -75,3 +75,4 @@ SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
 #EMAIL SETTINGS
 
+TEMPLATES[0]["OPTIONS"]["context_processors"].append('wagtail.contrib.settings.context_processors.settings')
