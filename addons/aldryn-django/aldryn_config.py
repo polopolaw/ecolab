@@ -170,7 +170,6 @@ class Form(forms.BaseForm):
                         'django.template.context_processors.tz',
                         'django.template.context_processors.static',
                         'aldryn_django.context_processors.debug',
-                        'wagtail.contrib.settings.context_processors.settings',
                     ],
                     'loaders': loader_list_class([
                         'django.template.loaders.filesystem.Loader',
