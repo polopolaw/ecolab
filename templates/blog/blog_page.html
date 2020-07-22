@@ -346,144 +346,10 @@
 						<div class="content-element6">
 							
 							<h4>Комментарии</h4>
-							<ol class="comments-list">
-        
-			                  <li class="comment">
 
-			                    <article>
-
-			                      <!-- - - - - - - - - - - - - - Avatar - - - - - - - - - - - - - - - - -->
-
-			                      <div class="gravatar">
-			                        
-			                        <a href="#"><img src="images/100x100_author1.jpg" alt=""></a>
-
-			                      </div>
-
-			                      <!-- - - - - - - - - - - - - - End of avatar - - - - - - - - - - - - - - - - -->
-
-			                      <!-- - - - - - - - - - - - - - Comment body - - - - - - - - - - - - - - - - -->
-
-			                      <div class="comment-body">
-
-			                        <header class="comment-meta">
-
-			                          <h6 class="comment-author"><a href="#">Amanda Johnson</a></h6>
-			                          <time datetime="2015-10-17 02:41" class="comment-date">August 20, 2017 at 2:06 pm</time>
-			                          <a href="#" class="comment-reply-link">Reply</a>
-
-			                        </header>
-
-			                        <p>Donec in velit vel ipsum auctor pulvinar. Vestibulum iaculis lacinia est. Proin dictum.Fusce euismod consequat ante. </p>
-
-			                      </div><!--/ .comment-body-->
-
-			                      <!-- - - - - - - - - - - - - - End of comment body - - - - - - - - - - - - - - - - -->
-
-			                    </article>
-
-			                    <ol class="children">
-			      
-			                      <li class="comment">
-
-			                        <article>
-
-			                          <!-- - - - - - - - - - - - - - Avatar - - - - - - - - - - - - - - - - -->
-
-			                          <div class="gravatar">
-			                            
-			                            <a href="#"><img src="images/100x100_author4.jpg" alt=""></a>
-
-			                          </div>
-
-			                          <!-- - - - - - - - - - - - - - End of avatar - - - - - - - - - - - - - - - - -->
-
-			                          <!-- - - - - - - - - - - - - - Comment body - - - - - - - - - - - - - - - - -->
-
-			                          <div class="comment-body">
-
-			                            <header class="comment-meta">
-
-			                              <h6 class="comment-author"><a href="#">Admin</a></h6>
-			                              <time datetime="2015-10-17 02:41" class="comment-date">August 20, 2017 at 2:06 pm</time>
-			                              <a href="#" class="comment-reply-link">Reply</a>
-
-			                            </header>
-
-			                            <p>Sed in lacus ut enim adipiscing aliquet. Nulla venenatis. In pede mi, aliquet sit amet, euismod in, auctor ut, ligula. </p>
-
-			                          </div><!--/ .comment-body-->
-
-			                          <!-- - - - - - - - - - - - - - End of comment body - - - - - - - - - - - - - - - - -->
-
-			                        </article>
-
-			                      </li>
-			                  
-			                    </ol>
-
-			                  </li>
-
-			                  <li class="comment">
-
-			                    <article>
-
-			                      <!-- - - - - - - - - - - - - - Avatar - - - - - - - - - - - - - - - - -->
-
-			                      <div class="gravatar">
-			                        
-			                        <a href="#"><img src="images/100x100_author5.jpg" alt=""></a>
-
-			                      </div>
-
-			                      <!-- - - - - - - - - - - - - - End of avatar - - - - - - - - - - - - - - - - -->
-
-			                      <!-- - - - - - - - - - - - - - Comment body - - - - - - - - - - - - - - - - -->
-
-			                      <div class="comment-body">
-
-			                        <header class="comment-meta">
-
-			                          <h6 class="comment-author"><a href="#">Bradley Grosh</a></h6>
-			                          <time datetime="2015-10-17 02:41" class="comment-date">August 20, 2017 at 2:06 pm</time>
-			                          <a href="#" class="comment-reply-link">Reply</a>
-
-			                        </header>
-
-			                        <p>Duis ac turpis. Integer rutrum ante eu lacus.</p>
-
-			                      </div><!--/ .comment-body-->
-
-			                      <!-- - - - - - - - - - - - - - End of comment body - - - - - - - - - - - - - - - - -->
-
-			                    </article>
-
-			                  </li>
-			              
-			                </ol>
 
 						</div>
 
-						<div class="content-element6">
-							
-							<h4>Leave a Comment</h4>
-							<p>Your email address will not be published. </p>
-
-							<form class="contact-form flex-type">
-
-    							<div class="contact-col-2"><input type="text" name="cf-name" placeholder="Your Name (required)"></div>
-
-    							<div class="contact-col-2"><input type="text" name="cf-email" placeholder="Email (required)"></div>
-
-    							<div class="contact-col"><input type="email" placeholder="Website"></div>
-
-    							<div class="contact-col"><textarea rows="8" name="cf-message" placeholder="Message"></textarea></div>
-
-    							<div class="contact-col-submit"><button type="submit" class="btn" data-type="submit">Post Comment</button></div>
-
-				            </form>
-
-						</div>
 
 		        	</main>
 
@@ -507,20 +373,7 @@
 		        		
 		        		{% block categories_widget %}{% include "blog/includes/categories_widget.html" with cattegories=categories%}{% endblock categories_widget %}
 
-		        		<!-- widget Banner -->
-		        		<div class="widget">
-		        			
-		        			<a href="#" class="banner-item">
-			                    <div class="banner-inner">
-				                  	<i class="licon-tie"></i>
-				                    <h5 class="banner-title">Employment <br> Vacancies</h5>
-				                    <p>Nulla venenatis. In pede mi, aliquet sit amet, euismod.</p>
-				                    <div class="btn btn-small">View Vacancies</div>
-			                    </div>
-			                </a>
 
-		        		</div>
-		        		<!-- /widget -->
 						{%if page.get_popular_news%}
 		        		<!-- widget News -->
 		        		<div class="widget">

@@ -289,7 +289,7 @@
                         <div class="icons-item">
                             <div class="item-box"> <i class="licon-share2"></i>
                                 <h5 class="icons-box-title">
-                                    <a href="#">Оставайтесь на связи</a>
+                                    <a>Оставайтесь на связи</a>
                                 </h5>
                                 <ul class="social-icons style-2">
                                     
@@ -305,7 +305,8 @@
                                     {%if settings.site_settings.SocialMediaSettings.youtube %}
                                     <li class="youtube-icon"><a href="{{settings.site_settings.SocialMediaSettings.youtube}}"><i class="icon-youtube"></i></a></li>
                                     {%endif%}
-                                    {%if settings.site_settings.SocialMediaSettings.instagram %}<li class="insta-icon"><a href="{{ settings.site_settings.SocialMediaSettings.instagram }}"><i class="icon-instagram-4"></i></a></li> {%endif%}
+                                    {%if settings.site_settings.SocialMediaSettings.instagram %}
+                                    <li class="insta-icon"><a href="{{ settings.site_settings.SocialMediaSettings.instagram }}"><i class="icon-instagram-4"></i></a></li> {%endif%}
 
                                 </ul>
                             </div>
