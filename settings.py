@@ -67,12 +67,4 @@ INSTALLED_APPS.extend([
 # See https://docs.divio.com/en/latest/how-to/configure-settings.html#list
 
 
-
-#Recaptcha settings
-#RECAPTCHA_PUBLIC_KEY = '6LfjnPAUAAAAAHhqKbK4IrSsPIfis1Y0YGje-gp3'
-#RECAPTCHA_PRIVATE_KEY = '6LfjnPAUAAAAAG0c_aoK_k02HXcR9PKNN_856ESB'
-SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
-
-#EMAIL SETTINGS
-
 TEMPLATES[0]["OPTIONS"]["context_processors"].append('wagtail.contrib.settings.context_processors.settings')
