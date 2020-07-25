@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
+{% block extra_js_top %} 
+<script type="text/javascript" src="https://vk.com/js/api/openapi.js?168"></script>
+{% endblock %}
     <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
 {% load static wagtailuserbar %}
 {% load wagtailimages_tags %}
 {% load wagtailcore_tags %}
 {% block content %}
+
 {{page.counter}}
     <div id="content">
 		
@@ -77,9 +81,6 @@
 												            <a class="entry-news" href="{% pageurl page.get_parent %}?cat={{ cat }}">{{cat}}</a>
 												        {% endfor %}
 													{% endif %}
-													<a href="#" class="entry-comments-link">3</a>
-													<a href="#" class="entry-share f-right">Поделиться</a>
-
 												</div>
 
 												<!-- - - - - - - - - - - - - - Entry meta - - - - - - - - - - - - - - - - -->
@@ -108,7 +109,7 @@
 												        {% endfor %}
 														{% endif %}
 													</div>
-													<a url="{{page.url}}" text="{{page.intro}}" img="{{page.main_image}}" class="entry-share f-right">Поделиться</a>
+													<a url="{{site_url}}" text="{{page.intro}}" img="{{page.main_image}}" class="entry-share f-right">Поделиться</a>
 
 												</div>
 
@@ -256,7 +257,7 @@
 													            <a class="entry-news" href="{% pageurl page.get_parent %}?cat={{ cat }}">{{cat}}</a>
 													        {% endfor %}
 														{% endif %}
-															<a href="#" class="entry-comments-link">5</a>
+															
 
 														</div>
 
@@ -318,7 +319,7 @@
 													            <a class="entry-news" href="{% pageurl page.get_parent %}?cat={{ cat }}">{{cat}}</a>
 													        {% endfor %}
 														{% endif %}
-															<a href="#" class="entry-comments-link">3</a>
+															
 
 														</div>
 
@@ -347,6 +348,16 @@
 							
 							<h4>Комментарии</h4>
 
+
+							<script type="text/javascript">
+							VK.init({apiId: 7549275, onlyWidgets: true});
+							</script>
+
+							<!-- Put this div tag to the place, where the Comments block will be -->
+							<div id="vk_comments"></div>
+							<script type="text/javascript">
+							VK.Widgets.Comments("vk_comments", {limit: 10, attach: "*"});
+							</script>
 
 						</div>
 
@@ -437,8 +448,14 @@
 		        		</div>
 		        		<!-- /widget -->
 						{%endif%}
+						<div class="widget">
 
-
+											    
+						<h4>Привет из инстаграма</h4>
+												<!-- SnapWidget -->
+						<script src="https://snapwidget.com/js/snapwidget.js"></script>
+						<iframe src="https://snapwidget.com/embed/796694" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden;  width:100%; "></iframe>
+						</div>
 		        		<!-- widget Events -->
 		        		<div class="widget">
 

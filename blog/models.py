@@ -68,6 +68,7 @@ class BlogIndex(Page):
             'events': events,
             'popularnews': popularnews,
             'categories': categories,
+            'site_url': request.build_absolute_uri(),
         })
 
 class BlogPageTag(TaggedItemBase):
@@ -155,6 +156,7 @@ class BlogPage(Page):
         context['popularnews'] = popularnews
         context['events'] = events
         context['categories'] = categories
+        context['site_url'] = request.build_absolute_uri()
         return context
 
 class BlogPageGalleryImage(Orderable):

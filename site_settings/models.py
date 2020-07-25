@@ -27,6 +27,7 @@ class WorkspaceSettings(BaseSetting):
 
 
 
+
 @register_setting
 class SocialMediaSettings(BaseSetting):
     facebook = models.URLField(

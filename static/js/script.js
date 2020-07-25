@@ -675,6 +675,7 @@
 		
 		$('.entry-share').click(function(){
 			var url = this.getAttribute('url');
+			console.log(url);
 			var text = this.getAttribute('text');
 			var vk = 'https://vk.com/share.php?url='+url;
 			var whatsapp = 'https://api.whatsapp.com/send?text='+url;
