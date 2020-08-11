@@ -39,7 +39,7 @@ class BlogIndex(Page):
     def serve(self, request):
         # Get the full unpaginated listing of resource pages as a queryset -
         # replace this with your own query as appropriate
-        blogpages = BlogPage.objects.child_of(self).live()
+        blogpages = BlogPage.objects.child_of(self).live().order_by('-date')
         # Filter by tag
         tag = request.GET.get('tag')
         if tag:

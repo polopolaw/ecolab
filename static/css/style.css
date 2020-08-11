@@ -3726,6 +3726,10 @@ button.search-button:before{content: "\e922";}
     color: #ffbd0a;
   }
 
+  .custom-list.type-2.style-3 li {
+    font-size: 22px;
+  }
+
   .custom-list.type-2.style-2 li::before{
     content: "\e959";
     font-size: 24px;
@@ -6065,7 +6069,7 @@ button.search-button:before{content: "\e922";}
     }
 
     .entry .entry-meta > .entry-comments-link:before{
-      content: '\e893';
+      content: '\e871';
     }
 
     .entry .entry-meta > .entry-share:before{
