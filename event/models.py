@@ -135,13 +135,13 @@ class EventPage(Page):
             icon='form', template="blocks/event_form_block.html"
             )), 
     ])
-    form_answers = JSONField(blank=True)
-    max_visitors = models.PositiveIntegerField(blank=True)
+    form_answers = JSONField(default=dict)
+    max_visitors = models.PositiveIntegerField(null=True, blank=True)
     tags = ClusterTaggableManager(through=EventPageTag, blank=True)
-    location = models.CharField(max_length=250, blank=True)
+    location = models.CharField(max_length=250, blank=True, null=True)
     coordinates = models.CharField(max_length=100, blank=True, null=True, help_text="Широта,долгота через запятую")
     timepad = models.URLField(
-        help_text='URL на мероприятие в Timepad', blank=True)
+        help_text='URL на мероприятие в Timepad', blank=True, null=True)
     categories = ParentalManyToManyField('event.EventCategory', blank=True)
     organizer = models.ForeignKey('event.EventOrganizer', on_delete=models.SET_NULL, null=True, blank=True)
     views = models.IntegerField(default=0)

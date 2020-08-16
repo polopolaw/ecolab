@@ -13,7 +13,6 @@ from .models import EventPage
 
 
 def ajax_event_index_page(request):
-    print('sdfsdfs')
     responseData = {
         'id': 4,
         'name': 'Test Response',
@@ -26,7 +25,7 @@ def ajax_event_index_page(request):
 @csrf_protect
 def register_on_event(request):
     if request.method == 'POST':
-        event = get_object_or_404(EventPage, pk=request.POST.get('event_id'))
+        event = EventPage.objects.get(pk=request.POST.get('event_id'))
         result = {event.form_answers.__len__() + 1:{},
         }
         for streamblocks in event.body:
