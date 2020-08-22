@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.contrib import messages
 from .models import EventPage
+import json
 # Create your views here.
 
 
@@ -38,7 +39,7 @@ def register_on_event(request):
                             result[event.form_answers.__len__() + 1][blocks.value.get('name')] = request.POST.get(field, '')
         event.form_answers.update(result)
         event.save()
-        messages.add_message(request, messages.SUCCESS, 'Вы успешно зарегистрировались на мероприятие.')
+        messages.add_message(request, messages.SUCCESS, 'Вы успешно зарегистрировались.')
         try:
             user = result[event.form_answers.__len__()]['Имя']
         except KeyError:
@@ -50,7 +51,7 @@ def register_on_event(request):
         if to:
             try:
                 subject = 'Билет на мероприятие' + event.title
-                text_content = 'This is an important message.'
+                text_content = 'Экологическая мастреская ECOLAB'
                 context = {
                     'event':event,
                     'user':user,

@@ -135,7 +135,7 @@ class EventPage(Page):
             icon='form', template="blocks/event_form_block.html"
             )), 
     ])
-    form_answers = JSONField(default=dict)
+    form_answers = JSONField(default=dict, null=True, blank=True)
     max_visitors = models.PositiveIntegerField(null=True, blank=True)
     tags = ClusterTaggableManager(through=EventPageTag, blank=True)
     location = models.CharField(max_length=250, blank=True, null=True)

@@ -135,7 +135,7 @@
 			                    	{% for block in page.body %}
                                         <section>{% include_block block %}</section>
 									{% endfor %}
-									<!--
+
 									{% if request.user.is_superuser %}
 									<h4>Зарегистрированные пользователи</h4>
 									<div id="register_users" class="table-type-1">{{page.form_answers}}</div>
@@ -165,7 +165,6 @@
 									
 									</script>
 									{%endif%}
-									-->
 			                    </div>
 								{%if page.timepad%}
 								<div href="{{page.timepad}}">Записаться TimePad</div>

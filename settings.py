@@ -71,3 +71,10 @@ TEMPLATES[0]["OPTIONS"]["context_processors"].append('wagtail.contrib.settings.c
 
 RECAPTCHA_PUBLIC_KEY = '6LfjnPAUAAAAAHhqKbK4IrSsPIfis1Y0YGje-gp3'
 RECAPTCHA_PRIVATE_KEY = '6LfjnPAUAAAAAG0c_aoK_k02HXcR9PKNN_856ESB'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'polopolaw@gmail.com'
+EMAIL_HOST_PASSWORD = 'dfuykmiqcfdzyxac'
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
