@@ -166,11 +166,7 @@
 
 	    							<div class="team-member">
 	    								<div class="member-photo">
-
-											  {% if request.user.wagtail_userprofile.avatar %}
 											    <a href="#"><img src="{{ page.owner.wagtail_userprofile.avatar.url }}" alt="{{ request.user.get_full_name }}" height="100px" width="100px">
-											  {% endif %}
-
 	    									</a>
 	    								</div>
 	    								<div class="wrapper">
