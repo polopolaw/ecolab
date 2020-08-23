@@ -50,7 +50,7 @@ def register_on_event(request):
             to = False
         if to:
             try:
-                subject = 'Билет на мероприятие' + event.title
+                subject = 'Ваш билет: ' + event.title
                 text_content = 'Экологическая мастреская ECOLAB'
                 context = {
                     'event':event,
