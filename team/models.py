@@ -90,6 +90,7 @@ class TeamMember(models.Model):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    website = models.URLField(help_text='Ссылка на сайт', blank=True)
 
     panels = [
         FieldPanel('user'),
@@ -102,6 +103,7 @@ class TeamMember(models.Model):
             FieldPanel('instagram'),
             FieldPanel('twitter'),
             FieldPanel('vk'),
+            FieldPanel('website'),
         ],heading='Аккаунты в социальных сетях'),
         
     ]

@@ -98,7 +98,7 @@ b, strong{font-weight: bold !important;}
 
 ul,
 ol{
-  list-style: none;
+  padding: revert;
 }
 
 q{quotes: none;}
@@ -7640,3 +7640,7 @@ button.search-button:before{content: "\e922";}
     .footer-3 .copyright span{
       color: #fff;
     }
+
+.rich-text a{
+  color: #A6C437;
+}

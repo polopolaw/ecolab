@@ -59,10 +59,10 @@
 
 			                    {% if member.photo %}
 			                    {% image member.photo fill-360x360 as img %} 
-							    	<a href="#" class="member-photo"><img src="{{img.url}}" alt="{{img.alt}}"></a>
+							    	<a href="{%if member.website%} {{member.website}}{%endif%}" class="member-photo"><img src="{{img.url}}" alt="{{img.alt}}"></a>
 								{% endif %}
 			                  	<div class="member-info">
-			                    	<h5 class="member-name"><a href="#">{{member.user.get_full_name}}</a></h5>
+			                    	<h5 class="member-name"><a href="{%if member.website%} {{member.website}}{%endif%}">{{member.user.get_full_name}}</a></h5>
 			                    	<h6 class="member-position">{%if member.specificrole %}{{member.specificrole}}{%else%}{{role.name}}{%endif%}</h6>
 			                    	<p>{{member.info}}</p>
 			                  	</div>
@@ -78,6 +78,9 @@
 					                {%endif%}
 					                {%if member.instagram%}
 					                <li class="insta-icon"><a href="https://instagram.com/{{member.instagram}}" target="_blank"><i class="icon-instagram-4"></i></a></li>
+									{%endif%}
+									{%if member.website%}
+					                <li class="tweet-icon"><a href="{{member.website}}" target="_blank"><i class="icon-website"></i></a></li>
 					                {%endif%}
 
 				              	</ul>
