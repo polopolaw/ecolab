@@ -675,9 +675,9 @@
 		
 		$('.entry-share').click(function(){
 			var url = this.getAttribute('url');
-			console.log(url);
 			var text = this.getAttribute('text');
-			var vk = 'https://vk.com/share.php?url='+url;
+			var image = this.getAttribute('image')
+			var vk = 'https://vk.com/share.php?url='+url+'&image='+image;
 			var whatsapp = 'https://api.whatsapp.com/send?text='+url;
 			var fb = 'www.facebook.com/dialog/share?app_id=324966041266385&href='+url+'&name='+text+'&amp;display=popup&link=#&redirect_uri=#close_window';
 			var tw = 'https://twitter.com/intent/tweet?url='+url+'&text='+text;

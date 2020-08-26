@@ -109,7 +109,8 @@
 												        {% endfor %}
 														{% endif %}
 													</div>
-													<a url="{{site_url}}" text="{{page.intro}}" img="{{page.main_image}}" class="entry-share f-right">Поделиться</a>
+													{% image page.main_image width-360 as tmp_photo %}
+													<a url="{{site_url}}" text="{{page.intro}}" image="{{site_url}}{{tmp_photo.url}}" class="entry-share f-right">Поделиться</a>
 
 												</div>
 
@@ -166,7 +167,7 @@
 
 	    							<div class="team-member">
 	    								<div class="member-photo">
-											    <a href="#"><img src="{{ page.owner.wagtail_userprofile.avatar.url }}" alt="{{ request.user.get_full_name }}" height="100px" width="100px">
+											    <a>{% image page.owner.custom_userprofile.photo fill-100x100 %}>
 	    									</a>
 	    								</div>
 	    								<div class="wrapper">

@@ -96,10 +96,12 @@ iframe{width: 100%;}
 
 b, strong{font-weight: bold !important;}
 
-ul,
-ol{
-  padding: revert;
+ul{
+  padding: 0px;
+  list-style: none;
 }
+
+ol { padding: revert;}
 
 q{quotes: none;}
 
