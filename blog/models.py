@@ -14,6 +14,8 @@ from wagtail.search import index
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.snippets.models import register_snippet
 
+
+
 from event.models import EventPage
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 

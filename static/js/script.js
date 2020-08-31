@@ -674,28 +674,30 @@
 		});
 		
 		$('.entry-share').click(function(){
+			$('.social-modal-share').show();
+			$('.social-share').show();
 			var url = this.getAttribute('url');
 			var text = this.getAttribute('text');
 			var image = this.getAttribute('image')
 			var vk = 'https://vk.com/share.php?url='+url+'&image='+image;
 			var whatsapp = 'https://api.whatsapp.com/send?text='+url;
-			var fb = 'www.facebook.com/dialog/share?app_id=324966041266385&href='+url+'&name='+text+'&amp;display=popup&link=#&redirect_uri=#close_window';
+			var fb = 'https://facebook.com/sharer/sharer.php?u='+url;
 			var tw = 'https://twitter.com/intent/tweet?url='+url+'&text='+text;
-			var tg = 'tg://msg_url?url='+url+'&text='+text;
+			var tg = 'https://telegram.me/share/url?url='+url+'&text='+text;
 			$('#share-link-tg').attr( "href", tg );
 			$('#share-link-vk').attr( "href", vk );
 			$('#share-link-whatsapp').attr( "href", whatsapp );
 			$('#share-link-fb').attr( "href", fb );
 			$('#share-link-tw').attr( "href", tw );
-			$('.social-share').slideToggle( "slow", function() {
-    // Animation complete.
-  			});
+			
+			
 		});
 
-		$('.social-share-close').click(function() {
+		$('.social-share-close, .social-modal-share').click(function() {
 			$('.social-share').slideUp("slow", function() {
     // Animation complete.
-  			});
+			  });
+			  $('.social-modal-share').hide();
 		});
 	});
 	

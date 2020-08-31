@@ -1,6 +1,6 @@
-from django.conf.urls import include, url
-
-from . import views
+from django.conf.urls import include
+from django.urls import path
+from .feeds import LatestBlogFeed
 urlpatterns = [
-	url(r'<int:slug>/', views.blog_page, name='blog_page')
+	path(r'latest/feed/', LatestBlogFeed())
 ]

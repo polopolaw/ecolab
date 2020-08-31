@@ -58,7 +58,8 @@
 									<div class="welcome-inner">
 										
 										<div class="welcome-img">
-				    						{% image page.main_image fill-750x460%}
+											{% image page.main_image original as tmp_photo%}
+											<img src="{{ tmp_photo.url }}" width="750" style="max-height: 450px;" alt="{{ tmp_photo.alt }}"/>
 				    					</div>
 
 				    					<div class="welcome-content">
@@ -287,7 +288,7 @@
 
 						                    		<div class="entry-attachment">
 
-														<a class="#" href="{{post.url}}">{% image post.specific.main_image fill-100x100%}</a>
+														<a href="{{post.url}}">{% image post.specific.main_image fill-100x100%}</a>
 
 													</div>
 
