@@ -40,11 +40,11 @@ class EventIndex(Page):
     def serve(self, request):
         # Get the full unpaginated listing of resource pages as a queryset -
         # replace this with your own query as appropriate
-        eventpages = EventPage.objects.child_of(self).live().order_by('date').exclude(date__lt=timezone.now())
+        eventpages = EventPage.objects.child_of(self).live().order_by('-date')
         # Filter by tag
         tag = request.GET.get('tag')
         if tag:
-            eventpages = eventpages.filter(tags__name=tag).order_by('date').exclude(date__lt=timezone.now())
+            eventpages = eventpages.filter(tags__name=tag).order_by('-date')
         paginator = Paginator(eventpages, 6) # Show 6 resources per page
 
         page = request.GET.get('page')
