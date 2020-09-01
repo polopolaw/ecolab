@@ -2942,10 +2942,9 @@ button.search-button:before{content: "\e922";}
   }
 
   [class*="btn"].type-2{
-    background: transparent;
-    border: 1px solid;
     padding: 9px 18px 7px;
     box-shadow: none;
+    background: #a6c437;
   }
 
   [class*="btn"].type-2.btn-small{
@@ -2958,7 +2957,7 @@ button.search-button:before{content: "\e922";}
   }
 
   [class*="btn"].type-2:hover{
-    border-color: transparent;
+    background: #a6c437;
   }
 
   [class*="btn"].btn-style-6{
