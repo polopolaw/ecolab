@@ -25,3 +25,13 @@ class HomePage(Page):
         return context
 
 
+class CustomHTMLPage(Page):
+    
+    page_template = models.CharField(max_length=100, default='default.html', blank=True, help_text="Необходимо указывать полное название html файла 'название.html'")
+
+    content_panels = Page.content_panels + [
+        FieldPanel('page_template'),
+    ]
+
+    def get_template(self, request):
+        return 'custom/'+self.page_template
