@@ -7,15 +7,15 @@
 
       <!-- - - - - - - - - - - - - - Revolution Slider - - - - - - - - - - - - - - - - -->
 
+      {%if page.slider.all|length != 0%}
       <div class="rev-slider-wrapper">
 
         <div id="rev-slider" class="rev-slider"  data-version="5.0">
 
           <ul>
-
-            <li data-transition="fade" class="align-center">
-
-              <img src="{% static 'images/Injection-Products.jpg' %}" class="rev-slidebg" alt="">      
+            {%for item in page.slider.all%}
+              <li data-transition="fade" class="align-center">
+              {%image item.image original class="rev-slidebg"%}     
 
               <!-- - - - - - - - - - - - - - Layer 1 - - - - - - - - - - - - - - - - -->      
 
@@ -25,7 +25,7 @@
                     data-whitespace="nowrap"
                     data-frames='[{"delay":150,"speed":2000,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":1000,"frame":"999","to":"y:[175%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
                     data-responsive_offset="on" 
-                    data-elementdelay="0.05" >Здравствуйте, мы рады вам!
+                    data-elementdelay="0.05" >{{item.sub_title}}
                   </div>
 
               <!-- - - - - - - - - - - - - - End of Layer 1 - - - - - - - - - - - - - - - - -->     
@@ -36,49 +36,7 @@
                     data-x="center"
                     data-y="top" data-voffset="225"
                     data-frames='[{"delay":450,"speed":2000,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":1000,"frame":"999","to":"y:[175%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
-                    >Мы перерабатываем пластик <br> и учим этому других
-                  </div>
-
-              <!-- - - - - - - - - - - - - - End of Layer 2 - - - - - - - - - - - - - - - - -->               
-
-              <!-- - - - - - - - - - - - - - Layer 3 - - - - - - - - - - - - - - - - -->      
-
-              <div class="tp-caption tp-resizeme rs-parallaxlevel-3"
-                    data-x="center"
-                    data-y="top" data-voffset="420"
-                    data-whitespace="nowrap"
-                    data-frames='[{"delay":750,"speed":2500,"frame":"0","from":"x:[-100%];z:0;rX:0deg;rY:0deg;rZ:0deg;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":1000,"frame":"999","to":"auto:auto;","ease":"Power2.easeInOut"},{"frame":"hover","speed":"300","ease":"Power1.easeInOut","to":"o:1;rX:0;rY:0;rZ:0;z:0;"}]'>
-                <a href="#" class="btn btn-big type-2 btn-style-7">Подробнее</a>
-              </div>
-
-              <!-- - - - - - - - - - - - - - End of Layer 3 - - - - - - - - - - - - - - - - --> 
-
-            </li>
-
-            <li data-transition="fade" class="align-center">
-
-              <img src="{% static 'images/Shredded-Plastic.jpg' %}" class="rev-slidebg" alt="">      
-
-              <!-- - - - - - - - - - - - - - Layer 1 - - - - - - - - - - - - - - - - -->      
-
-              <div class="tp-caption tp-resizeme scaption-white-text rs-parallaxlevel-1"
-                    data-x="center"
-                    data-y="top" data-voffset="180"
-                    data-whitespace="nowrap"
-                    data-frames='[{"delay":150,"speed":2000,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":1000,"frame":"999","to":"y:[175%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
-                    data-responsive_offset="on" 
-                    data-elementdelay="0.05" >Школа юных химиков и физиков
-                  </div>
-
-              <!-- - - - - - - - - - - - - - End of Layer 1 - - - - - - - - - - - - - - - - -->     
-
-              <!-- - - - - - - - - - - - - - Layer 2 - - - - - - - - - - - - - - - - -->      
-
-              <div class="tp-caption tp-resizeme scaption-white-large rs-parallaxlevel-2"
-                    data-x="center"
-                    data-y="top" data-voffset="225"
-                    data-frames='[{"delay":450,"speed":2000,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":1000,"frame":"999","to":"y:[175%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
-                    >Мы за правильный поход </br> к обучению
+                    >{{item.title}}
                   </div>
 
               <!-- - - - - - - - - - - - - - End of Layer 2 - - - - - - - - - - - - - - - - -->               
@@ -90,62 +48,20 @@
                     data-y="top" data-voffset="420"
                     data-whitespace="nowrap"
                     data-frames='[{"delay":550,"speed":2500,"frame":"0","from":"x:[-100%];z:0;rX:0deg;rY:0deg;rZ:0deg;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":1000,"frame":"999","to":"auto:auto;","ease":"Power2.easeInOut"},{"frame":"hover","speed":"300","ease":"Power1.easeInOut","to":"o:1;rX:0;rY:0;rZ:0;z:0;"}]'>
-                <a href="#" class="btn btn-big type-2 btn-style-7">Подробнее</a>
-                <a href="#" class="btn btn-big">Записаться</a>
+                <a href="{{item.button_href_1}}" class="btn btn-big type-2 btn-style-7">{{item.button_text_1}}</a>
+                {%if item.button_text_2%}
+                <a href="{{item.button_href_2}}" class="btn btn-big">{{item.button_text_2}}</a>
+                {%endif%}
               </div>
 
               <!-- - - - - - - - - - - - - - End of Layer 3 - - - - - - - - - - - - - - - - --> 
 
             </li>
-
-            <li data-transition="fade" class="align-center">
-
-              <img src="{% static 'images/Tiles.jpg' %}" class="rev-slidebg" alt="">     
-
-              <!-- - - - - - - - - - - - - - Layer 1 - - - - - - - - - - - - - - - - -->      
-
-              <div class="tp-caption tp-resizeme scaption-white-text rs-parallaxlevel-1"
-                    data-x="center"
-                    data-y="top" data-voffset="180"
-                    data-whitespace="nowrap"
-                    data-frames='[{"delay":150,"speed":2000,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":1000,"frame":"999","to":"y:[175%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
-                    data-responsive_offset="on" 
-                    data-elementdelay="0.05" > Мастер-класс
-                  </div>
-
-              <!-- - - - - - - - - - - - - - End of Layer 1 - - - - - - - - - - - - - - - - -->     
-
-              <!-- - - - - - - - - - - - - - Layer 2 - - - - - - - - - - - - - - - - -->      
-
-              <div class="tp-caption tp-resizeme scaption-white-large rs-parallaxlevel-2"
-                    data-x="center"
-                    data-y="top" data-voffset="225"
-                    data-frames='[{"delay":450,"speed":2000,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":1000,"frame":"999","to":"y:[175%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
-                    >Переработайте свой мусор <br> на нашем оборудовании!
-                  </div>
-
-              <!-- - - - - - - - - - - - - - End of Layer 2 - - - - - - - - - - - - - - - - -->               
-
-              <!-- - - - - - - - - - - - - - Layer 3 - - - - - - - - - - - - - - - - -->      
-
-              <div class="tp-caption tp-resizeme rs-parallaxlevel-3"
-                    data-x="center"
-                    data-y="top" data-voffset="420"
-                    data-whitespace="nowrap"
-                    data-frames='[{"delay":750,"speed":2500,"frame":"0","from":"x:[-100%];z:0;rX:0deg;rY:0deg;rZ:0deg;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":1000,"frame":"999","to":"auto:auto;","ease":"Power2.easeInOut"},{"frame":"hover","speed":"300","ease":"Power1.easeInOut","to":"o:1;rX:0;rY:0;rZ:0;z:0;"}]'>
-                <a href="#" class="btn btn-big type-2 btn-style-7">Подробнее</a>
-                <a href="#" class="btn btn-big">Записаться</a>
-              </div>
-
-              <!-- - - - - - - - - - - - - - End of Layer 3 - - - - - - - - - - - - - - - - --> 
-
-            </li>
-
+            {%endfor%}
           </ul>
-
         </div>
-
       </div>
+{%endif%} 
 
       <!-- - - - - - - - - - - - - - End of Slider - - - - - - - - - - - - - - - - -->
 
