@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^events/', include('event.urls')),
     url(r'^shop/', include('shop.urls')),
     url(r'^блог/', include('blog.urls')),
+    url(r'^home/', include('home.urls')),
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('/favicon.ico')))
 ] + aldryn_addons.urls.patterns() + i18n_patterns(
     # add your own i18n patterns here
