@@ -2721,6 +2721,7 @@ input, select, textarea {
 /* Main */
 
 	.main {
+		background-color: #313a3d45;
 		position: relative;
 	}
 
@@ -2783,6 +2784,7 @@ input, select, textarea {
 		height: 100vh;
 		position: relative;
 		text-align: center;
+		background-color: #313a3d45;
 	}
 
 		#header:after {
@@ -2847,6 +2849,7 @@ input, select, textarea {
 /* Footer */
 
 	#footer {
+		background-color: #313a3d45;
 		min-height: 100vh;
 		padding: 0 0 12em 0;
 		position: relative;
