@@ -59,7 +59,8 @@ INSTALLED_APPS.extend([
     'wagtailcaptcha',
     'wagtailmenus',
     "wagtail.contrib.routable_page",
-    "shop"
+    "shop",
+    'corsheaders',
 ])
 
 # To see the settings that have been applied, use the Django diffsettings 
@@ -68,6 +69,25 @@ INSTALLED_APPS.extend([
 
 
 TEMPLATES[0]["OPTIONS"]["context_processors"].append('wagtail.contrib.settings.context_processors.settings')
+
+MIDDLEWARE.extend([
+            'corsheaders.middleware.CorsMiddleware',
+            'django.middleware.common.CommonMiddleware',
+        ])
+
+CORS_ALLOWED_ORIGINS = [
+    "https://konkurs.ecolabomsk.ru",
+    "http://konkurs.ecolabomsk.ru",
+]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 
 RECAPTCHA_PUBLIC_KEY = '6LfjnPAUAAAAAHhqKbK4IrSsPIfis1Y0YGje-gp3'
 RECAPTCHA_PRIVATE_KEY = '6LfjnPAUAAAAAG0c_aoK_k02HXcR9PKNN_856ESB'
