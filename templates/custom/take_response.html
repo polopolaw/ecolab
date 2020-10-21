@@ -1,0 +1,63 @@
+{% load wagtailcore_tags %}
+{% load static wagtailuserbar %}    
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>{{page.title}}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'custom/response/assets/css/main.css' %}" />
+		<noscript><link rel="stylesheet" href="{% static 'custom/response/assets/css/noscript.css'%}" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<section id="header">
+				<header>
+					<h1>EcoLab - экологическая мастерская</h1>
+					<p>Обратная связь</p>
+				</header>
+				<footer>
+					<a href="#banner" class="button style2 scrolly-middle">Принять участие</a>
+				</footer>
+			</section>
+
+		<!-- Banner -->
+			<section id="banner">
+				<header>
+					<h2>Об организаторах</h2>
+				</header>
+				<p>Перед тем как вы ответите на несколько вопросов мы хотим рассказать о нашем проекте. Мы  <a target="_blank" href="/"> команда выпускниов СибАДИ </a> запускаем экологическую мастерскую? где каждый может переработать свой пластик в новое практичное изделие. Так же сейчас мы стараемся сделать СибАДИ максимально зеленым вузом. Если у вас есть желаение присоединиться к нашей команде дайте знать об этом нам. Мы открыты новым людям.<br />
+				<footer>
+					<a href="#form" class="button style2 scrolly">Перейти к форме</a>
+				</footer>
+			</section>
+
+		
+		<!-- Contact -->
+			<article id="form" class="container box style3">
+				<header>
+					<h2>Спасибо за просмотр</h2>
+				</header>
+				<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfEYjjTQKqTr8vc9aoRBkyTh6ugzg5akfgenYwKgB2Aj0CMHA/viewform?embedded=true" width="100%" height="1808" frameborder="0" marginheight="0" marginwidth="0">Загрузка…</iframe>
+			</article>
+
+		<section id="footer">
+			<ul class="icons">
+                <li><a  target="_blank" href="https://vk.com/design_ecolabomsk" class="icon brands alt fa-vk"><span class="label">Вконтакте</span></a></li>
+				<li><a target="_blank" href="https://www.instagram.com/ecolabomsk/" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+				<li><a target="_blank" href="mailto:ecolaboratory55@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+			</ul>
+		</section>
+
+		<!-- Scripts -->
+			<script src="{% static 'custom/response/assets/js/jquery.min.js'%}"></script>
+			<script src="{% static 'custom/response/assets/js/jquery.scrolly.min.js'%}"></script>
+			<script src="{% static 'custom/response/assets/js/jquery.poptrox.min.js'%}"></script>
+			<script src="{% static 'custom/response/assets/js/browser.min.js'%}"></script>
+			<script src="{% static 'custom/response/assets/js/breakpoints.min.js'%}"></script>
+			<script src="{% static 'custom/response/assets/js/util.js'%}"></script>
+			<script src="{% static 'custom/response/assets/js/main.js'%}"></script>
+
+	</body>
+</html>
