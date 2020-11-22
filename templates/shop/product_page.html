@@ -3,9 +3,7 @@
 {% load wagtailimages_tags %}
 {% load shop_tags wagtailcore_tags %}
 {% block extra_js_top %}
-<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-<script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
      
 {% endblock %}
 
@@ -23,13 +21,30 @@
 
 	<div class="shopping-cart dropdown-window">
 
-		
+		<div class="products-holder">
+
+
+		</div><!--/ .products-holder -->
+
+		<div class="sc-footer">
+
+		<div class="subtotal">Сумма: <span class="total-price">0</span></div>
+
+		<div class="vr-btns-set">
+
+			<a href="#" class="btn btn-small btn-style-4">Корзина</a>
+			<a href="#" class="btn btn-small">Оформить</a>
+
+		</div><!--/ .vr-btns-set -->
+
+		</div>
 
 	</div><!--/ .shopping-cart -->
 
 </div>
 {%endblock%}
 {% block content %}
+<div id="content">
 <div class="breadcrumbs-wrap style-2 type-2">
 
 	<div class="container">
@@ -54,13 +69,9 @@
 
 </div>
 
-		                    
-
-
-
     <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
 
-    <div id="content" class="page-content-wrap">
+    <div  class="page-content-wrap">
 
         <div class="container">
 
@@ -77,11 +88,12 @@
 		                    <!-- - - - - - - - - - - - - - Image Preview Container - - - - - - - - - - - - - - - - -->
 							{%with i=page.slider.all|first%}
 		                    <div class="image-preview">
-							{%image i.image fill-555x555 as img%}
-		                      <img href="{{img.url}}" class="fancybox" id="zoom-image" data-zoom-image="{{img.url}}" src="{{img.url}}" alt="">
+							{%image i.image original as img%}
+							{%image i.image scale-200 as imgscale%}
+		                      <img href="{{img.url}}" class="fancybox" id="zoom-image" data-zoom-image="{{imgscale.url}}" src="{{img.url}}" alt="">
 
 		                    </div><!--/ .image-preview-->
-							{%endwith%}.
+							{%endwith%}
 							
 
 		                    <!-- - - - - - - - - - - - - - End of Image Preview Container - - - - - - - - - - - - - - - - -->
@@ -92,8 +104,9 @@
 
 		                      <div class="owl-carousel product-thumbs" id="thumbnails">
 		                      	{%for carousel_item in page.slider.all%}
-								  {%image carousel_item.image fill-555x555 as img%}
-		                        <a class="active" href="#" data-image="{{img.url}}">
+								  {%image carousel_item.image original as img%}
+								  {%image carousel_item.image scale-200 as imgscale%}
+		                        <a class="active" href="#" data-image="{{imgscale.url}}">
 
 		                          {%image carousel_item.image fill-100x100%}
 
@@ -120,12 +133,10 @@
 
 		                    <div class="pricing-area">
 
-		                      <div class="product-price">
-							{%if page.option%}
-		                        {%with option=page.option|first%}{{option.value.cost}}&#8381{%endwith%}
-							{%else%}
+		                      <div class="product-price curr">
+
 								{{page.cost}}&#8381
-							{%endif%}
+
 		                      </div>
 		                      
 		                      <div class="flex-row">
@@ -172,12 +183,15 @@
 							  {%if page.option%}
 							  <label>Опции:</label>
 		                      <div class="custom-select type-2">
-		                        <div class="select-title">{%with option=page.option|first%}{{option.value.name}}{%endwith%}</div>
+		                        <div class="select-title">-</div>
 		                        <ul id="menu-type3" class="select-list"></ul>
 		                        <select class="hide">
-								{%for block in page.option%}
+								<option value="-">-</option>
+								{% for block in page.option %}
+								 {% if block.value.in_stock %}
 									<option value="{{block.value.cost}}">{{block.value.name}}</option>
-								{%endfor%}
+								 {% endif %}
+								{% endfor %}
 		                        </select>
 		                      </div>
 							  {%endif%}
@@ -191,9 +205,16 @@
 		                            <button type="button" class="qty-plus"><i class="icon icon-up-dir"></i></button>
 		                            
 		                          </div>
-		                          <a href="#" class="btn">В корзину</a>
+								  {% with i=page.slider.all|first %}
+									{% image i.image fill-100x100 as img %}
+		                          <a href="" class="btn add-to-cart" item_id="{{page.id}}" 
+							cost="{{page.cost}}" 
+							name="{{page.name}}" 
+							url="{{page.url}}"  
+							img="{{img.url}}"
+							count='1'>В корзину</a>
 		                        </div>
-
+								{% endwith %}
 		                      </div><!--/ .product-actions -->
 
 		                    </form>
@@ -466,10 +487,10 @@
       </div>
 
     <!-- - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - -->
-
+</div>
 {%endblock%}
 {%block extra_js%}
-<script type="text/babel" src="{% static 'js/react-cart-manager.js' %}"></script>    
+ 
     <script src="{% static 'plugins/elevatezoom.min.js' %}"></script>
 	<script src="{% static 'plugins/isotope.pkgd.min.js' %}"></script>
   	<script src="{% static 'plugins/fancybox/jquery.fancybox.js' %}"></script>

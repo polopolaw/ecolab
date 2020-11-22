@@ -703,4 +703,153 @@
 	
 
 
+		function rerender_cart(data){
+			let l = Object.keys(data).length;
+			setCookie("cart_data", JSON.stringify(data));
+			let holder = document.querySelector('.products-holder');
+			holder.innerHTML = '';
+			let subtotal = 0;
+			let products = '';
+			for (const [id, item] of Object.entries(data)) {
+				products += `<div class="product" ><button  class="item-close" product_id="${id}"></button>
+			<a href="${item.product_url}" class="product-image">
+			<img src="${item.img}" alt=""></a>
+			<div class="product-description">
+			<h6 class="product-name">
+			<a href="${item.product_url}">${item.name}</a></h6>
+			<span class="product-price">${item.count}x${item.cost}&#8381;</span>
+			</div></div>`;
+
+			subtotal += parseInt(item.cost)*parseInt(item.count);
+		}
+		
+		holder.innerHTML = products;
+		document.querySelector('.subtotal .total-price').innerHTML = subtotal + '&#8381;';
+
+		for (const close of document.querySelectorAll('.item-close')) {
+			close.onclick =  function(e){
+
+				e.preventDefault();
+
+				$(this).parent().stop().animate({
+					opacity: 0
+				}, function(){
+
+					$(this).stop().slideUp(function(){
+
+						$(this).remove();
+
+					});
+
+				});
+				delete_item_from_cookies($(this).attr('product_id'));
+				};
+			}
+		}
+
+
+		function delete_item_from_cookies(id) {
+			let data = JSON.parse(getCookie("cart_data"));
+			delete data[id];
+			
+			setCookie("cart_data", JSON.stringify(data));
+			rerender_cart(data);
+		}
+
+		function getCookie(name) {
+			let matches = document.cookie.match(new RegExp(
+			  "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+			));
+			return matches ? decodeURIComponent(matches[1]) : undefined;
+		}
+
+		function setCookie(name, value, options = {}) {		
+			let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+			for (let optionKey in options) {
+				updatedCookie += "; " + optionKey;
+				let optionValue = options[optionKey];
+				if (optionValue !== true) {
+				  updatedCookie += "=" + optionValue;
+				}
+			  }
+
+			
+			document.cookie = updatedCookie;
+		}
+		
+
+		function deleteCookie(name) {
+			setCookie(name, "", {
+			  'max-age': -1
+			})
+		}
+
+
+		$('.qty-plus').click(function(){
+			$('.add-to-cart').attr('count', $(this).prev('input')[0].value);
+		});
+
+		$('.qty-minus').click(function(){
+			$('.add-to-cart').attr('count', $(this).next('input')[0].value);
+		});
+
+		$('.add-to-cart').click(function(){
+			if(getCookie("cart_data")){
+				let data = JSON.parse(getCookie("cart_data"));
+				
+
+				let img = this.getAttribute('img');
+				let url = this.getAttribute('url');
+				let name  = this.getAttribute('name');
+				let cost = this.getAttribute('cost');
+				let id = this.getAttribute('item_id');
+				let product_url = this.getAttribute('product_url');
+				let count = parseInt(this.getAttribute('count'));
+					if(data[id]) {
+						data[id]['count'] = data[id]['count']  + count ;
+
+
+					}else {
+						data[id] = {
+							img:img,
+							url:url,
+							name:name,
+							cost:cost,
+							count:count,
+							product_url:product_url
+						};
+								
+					}
+
+				rerender_cart(data);
+			} else {
+				let img = this.getAttribute('img');
+				let url = this.getAttribute('url');
+				let name  = this.getAttribute('name');
+				let cost = this.getAttribute('cost');
+				let id = this.getAttribute('item_id');
+				let product_url = this.getAttribute('product_url');
+				let count = parseInt(this.getAttribute('count'));
+				let data = {};
+				data[id] = {
+						img:img,
+						url:url,
+						name:name,
+						cost:cost,
+						count:count,
+						product_url:product_url
+					};
+				setCookie("cart_data", JSON.stringify(data));
+			}
+			
+		});
+
+
+		$('.product .item-close').click(function(){
+			
+		});
+		if(getCookie("cart_data")) {
+			let data = JSON.parse(getCookie("cart_data"));
+			rerender_cart(data);
+		}
 })(jQuery);

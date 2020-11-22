@@ -1535,8 +1535,9 @@ button.search-button:before{content: "\e922";}
     position: relative;
   }
 
+
   .shop-cart .sc-cart-btn:before{
-    content: '2';
+    
     position: absolute;
     top: 5px;
     right: 5px;
@@ -1550,6 +1551,7 @@ button.search-button:before{content: "\e922";}
     line-height: 18px;
     text-align: center;
     z-index: 2;
+    content: '2';
   }
 
   .sc-invoker:hover,
@@ -4591,6 +4593,10 @@ button.search-button:before{content: "\e922";}
     padding: 60px 0;
   }
 
+
+  .call-out.type-2  .social-icons>li {
+    font-size: 50px;
+  }
   /*----------- Pagination --------------*/
 
   .pagination{
@@ -5779,6 +5785,10 @@ button.search-button:before{content: "\e922";}
         transition: all .4s ease;
       }
 
+      .service-item-photo {
+        height: 240px;
+        background-size: cover;
+      }
       .services .service-item:hover{
         box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.1);
       }
@@ -5786,6 +5796,8 @@ button.search-button:before{content: "\e922";}
         .services .service-item .service-inner{
           background-color: #f6f6f6;
           padding: 25px 30px 35px;
+          height: 540px;
+          overflow: hidden;
         }
 
           .services .service-item .service-inner .btn{
@@ -5797,6 +5809,14 @@ button.search-button:before{content: "\e922";}
             margin-bottom: 30px;
           }
 
+          .service-inner {
+            position: relative;
+          }
+
+          .service-inner-btn {
+            position: absolute;
+            bottom: 20px;
+          }
   /*----------- Countdown --------------*/
 
   .countdown{

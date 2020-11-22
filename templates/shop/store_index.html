@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static wagtailuserbar %}
 {% load wagtailimages_tags %}
-{% load event_tags wagtailcore_tags %}
+{% load wagtailcore_tags shop_tags %}
 {% block shopcart%}
 <div class="shop-cart">
                     
@@ -11,64 +11,17 @@
 
 		<div class="products-holder">
 
-			<!-- - - - - - - - - - - - - - Product - - - - - - - - - - - - - - - - -->
-
-			<div class="product">
-
-				<button class="item-close"></button>
-
-				<a href="#" class="product-image">
-				
-				<img src="images/100x100_product1.jpg" alt="">
-
-				</a>
-
-				<div class="product-description">
-
-				<h6 class="product-name"><a href="#">Baby Chair</a></h6>
-
-				<span class="product-price">1x$19.95</span>
-
-				</div><!--/ .product-info -->
-
-			</div>
-
-			<!-- - - - - - - - - - - - - - End of Product - - - - - - - - - - - - - - - - -->
-
-			<!-- - - - - - - - - - - - - - Product - - - - - - - - - - - - - - - - -->
-
-			<div class="product">
-
-				<button class="item-close"></button>
-
-				<a href="#" class="product-image">
-				
-				<img src="images/100x100_product2.jpg" alt="">
-
-				</a>
-
-				<div class="product-description">
-
-				<h6 class="product-name"><a href="#">Ergo Baby</a></h6>
-
-				<span class="product-price">1x$19.95</span>
-
-				</div><!--/ .product-info -->
-
-			</div>
-
-			<!-- - - - - - - - - - - - - - End of Product - - - - - - - - - - - - - - - - -->
 
 		</div><!--/ .products-holder -->
 
 		<div class="sc-footer">
 
-		<div class="subtotal">Subtotal: <span class="total-price">$35.68</span></div>
+		<div class="subtotal">Сумма: <span class="total-price">0</span></div>
 
 		<div class="vr-btns-set">
 
-			<a href="#" class="btn btn-small btn-style-4">View Cart</a>
-			<a href="#" class="btn btn-small">Checkout</a>
+			<a href="#" class="btn btn-small btn-style-4">Корзина</a>
+			<a href="#" class="btn btn-small">Оформить</a>
 
 		</div><!--/ .vr-btns-set -->
 
@@ -79,7 +32,9 @@
 </div>
 {%endblock%}
 {% block content %}
-<div class="breadcrumbs-wrap style-2 type-2">
+<div id="content">
+
+    <div class="breadcrumbs-wrap style-2 type-2">
 
 	<div class="container">
 		
@@ -103,8 +58,8 @@
 
 </div>
     <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
-
-    <div id="content" class="page-content-wrap">
+	
+    <div id="content" >
 
       <div class="container">
         
@@ -114,31 +69,33 @@
 
 	            <div class="product-sort-section">
 
-	              	<span>Showing 1–12 of 36 results</span>
-
-	              	<div class="custom-select type-2">
-	                  <div class="select-title">Default Sorting</div>
-	                  <ul id="menu-type" class="select-list"></ul>
-	                  <select class="hide">
-	                    <option value="menu">Option 1</option>
-	                    <option value="menu">Option 2</option>
-	                    <option value="menu">Option 3</option>
-	                  </select>
-	                </div>
+	              	<span>Всего товаров на сайте {{page.children | length }}</span>
 	              
 	            </div>
 
 	            <div class="content-element6">
 
 	              <div class="products-holder flex-row item-col-3">
-	                
+	                {% for product in posts %}
+					{% with product=product.specific %}
 	                <div class="product">
 	                      
 	                  <!-- - - - - - - - - - - - - - Product Image - - - - - - - - - - - - - - - - -->
 	                  <figure class="product-image">
-	                    <a href="#"><img src="images/263x263_img1.jpg" alt=""></a>
+					  {% with i=product.slider.all|first %}
+							{% image i.image fill-555x555 as img%}
+							<a href="{{product.url}}"> <img src="{{img.url}}" alt=""></a>
+						
+	                    
 	                    <div class="overlay">
-		                    <a href="#" class="btn">Add To Cart</a>
+		                    <a style="cursor:pointer;" class="btn add-to-cart" 
+							item_id="{{product.id}}" 
+							count='1'
+							cost="{{product.cost}}" 
+							name="{{product.name}}" 
+							url="{{product.url}}"  
+							img="{{img.url}}" product_option="-">Добавить в корзину</a>
+							{% endwith %}
 		                </div>
 	                  </figure>
 	                  <!-- - - - - - - - - - - - - - End of Product Image - - - - - - - - - - - - - - - - -->
@@ -146,21 +103,43 @@
 	                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
 	                  <div class="product-description">
 	              
-	                    <h6 class="product-name"><a href="#">Non Slip Yoga Mat</a></h6>
+	                    <h6 class="product-name"><a href="{{product.url}}">{{product.name}}</a></h6>
 	              
 	                    <div class="pricing-area">
 	              
 	                      <div class="product-price">
-	                        $19.95
+	                        {{ product.cost }}&#8381
 	                      </div>
 	              
 	                      <ul class="rating">
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li class="empty"><i class="licon-star"></i></li>
-	                      </ul>
+								  {%with rate=product.rating|div:product.count_rating%}
+			                        {%if rate >= 1%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%if rate >= 2%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%if rate >= 3%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%if rate >= 4%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%if rate >= 5%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%endwith%}
+			                    </ul>
 	              
 	                    </div>
 	              
@@ -168,315 +147,32 @@
 	                  <!-- - - - - - - - - - - - - - End of Product Description - - - - - - - - - - - - - - - - -->
 	              
 	                </div>
-	              
-	                <div class="product">
-	                      
-	                  <!-- - - - - - - - - - - - - - Product Image - - - - - - - - - - - - - - - - -->
-	                  <figure class="product-image">
-	                    <a href="#"><img src="images/263x263_img2.jpg" alt=""></a>
-	                    <div class="overlay">
-		                    <a href="#" class="btn">Add To Cart</a>
-		                </div>
-	                  </figure>
-	                  <!-- - - - - - - - - - - - - - End of Product Image - - - - - - - - - - - - - - - - -->
-	              
-	                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
-	                  <div class="product-description">
-	              
-	                    <h6 class="product-name"><a href="#">Non Slip Yoga Mat</a></h6>
-	              
-	                    <div class="pricing-area">
-	              
-	                      <div class="product-price">
-	                        $19.95
-	                      </div>
-	              
-	                      <ul class="rating">
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li class="empty"><i class="licon-star"></i></li>
-	                      </ul>
-	              
-	                    </div>
-	              
-	                  </div>
-	                  <!-- - - - - - - - - - - - - - End of Product Description - - - - - - - - - - - - - - - - -->
-	              
-	                </div>
-
-	                <div class="product">
-	                      
-	                  <!-- - - - - - - - - - - - - - Product Image - - - - - - - - - - - - - - - - -->
-	                  <figure class="product-image">
-	                    <a href="#"><img src="images/263x263_img3.jpg" alt=""></a>
-	                    <div class="overlay">
-		                    <a href="#" class="btn">Add To Cart</a>
-		                </div>
-	                  </figure>
-	                  <!-- - - - - - - - - - - - - - End of Product Image - - - - - - - - - - - - - - - - -->
-	              
-	                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
-	                  <div class="product-description">
-	              
-	                    <h6 class="product-name"><a href="#">Non Slip Yoga Mat</a></h6>
-	              
-	                    <div class="pricing-area">
-	              
-	                      <div class="product-price">
-	                        $19.95
-	                      </div>
-	              
-	                      <ul class="rating">
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li class="empty"><i class="licon-star"></i></li>
-	                      </ul>
-	              
-	                    </div>
-	              
-	                  </div>
-	                  <!-- - - - - - - - - - - - - - End of Product Description - - - - - - - - - - - - - - - - -->
-	              
-	                </div>
-
-	                <div class="product">
-	                      
-	                  <!-- - - - - - - - - - - - - - Product Image - - - - - - - - - - - - - - - - -->
-	                  <figure class="product-image">
-	                    <a href="#"><img src="images/263x263_img4.jpg" alt=""></a>
-	                    <div class="overlay">
-		                    <a href="#" class="btn">Add To Cart</a>
-		                </div>
-	                  </figure>
-	                  <!-- - - - - - - - - - - - - - End of Product Image - - - - - - - - - - - - - - - - -->
-	              
-	                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
-	                  <div class="product-description">
-	              
-	                    <h6 class="product-name"><a href="#">Non Slip Yoga Mat</a></h6>
-	              
-	                    <div class="pricing-area">
-	              
-	                      <div class="product-price">
-	                        $19.95
-	                      </div>
-	              
-	                      <ul class="rating">
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li class="empty"><i class="licon-star"></i></li>
-	                      </ul>
-	              
-	                    </div>
-	              
-	                  </div>
-	                  <!-- - - - - - - - - - - - - - End of Product Description - - - - - - - - - - - - - - - - -->
-	              
-	                </div>
-
-	                <div class="product">
-	                      
-	                  <!-- - - - - - - - - - - - - - Product Image - - - - - - - - - - - - - - - - -->
-	                  <figure class="product-image">
-	                    <a href="#"><img src="images/263x263_img5.jpg" alt=""></a>
-	                    <div class="overlay">
-		                    <a href="#" class="btn">Add To Cart</a>
-		                </div>
-	                  </figure>
-	                  <!-- - - - - - - - - - - - - - End of Product Image - - - - - - - - - - - - - - - - -->
-	              
-	                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
-	                  <div class="product-description">
-	              
-	                    <h6 class="product-name"><a href="#">Non Slip Yoga Mat</a></h6>
-	              
-	                    <div class="pricing-area">
-	              
-	                      <div class="product-price">
-	                        $19.95
-	                      </div>
-	              
-	                      <ul class="rating">
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li class="empty"><i class="licon-star"></i></li>
-	                      </ul>
-	              
-	                    </div>
-	              
-	                  </div>
-	                  <!-- - - - - - - - - - - - - - End of Product Description - - - - - - - - - - - - - - - - -->
-	              
-	                </div>
-
-	                <div class="product">
-	                      
-	                  <!-- - - - - - - - - - - - - - Product Image - - - - - - - - - - - - - - - - -->
-	                  <figure class="product-image">
-	                    <a href="#"><img src="images/263x263_img6.jpg" alt=""></a>
-	                    <div class="overlay">
-		                    <a href="#" class="btn">Add To Cart</a>
-		                </div>
-	                  </figure>
-	                  <!-- - - - - - - - - - - - - - End of Product Image - - - - - - - - - - - - - - - - -->
-	              
-	                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
-	                  <div class="product-description">
-	              
-	                    <h6 class="product-name"><a href="#">Non Slip Yoga Mat</a></h6>
-	              
-	                    <div class="pricing-area">
-	              
-	                      <div class="product-price">
-	                        $19.95
-	                      </div>
-	              
-	                      <ul class="rating">
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li class="empty"><i class="licon-star"></i></li>
-	                      </ul>
-	              
-	                    </div>
-	              
-	                  </div>
-	                  <!-- - - - - - - - - - - - - - End of Product Description - - - - - - - - - - - - - - - - -->
-	              
-	                </div>
-
-	                <div class="product">
-	                      
-	                  <!-- - - - - - - - - - - - - - Product Image - - - - - - - - - - - - - - - - -->
-	                  <figure class="product-image">
-	                    <a href="#"><img src="images/263x263_img7.jpg" alt=""></a>
-	                    <div class="overlay">
-		                    <a href="#" class="btn">Add To Cart</a>
-		                </div>
-	                  </figure>
-	                  <!-- - - - - - - - - - - - - - End of Product Image - - - - - - - - - - - - - - - - -->
-	              
-	                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
-	                  <div class="product-description">
-	              
-	                    <h6 class="product-name"><a href="#">Non Slip Yoga Mat</a></h6>
-	              
-	                    <div class="pricing-area">
-	              
-	                      <div class="product-price">
-	                        $19.95
-	                      </div>
-	              
-	                      <ul class="rating">
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li class="empty"><i class="licon-star"></i></li>
-	                      </ul>
-	              
-	                    </div>
-	              
-	                  </div>
-	                  <!-- - - - - - - - - - - - - - End of Product Description - - - - - - - - - - - - - - - - -->
-	              
-	                </div>
-
-	                <div class="product">
-	                      
-	                  <!-- - - - - - - - - - - - - - Product Image - - - - - - - - - - - - - - - - -->
-	                  <figure class="product-image">
-	                    <a href="#"><img src="images/263x263_img8.jpg" alt=""></a>
-	                    <div class="overlay">
-		                    <a href="#" class="btn">Add To Cart</a>
-		                </div>
-	                  </figure>
-	                  <!-- - - - - - - - - - - - - - End of Product Image - - - - - - - - - - - - - - - - -->
-	              
-	                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
-	                  <div class="product-description">
-	              
-	                    <h6 class="product-name"><a href="#">Non Slip Yoga Mat</a></h6>
-	              
-	                    <div class="pricing-area">
-	              
-	                      <div class="product-price">
-	                        $19.95
-	                      </div>
-	              
-	                      <ul class="rating">
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li class="empty"><i class="licon-star"></i></li>
-	                      </ul>
-	              
-	                    </div>
-	              
-	                  </div>
-	                  <!-- - - - - - - - - - - - - - End of Product Description - - - - - - - - - - - - - - - - -->
-	              
-	                </div>
-
-
-	                <div class="product">
-	                      
-	                  <!-- - - - - - - - - - - - - - Product Image - - - - - - - - - - - - - - - - -->
-	                  <figure class="product-image">
-	                    <a href="#"><img src="images/263x263_img9.jpg" alt=""></a>
-	                    <div class="overlay">
-		                    <a href="#" class="btn">Add To Cart</a>
-		                </div>
-	                  </figure>
-	                  <!-- - - - - - - - - - - - - - End of Product Image - - - - - - - - - - - - - - - - -->
-	              
-	                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
-	                  <div class="product-description">
-	              
-	                    <h6 class="product-name"><a href="#">Non Slip Yoga Mat</a></h6>
-	              
-	                    <div class="pricing-area">
-	              
-	                      <div class="product-price">
-	                        $19.95
-	                      </div>
-	              
-	                      <ul class="rating">
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li class="empty"><i class="licon-star"></i></li>
-	                      </ul>
-	              
-	                    </div>
-	              
-	                  </div>
-	                  <!-- - - - - - - - - - - - - - End of Product Description - - - - - - - - - - - - - - - - -->
-	              
-	                </div>
-	              
+					{% endwith %}
+					{% endfor %}
 	              </div>
 
 	            </div>
-
-	            <ul class="pagination">
-	              <li><a href="#" class="prev-page"></a></li>
-	              <li><a href="#">1</a></li>
-	              <li class="active"><a href="#">2</a></li>
-	              <li><a href="#">3</a></li>
-	              <li><a href="#" class="next-page"></a></li>
-	            </ul>
+				{% if product_pages.paginator.num_pages > 1 %}
+				<ul class="pagination">
+					{% if product_pages.has_previous %}
+					<li>
+						<a href="?page={{ product_pages.previous_page_number }}{% if request.GET.tag != ''%}&tag={{ request.GET.tag }}{% endif %}" class="prev-page"></a>
+					</li>
+					{% endif %}
+					{% for page_num in product_pages.paginator.page_range %}
+					<li>
+						<a href="?page={{ page_num }}{% if request.GET.tag != ''%}&tag={{ request.GET.tag }}{% endif %}" class="{% if page_num == product_pages.number %} active{% endif %}">{{ page_num }}</a>
+					</li>
+					{% endfor %}
+					{% if product_pages.has_next %}
+					<li>
+						<a href="?page={{ product_pages.next_page_number }}{% if request.GET.tag != ''%}&tag={{ request.GET.tag }}{% endif %}" class="next-page"></a>
+					</li>
+					{% endif %}
+					
+				</ul>
+				{% endif %}
+	            
 
           	</main>
 	        <aside id="sidebar" class="col-lg-4 col-md-12">
@@ -489,146 +185,78 @@
 	    					<button class="search-btn btn"></button>
 	    				</div>
 	    				<div class="wrapper">
-	    					<input type="text" placeholder="Search">
+	    					<input type="text" placeholder="Поиск">
 	    				</div>
 	    			</form>
 
 	    		</div>
 	           
 	            <!-- Widget -->
-	            <div class="widget">
+	            {% block categories_widget %}{% include "blog/includes/categories_widget.html" with cattegories=categories%}{% endblock categories_widget %}
 
-	    			<h4 class="widget-title">Categories</h4>
-	    			
-	    			<ul class="info-links type2">
-	    
-	                    <li><a href="#">0+ years</a></li>
-	                    <li><a href="#">3-6 months</a></li>
-	                    <li><a href="#">6-12 months</a></li>
-	                    <li><a href="#">1-3 years</a></li>
-	                    <li><a href="#">3+ years</a></li>
-
-	                </ul>
-
-	    		</div>
-
-	            <!-- Widget -->
-	            <div class="widget">
-	            
-	              <h4 class="widget-title">Filter By Price</h4>
-	              <!--price-->
-	              <fieldset class="price-scale">
-	                <div id="price"></div>
-	                <div class="clearfix range-values">
-	                  <div class="f-left">
-	                    <input class="first-limit" readonly type="text" value="$1,000">
-	                    <span>-</span>
-	                    <input class="last-limit" readonly type="text" value="$99,000">
-	                  </div>
-	                  <div class="f-right">
-	                    <a href="#" class="btn btn-small f-right">Filter</a>
-	                  </div>
-	                </div>
-	              </fieldset>
-
-	            </div>
 	            
 	            <!-- Widget -->
 	            <div class="widget">
 	                  
-	              <h4 class="widget-title">Products</h4>
+	              <h4 class="widget-title">Самые обсуждаемые</h4>
 
 	              <div class="product-holder">
-	                
+				  {% if popular_product %}
+	                {% for product in popular_product%}
+
 	                <!-- product -->
 	                <div class="product">
 	                    
 	                  <!-- - - - - - - - - - - - - - Product Image - - - - - - - - - - - - - - - - -->
-	                  <figure class="product-image">
-	                    <a href="#"><img src="images/100x100_product1.jpg" alt=""></a>
-	                  </figure>
+	                  
 	                  <!-- - - - - - - - - - - - - - End of Product Image - - - - - - - - - - - - - - - - -->
 
 	                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
 	                  <div class="product-description">
 
-	                    <h5 class="product-name"><a href="#">Baby Chair</a></h5>
+	                    <h5 class="product-name"><a href="{{product.url}}">{{product.name}}</a></h5>
+						<figure class="product-image">
+	                    {%with i=product.slider.all|first%}
+							{%image i.image fill-555x555 as img%}
+							<a href="{{product.url}}"> <img src="{{img.url}}" alt=""></a>
+						{%endwith%}
+	                  </figure>
 
 	                    <div class="pricing-area">
 
 	                      <div class="product-price">
-	                        $19.95
+	                        {{product.cost}}&#8381
 	                      </div>
 
 	                      <ul class="rating">
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li class="empty"><i class="licon-star"></i></li>
-	                      </ul>
-
-	                    </div>
-
-	                  </div>
-	                  <!-- - - - - - - - - - - - - - End of Product Description - - - - - - - - - - - - - - - - -->
-
-	                </div>
-	                
-	                <!-- product -->
-	                <div class="product">
-	                    
-	                  <!-- - - - - - - - - - - - - - Product Image - - - - - - - - - - - - - - - - -->
-	                  <figure class="product-image">
-	                    <a href="#"><img src="images/100x100_product2.jpg" alt=""></a>
-	                  </figure>
-	                  <!-- - - - - - - - - - - - - - End of Product Image - - - - - - - - - - - - - - - - -->
-
-	                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
-	                  <div class="product-description">
-
-	                    <h5 class="product-name"><a href="#">Ergo Baby</a></h5>
-
-	                    <div class="pricing-area">
-
-	                      <div class="product-price">
-	                        $19.95
-	                      </div>
-
-	                    </div>
-
-	                  </div>
-	                  <!-- - - - - - - - - - - - - - End of Product Description - - - - - - - - - - - - - - - - -->
-
-	                </div>
-
-	                <!-- product -->
-	                <div class="product">
-	                    
-	                  <!-- - - - - - - - - - - - - - Product Image - - - - - - - - - - - - - - - - -->
-	                  <figure class="product-image">
-	                    <a href="#"><img src="images/100x100_product3.jpg" alt=""></a>
-	                  </figure>
-	                  <!-- - - - - - - - - - - - - - End of Product Image - - - - - - - - - - - - - - - - -->
-
-	                  <!-- - - - - - - - - - - - - - Product Description - - - - - - - - - - - - - - - - -->
-	                  <div class="product-description">
-
-	                    <h5 class="product-name"><a href="#">Small Flashes</a></h5>
-
-	                    <div class="pricing-area">
-
-	                      <div class="product-price">
-	                        $19.95
-	                      </div>
-
-	                      <ul class="rating">
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li><i class="licon-star"></i></li>
-	                        <li class="empty"><i class="licon-star"></i></li>
-	                      </ul>
+								  {%with rate=product.rating|div:product.count_rating%}
+			                        {%if rate >= 1%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%if rate >= 2%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%if rate >= 3%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%if rate >= 4%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%if rate >= 5%}
+									<li><i class="licon-star"></i></li>
+									{%else%}
+									<li class="empty"><i class="licon-star"></i></li>
+									{%endif%}
+									{%endwith%}
+			                    </ul>
 
 	                    </div>
 
@@ -637,6 +265,8 @@
 
 	                </div>
 
+					{% endfor %}
+				  {% endif%}
 	              </div>
 
 	            </div>
@@ -648,6 +278,9 @@
       </div>
       
     </div>
+
+</div>
+
 
     <!-- - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - -->
 {%endblock%}

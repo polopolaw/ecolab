@@ -8,6 +8,7 @@
         <meta charset="utf-8" />
         <meta name="yandex-verification" content="e8b6fef26aea5dd9" />
         <meta name="keywords" content="Переработка пластика">
+        <meta name="description" content="{% if self.search_description %}{{ self.search_description }}{% endif %}">
         <meta name="description" content="Перереработка пластика в Омске, мы делаем из вторсырья практичные и стильные вещи">
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900" rel="stylesheet">
@@ -71,7 +72,13 @@
 
     <body class="{% block body_class %}{% endblock %}">
         <div class="loader"></div>
-
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
   <!--cookie-->
   <!-- <div class="cookie">
           <div class="container">

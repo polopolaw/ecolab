@@ -2,9 +2,11 @@ from django.db import models
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core import blocks
-from wagtail.core.blocks import CharBlock, FloatBlock
+from wagtail.core.blocks import CharBlock, FloatBlock, BooleanBlock
 from wagtail.admin.edit_handlers import InlinePanel, FieldPanel, MultiFieldPanel, StreamFieldPanel, PageChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 from django import forms
 from .forms import ReviewForm
@@ -16,13 +18,57 @@ from django.contrib.auth.models import User
 from wagtail.snippets.models import register_snippet
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
-
+from django.shortcuts import render
 # Create your models here.
 
 
 class StoreIndex(Page):
     subpage_types = ['ProductPage']
     
+    def get_child_tags(self):
+        tags = []
+        product_pages = ProductPageTag.objects.live().descendant_of(self)
+        for page in product_pages:
+            # Not tags.append() because we don't want a list of lists
+            tags += page.tags.all()
+        tags = sorted(set(tags))
+        return tags
+
+    def children(self):
+        return self.get_children().specific().live()
+
+    def serve(self, request):
+        # Get the full unpaginated listing of resource pages as a queryset -
+        # replace this with your own query as appropriate
+        product_pages = ProductPage.objects.child_of(self).live()
+        popular_product = product_pages.order_by('-count_rating')[:3]
+        # Filter by tag
+        tag = request.GET.get('tag')
+        if tag:
+            product_pages = product_pages.filter(tags__name=tag)
+        category = request.GET.get('cat')
+        if category:
+            product_pages = product_pages.filter(categories__name=category)
+        paginator = Paginator(product_pages, 18) # Show 18 resources per page
+
+        page = request.GET.get('page')
+        try:
+            product_pages = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            product_pages = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            product_pages = paginator.page(paginator.num_pages)
+        categories = StoreCategory.objects.all()
+        return render(request, self.template, {
+            'page': self,
+            'posts': product_pages,
+            'product_pages': product_pages,
+            'categories': categories,
+            'popular_product':popular_product,
+            'site_url': request.build_absolute_uri(),
+        })
 
 
 class Customer(models.Model):
@@ -53,6 +99,7 @@ class ProductPage(Page):
         ('option', blocks.StructBlock([
             ('name', CharBlock (label="Название параметра")),
             ('cost', FloatBlock(label="Стоимоть товара с параметром", required=False)),
+            ('in_stock', BooleanBlock(label="Наличие товара с опцией", required=False)),
 
         ], template = 'blocks/shop/option_block.html', icon='openquote', label='Параметры товара')), 
     ], blank=True, null=True)

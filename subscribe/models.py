@@ -43,12 +43,17 @@ class SubscribePage(AbstractEmailForm):
 
 	def send_mail(self, form):
 		# `self` is the FormPage, `form` is the form's POST data on submit
-
+		print(dir(self))
+		addresses = [form['podpisatsia-na-rassylku'].value()]
+		subject = "Благодарим за доверие"
+		content = "Мы благодарим вас за подписку на email рассылку. Мы будем очень аккуратно и редко отправлять концентрированную информацию вам"
+		send_mail(subject, content, addresses, self.from_address)
 		# Email addresses are parsed from the FormPage's addresses field
 		addresses = [x.strip() for x in self.to_address.split(',')]
 		subject = self.subject
-		content = self.thank_you_text
+		content = "Новая подписка на email с сайта ecolabomsk.ru"
 		send_mail(subject, content, addresses, self.from_address)
+
 
 	def get_form(self, *args, **kwargs):
 		form = super(AbstractEmailForm, self).get_form(*args, **kwargs)

@@ -21,8 +21,9 @@
 
               <div class="tp-caption tp-resizeme scaption-white-text rs-parallaxlevel-1"
                     data-x="center"
+                    data-fontsize="['18','17','14','0']"
                     data-y="top" data-voffset="180"
-                    data-whitespace="nowrap"
+                    data-whitespace="normal"
                     data-frames='[{"delay":150,"speed":2000,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":1000,"frame":"999","to":"y:[175%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
                     data-responsive_offset="on" 
                     data-elementdelay="0.05" >{{item.sub_title}}
@@ -34,7 +35,9 @@
 
               <div class="tp-caption tp-resizeme scaption-white-large rs-parallaxlevel-2"
                     data-x="center"
+
                     data-y="top" data-voffset="225"
+                    data-whitespace="normal"
                     data-frames='[{"delay":450,"speed":2000,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":1000,"frame":"999","to":"y:[175%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
                     >{{item.title}}
                   </div>
@@ -80,7 +83,7 @@
           <div class="row">
         <div class="col-md-8">
                 
-                <h2 class="section-title type2 style-2">Добро пожаловать <br> в EcoLab</h2>
+                <h2 class="section-title type2 style-2">Добро пожаловать <br> в ECOlab</h2>
 
                 <div class="tabs tabs-section clearfix">
                     <!--tabs navigation-->                  
@@ -381,7 +384,7 @@
             <div class="icons-item">
               <div class="item-box"> <i class="fa fa-users" aria-hidden="true"></i>
                 <h5 class="icons-box-title">
-                  <a href="#">Дизайн</a>
+                  <a target="_blank" href="https://greenmega.ru/">Дизайн</a>
                 </h5>
                 <p>
                   Мы сотрудничаем с омскими университетами и вместе создаем новые дизайнерские продукты из вторсырья.
@@ -415,11 +418,11 @@
                   <div class="service-col">
                     
                     <div class="service-item">
-                      <img src="{%static 'images/events2.jpg' %}" alt="">
+                    <div class="service-item-photo" style="background:url('{%static 'images/events2.jpg' %}');background-size: cover;"></div>
                       <div class="service-inner">
                         <h4>Организация мероприятий или экологизация сущестующих</h4>
                         <p>Мы можем организовать эко-вечеринку или пикник на свежем воздухе для вашей компании. Мы работаем с ответвенными партнерами и практикуем ответвенные закупки. Мы можем организовать раздельный сбор отходов на вашем мерпориятии или помочь уменьшить углеродный след вашего мероприятия.</p>
-                        <a href="/%D0%B1%D0%BB%D0%BE%D0%B3/?cat=%D0%AD%D0%BA%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BC%D0%B5%D1%80%D0%BE%D0%BF%D1%80%D0%B8%D1%8F%D1%82%D0%B8%D0%B9" class="btn btn-style-2">Читать подробнее</a>
+                        <a href="/%D0%B1%D0%BB%D0%BE%D0%B3/?cat=%D0%AD%D0%BA%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BC%D0%B5%D1%80%D0%BE%D0%BF%D1%80%D0%B8%D1%8F%D1%82%D0%B8%D0%B9" class="btn btn-style-2 service-inner-btn">Подробнее</a>
                       </div>
                     </div>
 
@@ -429,11 +432,12 @@
                   <div class="service-col">
                     
                     <div class="service-item">
-                      <img src="{%static 'images/360x220_img8.jpg' %}" alt="">
+                    <div class="service-item-photo" style="background:url('{%static 'images/360x220_img8.jpg' %}');background-size: cover;"></div>
+                      
                       <div class="service-inner">
                         <h4>Сделайте из своего пластикового мусора полезные вещи</h4>
                         <p>Используя наше обордование и технологии вы можете из пластика который собирались выкинуть сделать кашпо для растений или набор карабинов для ключей. Все ограничено лишь вашей фантазией.</p>
-                        <a href="#" class="btn btn-style-2">Читать подробнее</a>
+                        <a href="#" class="btn btn-style-2 service-inner-btn">Подробнее</a>
                       </div>
                     </div>
 
@@ -443,11 +447,11 @@
                   <div class="service-col">
                     
                     <div class="service-item">
-                      <img src="{% static 'images/events3.jpg' %}" alt="">
+                      <div class="service-item-photo" style="background:url('{% static 'images/events3.jpg' %}');background-size: cover;"></div>
                       <div class="service-inner">
                         <h4>Раздельный сбор в вашей организации</h4>
-                        <p>У нас есть опыт и возможность внедрить в вашем офисе или здании раздельный сбор и наладить вывоз вторсырья, мы проведем лекции, предоставим материалы и будем сопровождать вашу компанию на пути становления раздельного сбора. Так же мы можем порекомендовать средства для экономии воды, электричества, тепла в вашем офисе и сделать его более приятным для сотрудников.</p>
-                        <a href="/мероприятия/экоконтейнер/" class="btn btn-style-2">Подробнее</a>
+                        <p>Внедряем и налаживаем вывоз вторсырья в вашем офисе. Проведем лекции, предоставим материалы и будем сопровождать вашу компанию на пути становления раздельного сбора. Так же мы можем порекомендовать средства для экономии воды, электричества, тепла в вашем офисе и сделать его более приятным для сотрудников.</p>
+                        <a href="/мероприятия/экоконтейнер/" class="btn btn-style-2 service-inner-btn">Подробнее</a>
                       </div>
                     </div>
 
@@ -723,7 +727,7 @@
         <div class="row table-row">
           <div class="col-md-4">
             
-            <h2 class="section-title">EcoLab в цифрах</h2>
+            <h2 class="section-title">ECOlab в цифрах</h2>
 
           </div>
           <div class="col-md-8">
@@ -795,21 +799,7 @@
             
             <div class="align-right">
                       <div class="button-holder">
-                        <ul class="social-icons">
-                          {%if settings.site_settings.SocialMediaSettings.facebook %}
-                          <li class="fb-icon"><a href="{{settings.site_settings.SocialMediaSettings.facebook}}"><i class="icon-facebook"></i></a></li>
-                          {%endif%}
-                          {%if settings.site_settings.SocialMediaSettings.twitter %}
-                          <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.twitter}}"><i class="icon-twitter"></i></a></li>
-                          {%endif%}
-                          {%if settings.site_settings.SocialMediaSettings.vk %}
-                          <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.vk}}"><i class="icon-vkontakte"></i></a></li>
-                          {%endif%}
-                          {%if settings.site_settings.SocialMediaSettings.youtube %}
-                          <li class="youtube-icon"><a href="{{settings.site_settings.SocialMediaSettings.youtube}}"><i class="icon-youtube"></i></a></li>
-                          {%endif%}
-                          {%if settings.site_settings.SocialMediaSettings.instagram %}<li class="insta-icon"><a href="{{ settings.site_settings.SocialMediaSettings.instagram }}"><i class="icon-instagram-4"></i></a></li> {%endif%}
-                        </ul>
+                        {% include "social-icons.html"%}
                       </div>
                   </div>
 
