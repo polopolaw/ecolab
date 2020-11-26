@@ -941,7 +941,7 @@ a:hover .tooltip{
 
   #header.header-2 .pre-header{
     background: #a6c437;
-    padding: 9px 0 7px;
+    padding: 14px 0 14px;
     position: relative;
 
     -webkit-transition: all .35s ease;
@@ -978,6 +978,7 @@ a:hover .tooltip{
     #header.header-3 .pre-header .contact-info-menu .contact-info-item > a,
     #header.header-3 .pre-header .contact-info-menu .contact-info-item > span{
       color: #fff;
+      font-size: 14px;
     }
 
     #header.header-2 .pre-header .contact-info-menu > * > i{
@@ -3017,7 +3018,7 @@ button.search-button:before{content: "\e922";}
     position: fixed;
     z-index: 103;
     right: 60px;
-    bottom: 30%;
+    bottom: 20%;
     background: #ffbd0a;
     color: #fff;
     opacity: 0;
@@ -7459,7 +7460,7 @@ button.search-button:before{content: "\e922";}
 }
 
 #footer[class*="footer"]:not(.footer-2):not(.footer-3){
-  
+  background: #f6f6f6;
 }
 
 #footer[class*="footer"]:not(.footer-3):before{

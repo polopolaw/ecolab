@@ -112,57 +112,33 @@
         </div>
     </div>
 <!--/social-share-->
-  <div id="wrapper" class="wrapper-container">
 
-    <!-- - - - - - - - - - - - - Mobile Menu - - - - - - - - - - - - - - -->
+    <header id="header" class="header-2 type-2">
+		
+		<!-- search-form -->
+    	<div class="searchform-wrap">
+	        <div class="vc-child h-inherit relative">
 
-    <nav id="mobile-advanced" class="mobile-advanced"></nav>
-
-    <!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->
-
-    <header id="header" class="header style-2">
-        
-        <!-- search-form -->
-        <div class="searchform-wrap">
-            <div class="vc-child h-inherit relative">
-
-              <form action="{% url 'search' %}">
+                <form action="{% url 'search' %}">
                 <input type="text" name="query" placeholder="Найти">
                 <button type="submit"></button>
-              </form>
+            </form>
 
             </div>
             <button class="close-search-form"></button>
-        </div>
+	    </div>
+		
+		<!-- pre-header -->
+	    <div class="pre-header">
+	    	
+	    	<div class="container">
+	    		
+	    		<div class="row">
+	    			<div class="col-sm-6">
+	    				
+	    				<div class="contact-info-menu">
 
-        <!-- top-header -->
-        <div class="top-header">
-            
-            <!-- - - - - - - - - - - - / Mobile Menu - - - - - - - - - - - - - -->
-
-            <!--main menu-->
-
-            <div class="menu-holder">
-                
-                <div class="menu-wrap">
-
-                    <div class="table-row">
-                        
-                        <!-- logo -->
-
-                        <div class="logo-wrap">
-
-                            <a href="/" class="logo"><img src="{% static 'images/logo.png' %}" alt=""></a>
-
-                        </div>
-
-                        <!-- Menu & TopBar -->
-                        <div class="nav-item">
-                            
-                            <!-- Top Bar -->
-                            
-                            <div class="contact-info-menu">
-                                {%if settings.site_settings.WorkspaceSettings.phone %}
+            				 {%if settings.site_settings.WorkspaceSettings.phone %}
                                 <div class="contact-info-item">
                                     <i class="icon-phone"></i>
                                     <a href="tel:{{settings.site_settings.WorkspaceSettings.phone}}">{{settings.site_settings.WorkspaceSettings.phone}}</a>
@@ -180,11 +156,18 @@
                                     <span>{{settings.site_settings.WorkspaceSettings.address}}</span>
                                 </div>
                                 {%endif%}
-                                <!--<div class="contact-info-item">
-                                    <i class="icon-globe-1"></i>
-                                    <a href="#">Войти/Зарегистрироваться</a>
-                                </div> -->
-                                <div class="contact-info-item">
+
+            			</div>
+
+	    			</div>
+	    			<div class="col-sm-6">
+	    				
+	    				<div class="align-right">
+	    					
+	    					<div class="contact-info-menu">
+
+
+	            				<div class="contact-info-item">
                                     <ul class="social-icons">
                                         {%if settings.site_settings.SocialMediaSettings.facebook %}
                                         <li class="fb-icon"><a href="{{settings.site_settings.SocialMediaSettings.facebook}} "target="_blank"><i class="icon-facebook"></i></a></li>
@@ -204,36 +187,99 @@
                                     </ul>
                                 </div>
 
-                            </div>
+	            			</div>
+
+	    				</div>
+
+	    			</div>
+	    		</div>
+
+	    	</div>
+
+	    </div>
+
+      	<!-- top-header -->
+      	<div class="top-header">
+			
+			<!-- - - - - - - - - - - - / Mobile Menu - - - - - - - - - - - - - -->
+
+          	<!--main menu-->
+
+	        <div class="menu-holder">
+	            
+	            <div class="menu-wrap">
+
+	            	<div class="container">
+	            		
+	            		<div class="table-row">
                             
-                            <!-- - - - - - - - - - - - - - Navigation - - - - - - - - - - - - - - - - -->
-{% load menu_tags %}
-{% main_menu max_levels=3 template="menus/custom_main_menu.html" sub_menu_template="menus/custom_sub_menu.html" %}
-                            
-                            <!-- - - - - - - - - - - - - end Navigation - - - - - - - - - - - - - - - -->
+	            			<ul class="our-info-list">
+				                <li>
 
-                            <div class="search-holder">
+				                  <span class="licon-telephone"></span>
+				                  <div>
+				                    Позоните нам:
+				                    <a href="callto:89088081722">89088081722</a>
+				                  </div>
 
-                                <button class="search-button"></button>
+				                </li>
+				            </ul>
+	            		
+		            		<!-- logo -->
 
-                            </div>
-                            {% block shopcart%}{%endblock%}
-                            <a  target="_blank" href="https://vk.com/im?sel=-193648286" class="btn btn-style-2">Связаться</a>
+                        <div class="logo-wrap">
+
+                            <a href="/" class="logo"><img src="{% static 'images/logo.png' %}" alt=""></a>
 
                         </div>
 
-                    </div>
+							<!-- logo -->
 
-                </div>
+							<div class="call-us">
 
-            </div>
+					            <div class="search-holder">
 
-        </div>
-        
-        <!-- bottom-separator -->
-        <div class="bottom-separator"></div>
+									<button class="search-button"></button>
+
+			                    </div>
+								
+								{% block shopcart%}{%endblock%}
+                            <a  target="_blank" href="https://vk.com/im?sel=-193648286" class="btn btn-style-2">Связаться</a>
+
+							</div>
+
+		            	</div>
+
+	            	</div>
+
+	            	<!-- Menu & TopBar -->
+            		<div class="nav-item">
+						
+		                <div class="container">
+		                	
+		                	<!-- - - - - - - - - - - - - - Navigation - - - - - - - - - - - - - - - - -->
+
+			                {% load menu_tags %}
+                            {% main_menu max_levels=3 template="menus/custom_main_menu.html" sub_menu_template="menus/custom_sub_menu.html" %}
+
+			                <!-- - - - - - - - - - - - - end Navigation - - - - - - - - - - - - - - - -->
+
+		                </div>
+
+	              	</div>
+
+	            </div>
+
+	        </div>
+
+      	</div>
+		
+		<!-- bottom-separator -->
+	    <div class="bottom-separator"></div>
       
     </header>
+
+
         {% wagtailuserbar %}
 {% if messages %}
 
@@ -254,7 +300,7 @@
             
             <div class="container">
                 
-                <div class="icons-box fx-col-4">
+                <div class="icons-box fx-col-3">
 
                     <!-- - - - - - - - - - - - - - Icon Box Item - - - - - - - - - - - - - - - - -->       
                     {%if settings.site_settings.WorkspaceSettings.address %}         

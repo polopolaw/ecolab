@@ -325,6 +325,9 @@
 .fa-icon-font:before {
   content: "\f031";
 }
+.fa-icon-tg:before {
+  content: "\f2c6";
+}
 .fa-icon-bold:before {
   content: "\f032";
 }
