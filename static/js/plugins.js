@@ -829,7 +829,6 @@
 
 					base.navButton.on(base.event, function (e) {
 						e.preventDefault();
-
 						if (!base.wrapper.is('.active')) {
 							$('html, body').animate({ scrollTop: 0 }, 0, function () {
 								base.wrapper.css({

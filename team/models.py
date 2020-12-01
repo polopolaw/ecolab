@@ -75,6 +75,7 @@ class TeamMember(models.Model):
     info = models.CharField(max_length=100, blank=True)
     role = models.ForeignKey(TeamMemberRole, models.SET_NULL, null=True, blank=True)
     specificrole = models.CharField(max_length=100, blank=True)
+    order = models.IntegerField(default=1000)
     facebook = models.URLField(
         help_text='Your Facebook page URL',blank=True)
     instagram = models.CharField(
@@ -96,6 +97,7 @@ class TeamMember(models.Model):
         FieldPanel('user'),
         FieldPanel('info'),
         FieldPanel('role'),
+        FieldPanel('order'),
         FieldPanel('specificrole'),
         ImageChooserPanel('photo'),
         MultiFieldPanel([
@@ -113,6 +115,7 @@ class TeamMember(models.Model):
 
     class Meta:
         verbose_name_plural = 'Команда проекта'
+        ordering = ['order']
 
     search_fields = [
         index.SearchField('user'),
