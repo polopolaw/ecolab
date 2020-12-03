@@ -41,6 +41,7 @@
         <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/fontello.css' %}">
+        
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 
@@ -167,23 +168,9 @@
 
 
 	            				<div class="contact-info-item">
-                                    <ul class="social-icons">
-                                        {%if settings.site_settings.SocialMediaSettings.facebook %}
-                                        <li class="fb-icon"><a href="{{settings.site_settings.SocialMediaSettings.facebook}} "target="_blank"><i class="icon-facebook"></i></a></li>
-                                        {%endif%}
-                                        {%if settings.site_settings.SocialMediaSettings.twitter %}
-                                        <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.twitter}}" target="_blank"><i class="icon-twitter"></i></a></li>
-                                        {%endif%}
-                                        {%if settings.site_settings.SocialMediaSettings.vk %}
-                                        <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.vk}}" target="_blank"><i class="icon-vkontakte"></i></a></li>
-                                        {%endif%}
-                                        {%if settings.site_settings.SocialMediaSettings.youtube %}
-                                        <li class="youtube-icon"><a href="{{settings.site_settings.SocialMediaSettings.youtube}}" target="_blank"><i class="icon-youtube"></i></a></li>
-                                        {%endif%}
-                                        {%if settings.site_settings.SocialMediaSettings.instagram %}<li class="insta-icon"><a href="{{ settings.site_settings.SocialMediaSettings.instagram }} " target="_blank"><i class="icon-instagram-4"></i></a></li> {%endif%}
-                                        
+                                    
+                                        {% include "social-icons.html"%}
 
-                                    </ul>
                                 </div>
 
 	            			</div>
@@ -360,22 +347,11 @@
                                 <h5 class="icons-box-title">
                                     <a>Оставайтесь на связи</a>
                                 </h5>
-                                <ul class="social-icons style-2">
+                                <ul class="social-icons ">
                                     
-                                    {%if settings.site_settings.SocialMediaSettings.facebook %}
-                                    <li class="fb-icon"><a href="{{settings.site_settings.SocialMediaSettings.facebook}}"><i class="icon-facebook"></i></a></li>
-                                    {%endif%}
-                                    {%if settings.site_settings.SocialMediaSettings.twitter %}
-                                    <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.twitter}}"><i class="icon-twitter"></i></a></li>
-                                    {%endif%}
-                                    {%if settings.site_settings.SocialMediaSettings.vk %}
-                                    <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.vk}}"><i class="icon-vkontakte"></i></a></li>
-                                    {%endif%}
-                                    {%if settings.site_settings.SocialMediaSettings.youtube %}
-                                    <li class="youtube-icon"><a href="{{settings.site_settings.SocialMediaSettings.youtube}}"><i class="icon-youtube"></i></a></li>
-                                    {%endif%}
-                                    {%if settings.site_settings.SocialMediaSettings.instagram %}
-                                    <li class="insta-icon"><a href="{{ settings.site_settings.SocialMediaSettings.instagram }}"><i class="icon-instagram-4"></i></a></li> {%endif%}
+                                    
+                                    {% include "social-icons.html" with style="style-2"%}
+
 
                                 </ul>
                             </div>

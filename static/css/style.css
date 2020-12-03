@@ -3913,6 +3913,22 @@ button.search-button:before{content: "\e922";}
         color: #3b5998;
       }
 
+      .social-icons > li.precious-icon > a{
+        color: #c7ca00;
+      }
+
+      .social-icons > li.tg-icon > a{
+        color: #33bdfd;
+      }
+
+      .social-icons > li.dzen-icon > a{
+        color: #060a13;
+      }
+
+      .social-icons > li.tweet-icon > a{
+        color: #3b5998;
+      }
+
       .social-icons > li.youtube-icon > a{
         color: #dc4a38;
       }
@@ -3922,7 +3938,7 @@ button.search-button:before{content: "\e922";}
       }
 
       .social-icons > li.insta-icon > a{
-        color: #896537;
+        color: #f015a7;
       }
 
   .social-icons.style-2{

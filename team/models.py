@@ -84,6 +84,8 @@ class TeamMember(models.Model):
         help_text='URL на аккаунт в Twitter', blank=True)
     vk = models.URLField(
         help_text='URL vk.com', blank=True)
+    tg = models.URLField(
+        help_text='URL telegram', blank=True)
     photo = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -106,6 +108,7 @@ class TeamMember(models.Model):
             FieldPanel('twitter'),
             FieldPanel('vk'),
             FieldPanel('website'),
+            FieldPanel('tg'),
         ],heading='Аккаунты в социальных сетях'),
         
     ]

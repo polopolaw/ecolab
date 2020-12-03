@@ -40,7 +40,12 @@ class SocialMediaSettings(BaseSetting):
         help_text='URL на аккаунт в Twitter', blank=True)
     vk = models.URLField(
         help_text='URL vk.com', blank=True)
-
+    precious_plastic = models.URLField(
+        help_text='URL precious plastic', blank=True)
+    tg = models.URLField(
+        help_text='URL telegram', blank=True)
+    dzen = models.URLField(
+        help_text='URL Yandex dzen', blank=True)
 
     panels = [
     MultiFieldPanel([
@@ -49,6 +54,9 @@ class SocialMediaSettings(BaseSetting):
             FieldPanel('youtube'),
             FieldPanel('twitter'),
             FieldPanel('vk'),
+            FieldPanel('precious_plastic'),
+            FieldPanel('tg'),
+            FieldPanel('dzen'),
         ],heading='Аккаунты в социальных сетях')
     ]
 

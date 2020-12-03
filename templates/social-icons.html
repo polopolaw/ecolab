@@ -2,20 +2,27 @@
 {% load wagtailimages_tags %}
 {% load wagtailcore_tags %}
 {%block icons%}
-<ul class="social-icons">
+<ul class="social-icons {{ style }}">
     {%if settings.site_settings.SocialMediaSettings.facebook %}
-    <li class="fb-icon"><a href="{{settings.site_settings.SocialMediaSettings.facebook}}"><i class="icon-facebook"></i></a></li>
+    <li class="fb-icon"><a target="_blank" href="{{settings.site_settings.SocialMediaSettings.facebook}}"><i class="icon-facebook"></i></a></li>
     {%endif%}
     {%if settings.site_settings.SocialMediaSettings.twitter %}
-    <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.twitter}}"><i class="icon-twitter"></i></a></li>
+    <li class="tweet-icon"><a target="_blank" href="{{settings.site_settings.SocialMediaSettings.twitter}}"><i class="icon-twitter"></i></a></li>
     {%endif%}
     {%if settings.site_settings.SocialMediaSettings.vk %}
-    <li class="tweet-icon"><a href="{{settings.site_settings.SocialMediaSettings.vk}}"><i class="icon-vkontakte"></i></a></li>
+    <li class="tweet-icon"><a target="_blank" href="{{settings.site_settings.SocialMediaSettings.vk}}"><i class="icon-vkontakte"></i></a></li>
     {%endif%}
     {%if settings.site_settings.SocialMediaSettings.youtube %}
-    <li class="youtube-icon"><a href="{{settings.site_settings.SocialMediaSettings.youtube}}"><i class="icon-youtube"></i></a></li>
+    <li class="youtube-icon"><a target="_blank" href="{{settings.site_settings.SocialMediaSettings.youtube}}"><i class="icon-youtube"></i></a></li>
     {%endif%}
-    {%if settings.site_settings.SocialMediaSettings.instagram %}<li class="insta-icon"><a href="{{ settings.site_settings.SocialMediaSettings.instagram }}"><i class="icon-instagram-4"></i></a></li> {%endif%}
+    {%if settings.site_settings.SocialMediaSettings.tg %}
+    <li class="tg-icon"><a target="_blank" href="{{settings.site_settings.SocialMediaSettings.tg}}"><i class="icon-telegram"></i></a></li>
+    {%endif%}
+    {%if settings.site_settings.SocialMediaSettings.precious_plastic %}
+    <li class="precious-icon"><a target="_blank" href="{{settings.site_settings.SocialMediaSettings.precious_plastic}}"><i class="icon-map-workspace"></i></a></li>
+    {%endif%}
+   
+    {%if settings.site_settings.SocialMediaSettings.instagram %}<li class="insta-icon"><a target="_blank" href="{{ settings.site_settings.SocialMediaSettings.instagram }}"><i class="icon-instagram"></i></a></li> {%endif%}
 </ul>
 
 {%endblock%}
