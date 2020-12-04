@@ -165,6 +165,14 @@
                             columnWidth: '.item',
                           }
                         });
+                    $('.isotope').isotope({
+                          itemSelector: '.item',
+                          layoutMode : "masonry",
+                          transitionDuration:"0.7s",
+                          masonry: {
+                            columnWidth: '.item',
+                          }
+                        });
                 
                 if($('.portfolio-holder').length){
                     if($.fancybox){

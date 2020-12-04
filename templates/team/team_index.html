@@ -59,10 +59,10 @@
 
 			                    {% if member.photo %}
 			                    {% image member.photo fill-360x360 as img %} 
-							    	<a href="{%if member.website%} {{member.website}}{%endif%}" class="member-photo"><img src="{{img.url}}" alt="{{img.alt}}"></a>
+							    	<a target="_blank" href="{%if member.website%} {{member.website}}{%endif%}" class="member-photo"><img src="{{img.url}}" alt="{{img.alt}}"></a>
 								{% endif %}
 			                  	<div class="member-info">
-			                    	<h5 class="member-name"><a href="{%if member.website%} {{member.website}}{%endif%}">{{member.user.get_full_name}}</a></h5>
+			                    	<h5 class="member-name"><a target="_blank" href="{%if member.website%} {{member.website}}{%endif%}">{{member.user.get_full_name}}</a></h5>
 			                    	<h6 class="member-position">{%if member.specificrole %}{{member.specificrole}}{%else%}{{role.name}}{%endif%}</h6>
 			                    	<p>{{member.info}}</p>
 			                  	</div>
