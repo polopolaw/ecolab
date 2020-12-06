@@ -1247,7 +1247,7 @@ a:hover .tooltip{
 
 .responsive-nav-button:before{
   font-family: 'fontello';
-  content: "\e8bb";
+  content: "\e814";
 }
 
 #wrapper #advanced-menu-hide{
@@ -2313,7 +2313,7 @@ button.search-button:before{content: "\e922";}
 }
 
 .holder-bg{
-  padding: 90px 0;
+  padding: 140px 0;
   position: relative;
 }
 
@@ -3719,11 +3719,11 @@ button.search-button:before{content: "\e922";}
   }
 
   .custom-list.type-1 li::before{
-    content: "\e8df";
+    content: "\f111";
   }
 
   .custom-list.type-2 li::before{
-    content: "\e854";
+    content: "\f111";
   }
 
   .custom-list.type-2.style-3 li::before{
@@ -5585,7 +5585,7 @@ button.search-button:before{content: "\e922";}
   .team-holder{margin-top: -30px;}
 
   .team-holder .team-item{
-    padding: 30px 15px 0;
+    padding: 52px 15px 0;
     text-align: center;
   }
 
@@ -5658,8 +5658,8 @@ button.search-button:before{content: "\e922";}
   }
 
   .member-info:not(:last-child){
-    padding-bottom: 25px;
-    margin-bottom: 25px;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
   }
 
   .member-info:not(:last-child):after{
@@ -6095,7 +6095,7 @@ button.search-button:before{content: "\e922";}
     }
 
     .entry .entry-meta > .entry-tags:before{
-      content: '\e874';
+      content: '\e82f';
     }
 
     .entry .entry-meta > .entry-byline a:before{
@@ -6103,7 +6103,7 @@ button.search-button:before{content: "\e922";}
     }
 
     .entry .entry-meta > .entry-news:before{
-      content: '\e8b1';
+      content: '\e82f';
     }
 
     .entry .entry-meta > .entry-comments-link:before{
@@ -6111,7 +6111,7 @@ button.search-button:before{content: "\e922";}
     }
 
     .entry .entry-meta > .entry-share:before{
-      content: "\e88a";
+      content: "\f1e0";
     }
 
     .blog-type .welcome-item .entry-calendar:before{
